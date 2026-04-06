@@ -1,6 +1,7 @@
 import { RoomTempProcessFlow } from '../components/ProcessFlow'
 import SealingDiagram from '../components/SealingDiagram'
 import SafetyChecklist from '../components/SafetyChecklist'
+import FailureModes from '../components/FailureModes'
 
 # Path 2: 상온 봉착 경로 (Tutorial)
 
@@ -106,9 +107,4 @@ MAP(가스 치환 포장) 원리를 적용:
 
 ## 예상 실패 모드와 대응
 
-| 실패 | 원인 | 대응 |
-|------|------|------|
-| 점등 안 됨 | 가스 순도 부족 (잔류 공기) | 플러싱 횟수 증가 + 게터 추가 |
-| 수일 후 어두워짐 | 부틸 봉착부 네온 투과 | 졸-겔 SiO₂ 오버코팅 추가 |
-| 이상한 색상 (보라/분홍) | 공기 유입 | 봉착부 리크 탐색 → 재봉착 |
-| 전극 형상 안 보임 | 고압 글로우 특성 (양광주 지배) | 전류 조절 또는 압력 변경 |
+<FailureModes />
