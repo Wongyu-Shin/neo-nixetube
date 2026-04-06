@@ -58,6 +58,9 @@ export function useMDXComponents(components: MDXComponents): MDXComponents {
         {children}
       </a>
     ),
+    hr: () => (
+      <hr className="border-white/[0.06] my-8" />
+    ),
     ...components,
   }
 }
