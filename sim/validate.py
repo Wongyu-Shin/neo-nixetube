@@ -39,17 +39,21 @@ def _predict_loocv(pd_query: float, pd_data: np.ndarray, vb_data: np.ndarray,
         cs = CubicSpline(log_pd, log_vb)
         return float(np.exp(cs(np.log(pd_query))))
     else:
-        # Extrapolation: power-law fit on nearest 3 points
+        # Extrapolation: different strategies for left vs right
         if pd_query < pd_train.min():
-            # Left extrapolation (low pd)
-            idx = np.argsort(pd_train)[:3]
+            # Left extrapolation (low pd — steep rise, Paschen left branch)
+            # Use quadratic in log-log space to capture curvature
+            n_pts = min(4, len(pd_train))
+            idx = np.argsort(pd_train)[:n_pts]
+            deg = min(2, n_pts - 1)
+            coeffs = np.polyfit(log_pd[idx], log_vb[idx], deg)
+            return float(np.exp(np.polyval(coeffs, np.log(pd_query))))
         else:
-            # Right extrapolation (high pd)
-            idx = np.argsort(pd_train)[-3:]
-
-        # Fit log(Vb) = a * log(pd) + b (power law)
-        coeffs = np.polyfit(log_pd[idx], log_vb[idx], 1)
-        return float(np.exp(np.polyval(coeffs, np.log(pd_query))))
+            # Right extrapolation (high pd — gentle rise, near-linear in log-log)
+            n_pts = min(4, len(pd_train))
+            idx = np.argsort(pd_train)[-n_pts:]
+            coeffs = np.polyfit(log_pd[idx], log_vb[idx], 1)
+            return float(np.exp(np.polyval(coeffs, np.log(pd_query))))
 
 
 def _analytical_predict(pd: float, constants: dict) -> float:
