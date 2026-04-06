@@ -13,9 +13,14 @@ const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
 });
 
+import type { Viewport } from "next";
+
 export const metadata: Metadata = {
   title: "neo-nixetube",
   description: "50년간 발전이 멈춘 닉시관에 현대 과학의 '연결되지 않은 지식'을 적용하는 PoC 프로젝트",
+};
+
+export const viewport: Viewport = {
   themeColor: "#0D0D0D",
 };
 
