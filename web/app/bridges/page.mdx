@@ -1,5 +1,6 @@
 import NixieDiagram from '../components/NixieDiagram'
 import BridgeNetwork from '../components/BridgeNetwork'
+import PermeabilityChart from '../components/PermeabilityChart'
 
 # 발견된 브릿지 기술 (Disconnected Knowledge)
 
@@ -122,12 +123,4 @@ PDP, 나노기술, MEMS에서 발견된 3개 브릿지.
 
 모든 비유리 실링 재료의 go/no-go 판정 기준:
 
-| 재료 | Ne 투과율 (CGS) | PoC 100h | 상용 10,000h |
-|------|----------------|----------|------------|
-| 유리 | 10⁻¹⁵ | ✓ | ✓ |
-| PIB | 10⁻¹¹ | ✓ | ⚠ |
-| 부틸(IIR) | 10⁻¹⁰ | ✓ | ✗ |
-| 폴리설파이드 | 10⁻¹⁰ | ✓ | ✗ |
-| + 졸겔 오버코팅 | x0.01-0.1 | ✓ | ⚠~✓ |
-| 에폭시 | 10⁻⁹ | ⚠ | ✗ |
-| PDMS | 10⁻⁷ | ✗ | ✗ |
+<PermeabilityChart />
