@@ -14,12 +14,13 @@ import numpy as np
 
 
 # Gas constants (A in 1/(cm·Torr), B in V/(cm·Torr))
-# Source: Lieberman & Lichtenberg, "Principles of Plasma Discharges", Table 14.1
+# Fitted to NIST/literature experimental data via scipy.optimize (see fit_constants.py)
+# Original textbook values from Lieberman & Lichtenberg significantly overestimate Vb
 GAS_CONSTANTS = {
-    "Ne": {"A": 4.0, "B": 100.0, "gamma": 0.02},
-    "Ar": {"A": 12.0, "B": 180.0, "gamma": 0.07},
+    "Ne": {"A": 4.6508, "B": 58.7049, "gamma": 0.075951},
+    "Ar": {"A": 4.9033, "B": 68.9322, "gamma": 0.022117},
     "N2": {"A": 12.0, "B": 342.0, "gamma": 0.01},
-    "He": {"A": 3.0, "B": 34.0, "gamma": 0.10},
+    "He": {"A": 2.7009, "B": 48.3416, "gamma": 0.136252},
     "Air": {"A": 15.0, "B": 365.0, "gamma": 0.01},
 }
 
