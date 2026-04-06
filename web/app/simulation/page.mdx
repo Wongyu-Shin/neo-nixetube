@@ -1,5 +1,6 @@
 import PaschenChart from '../components/PaschenChart'
 import GlowStructure from '../components/GlowStructure'
+import GlowComparison from '../components/GlowComparison'
 
 # 시뮬레이션 결과 (Simulation)
 
@@ -52,13 +53,7 @@ dc (음극 암부) 예측: MAPE **1.77%** — 고압(100-500 Torr) 비유사(non
 
 > **질문:** 마이크로 격벽(500μm-1mm, 200+ Torr)에서 글로우가 전극 형상을 감싸는가?
 
-| 조건 | dc (μm) | 글로우 (μm) | 글로우/갭 비 | 강도 (상대) | 판정 |
-|------|---------|-----------|------------|-----------|------|
-| **전통 (15 Torr, 1.5mm)** | **291** | **204** | **0.33** | **1x** | **기준** |
-| 1mm @ 100 Torr | 67 | 47 | 0.11 | 40x | 얇지만 밝음 |
-| 500μm @ 200 Torr | 45 | 32 | 0.15 | 180x | 얇지만 매우 밝음 |
-| 1mm @ 300 Torr | 37 | 26 | 0.06 | 440x | 너무 얇음 |
-| 500μm @ 500 Torr | 30 | 21 | 0.10 | 1300x | 극도로 밝은 얇은 선 |
+<GlowComparison />
 
 ### 해석
 
