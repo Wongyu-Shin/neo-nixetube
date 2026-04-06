@@ -1,5 +1,6 @@
 import CostComparison from '../components/CostComparison'
 import BOMBreakdown from '../components/BOMBreakdown'
+import PurchasePriority from '../components/PurchasePriority'
 
 # BOM & 재료 구매 리스트
 
@@ -84,14 +85,4 @@ import BOMBreakdown from '../components/BOMBreakdown'
 
 ## 구매 우선순위
 
-배송 리드타임이 긴 것부터 먼저 주문:
-
-| 우선순위 | 품목 | 리드타임 | 이유 |
-|---------|------|---------|------|
-| 1 (즉시) | TO-8 기밀 헤더 (DigiKey) | 5-7일 | 해외 배송 |
-| 1 (즉시) | 안전 장비 (쿠팡) | 1-2일 | 실험 전 필수 |
-| 1 (즉시) | 부틸 테이프 + 폴리설파이드 | 2-3일 | 상온 경로 핵심 |
-| 2 (이번 주) | 시그마알드리치 화학 시약 | 1-2주 | 프릿+졸겔+AAO용 |
-| 2 (이번 주) | 듀멧 와이어 (AliExpress) | 2-3주 | 해외 배송 최장 |
-| 3 (다음 주) | 중고 진공 펌프 탐색 | 1-4주 | 매물 대기 |
-| 3 (다음 주) | 네온 가스 확보 | 1-2주 | 네온사인 업체 접촉 |
+<PurchasePriority />
