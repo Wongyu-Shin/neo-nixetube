@@ -24,7 +24,7 @@ export default function Nav() {
         <Link href="/" className="flex items-center gap-2 whitespace-nowrap group">
           <span className="text-2xl transition-transform group-hover:scale-110">&#x2609;</span>
           <span className="font-bold text-lg bg-gradient-to-r from-amber-300 via-orange-400 to-amber-500 bg-clip-text text-transparent">
-            neo-nixetube
+            neo-nixietube
           </span>
         </Link>
         <div className="flex gap-0.5">

@@ -16,7 +16,7 @@ const jetbrainsMono = JetBrains_Mono({
 import type { Viewport } from "next";
 
 export const metadata: Metadata = {
-  title: "neo-nixetube",
+  title: "neo-nixietube",
   description: "50년간 발전이 멈춘 닉시관에 현대 과학의 '연결되지 않은 지식'을 적용하는 PoC 프로젝트",
 };
 
@@ -48,7 +48,7 @@ export default function RootLayout({
         <footer className="border-t border-white/[0.06] mt-16">
           <div className="max-w-4xl mx-auto px-4 py-8 text-center text-stone-600 text-sm">
             <p className="font-[family-name:var(--font-space-grotesk)]">
-              neo-nixetube &mdash; Disconnected Knowledge for Nixie Tube Innovation
+              neo-nixietube &mdash; Disconnected Knowledge for Nixie Tube Innovation
             </p>
             <p className="mt-1">Seoul, South Korea &middot; 2026</p>
           </div>
