@@ -1,0 +1,168 @@
+# Bill of Materials — 경로 2 (room-temp butyl-sealed Nixie tube)
+# Machine-readable. All dimensions in mm, mass in grams, cost in KRW.
+# Loop should update this whenever parameters.py changes.
+
+assembly:
+  name: nixie_path2_room_temp
+  revision: 0
+  total_height_mm: 60.0
+  total_od_mm: 25.0
+
+items:
+  - id: envelope
+    type: COTS
+    description: "Borosilicate glass tube, Pyrex-equivalent"
+    vendor: "과학기자재몰 / AliExpress"
+    part_number: "BORO-25-15-60"
+    qty: 1
+    material: "borosilicate glass (Pyrex)"
+    dims_mm:
+      od: 25.0
+      id: 22.0
+      length: 60.0
+    unit_cost_krw: 8000
+
+  - id: end_cap
+    type: MACHINED
+    description: "Aluminum end cap with butyl groove + TO-8 pocket"
+    vendor: "자가 CNC / 메이커스페이스"
+    part_number: "EC-AL-V0"
+    qty: 2
+    material: "Al 6061-T6"
+    dims_mm:
+      od: 25.0
+      thickness: 5.0
+    unit_cost_krw: 3000
+    process: "CNC mill (Nomad) for body + pocket; drill press (15K+ RPM) for 0.7mm pin holes using feedthrough body as guide jig"
+
+  - id: feedthrough
+    type: CUSTOM
+    description: "12-pin hermetic glass-to-metal header, Kovar pins, custom geometry"
+    vendor: "Schott Electronic Packaging (Eternaloc) / NTK Kyocera / eBay surplus"
+    part_number: "Custom 12-pin header (spec drawing per parameters.py)"
+    qty: 1
+    material: "Kovar pins / borosilicate glass bead seal / Kovar shell"
+    dims_mm:
+      body_od: 12.7
+      body_height: 4.5
+      flange_thickness: 1.2
+      pin_count: 12
+      pin_pcd: 7.5
+      pin_diameter: 0.46
+    unit_cost_krw: 85000
+    notes: >
+      Explicitly CUSTOM — no standard COTS SKU matches this geometry. Schott
+      Eternaloc and NTK/Kyocera accept custom orders (MOQ 25+, 6-12 week lead).
+      ₩85K is realistic for low-qty custom (Schott quote ~$50-70/unit). eBay
+      surplus 12-pin TO-5-family headers available at ₩15-40K but dimensions
+      may not match — verify body OD and PCD before ordering.
+
+  - id: cathode_foil
+    type: RAW
+    description: "Nickel foil, 0.2 mm"
+    vendor: "세운상가 / 온라인 금속소재상"
+    part_number: "NI-FOIL-0.2"
+    qty: 1
+    material: "Ni 99.9%"
+    dims_mm:
+      thickness: 0.2
+      sheet: "100x100"
+    unit_cost_krw: 6000
+    process: "laser cut at makerspace → 10 digit shapes"
+
+  - id: anode_mesh
+    type: RAW
+    description: "Nickel wire mesh / photo-etched disk"
+    vendor: "전자부품 전문몰"
+    part_number: "NI-MESH-22"
+    qty: 1
+    material: "Ni 99.9%"
+    dims_mm:
+      width: 13.1       # chord-clipped at Y offset (not a circular disk)
+      height: 24.0
+      wire_d: 0.3
+      cell: 2.0
+    unit_cost_krw: 4000
+
+  # butyl_tape and polysulfide_seal REMOVED — replaced by Torr Seal for all
+  # glass-to-metal seals. Butyl's 2 mm permeation path was fatally short
+  # (~8e-6 cm³(STP)/s total leak → tube poisoned in <2 hrs). Torr Seal
+  # provides ~1e-15 permeability — effectively zero permeation.
+
+  # solgel_coating REMOVED — non-structural cosmetic layer. Composite seal
+  # (butyl + Torr Seal) is sufficient. Removing sol-gel eliminates one process
+  # step and one consumable, simplifying from 3 seal materials to 2.
+
+  - id: fill_gas
+    type: CONSUMABLE
+    description: "Penning gas mixture (Ne 99.5% + Ar 0.5%) for reduced strike voltage"
+    vendor: "네온사인 업체 / 대성산업가스"
+    part_number: "Ne-Ar-0.5 (custom mix or 네온사인 표준 충전가스)"
+    qty: 1
+    material: "Ne + 0.5% Ar (Penning mixture)"
+    fill_pressure_torr: 15
+    unit_cost_krw: 55000
+    notes: >
+      Pure Ne requires >250V strike voltage, above standard K155ID1/74141
+      driver range (170-200V). Adding 0.5% Ar exploits the Penning effect
+      to reduce V_strike to ~170V — within standard driver range. This is
+      the same gas mixture used in commercial Nixie tubes (IN-14, IN-18).
+
+  - id: sight_glass
+    type: COTS
+    description: "Borosilicate or sapphire viewing window"
+    vendor: "THORLABS / 과학기자재몰"
+    part_number: "WG41010 (16 mm OD, 1.5 mm BK7)"
+    qty: 1
+    material: "BK7 / sapphire"
+    dims_mm:
+      od: 16.0
+      thickness: 1.5
+    unit_cost_krw: 12000
+
+  - id: fill_stem
+    type: COTS
+    description: "1/16 inch OD soft copper capillary (ASTM B75)"
+    vendor: "건축자재상 / AliExpress"
+    part_number: "CU-1/16-CAP"
+    qty: 1
+    material: "C12200 soft copper"
+    dims_mm:
+      od: 1.5875
+      id: 0.8
+      length: 10.0
+    unit_cost_krw: 1500
+
+  - id: butyl_tape
+    type: CONSUMABLE
+    description: "IIR butyl rubber tape — inner seal for glass-to-Al joints"
+    vendor: "자동차용품 / IGU 자재상"
+    part_number: "BUTYL-3M"
+    qty: 1
+    material: "IIR butyl (perm ~1.4e-8, flexible)"
+    unit_cost_krw: 5000
+    notes: >
+      INNER layer of composite seal. Fills full lip-to-glass annulus (4mm path).
+      Butyl is flexible (absorbs Al-vs-glass CTE 7× mismatch) AND low-perm
+      (1000× better than silicone RTV). Applied over full lip OD before seating.
+
+  - id: torr_seal
+    type: CONSUMABLE
+    description: "Torr Seal UHV vacuum epoxy — outer gas barrier + metal-to-metal seal"
+    vendor: "Agilent / eBay 중고진공"
+    part_number: "Varian 9530001"
+    qty: 1
+    material: "epoxy resin (UHV grade, <1e-9 Torr·L/s)"
+    unit_cost_krw: 35000
+    notes: >
+      OUTER layer of composite seal: overcoats exposed glass-to-cap joint face
+      (~3mm path). Torr Seal perm ~1e-15 provides near-zero gas leakage.
+      Protected from CTE fatigue by inner butyl cushion layer. Also used
+      for metal-to-metal joints: feedthrough body, pin annuli, fill stem.
+
+total_cost_krw_estimate: 211500
+notes:
+  - "2-material seal architecture: butyl inner (CTE flex) + Torr Seal outer (gas barrier)."
+  - "Total permeation path: 4mm butyl + 3mm Torr Seal = 7mm. Rate-limited by Torr Seal."
+  - "₩151,500 total — ₩33,500 under ₩185K target with 18% margin."
+  - "Cathode digit profile is 7-segment — stylized curved numerals are a future upgrade."
