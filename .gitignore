@@ -18,3 +18,5 @@ web/node_modules/
 web/.next/
 web/out/
 autoresearch-results.tsv
+autoresearch-cad-path2-results.tsv
+cad/path-2-room-temp/build/
