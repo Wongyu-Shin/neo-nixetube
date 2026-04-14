@@ -32,7 +32,7 @@ export function RoomTempProcessFlow() {
     { num: 1, title: "전극 제작", duration: "2h", detail: "니켈 포일에 숫자 패턴 → 레이저 커터/에칭. 디버링 + IPA 세척.", color: "#6BA368" },
     { num: 2, title: "기밀 헤더에 장착", duration: "1h", detail: "커스텀 12핀 헤더에 전극 리드선 납땜. 양극 메쉬 연결.", color: "#6BA368" },
     { num: 3, title: "유리 돔 부틸 봉착", duration: "30min", detail: "핫멜트 부틸 테이프로 유리 돔-헤더 접합. 히트건으로 연화 → 밀착.", color: "#6BA368" },
-    { num: 4, title: "폴리설파이드 2차 실링", duration: "24h경화", detail: "외부에서 폴리설파이드 실란트 도포. 구조적 강도 확보. 24시간 경화.", color: "#6BA368" },
+    { num: 4, title: "Torr Seal 2차 실링", duration: "24h경화", detail: "부틸 봉착부 외부에 Torr Seal UHV 에폭시 도포. 가스 차단 확보. 24시간 경화.", color: "#6BA368" },
     { num: 5, title: "네온 플러싱", duration: "5min", detail: "한쪽에서 네온 유입, 반대쪽에서 배출. O₂ 센서로 <0.5% 확인. 3회 사이클.", color: "#7B9EB8" },
     { num: 6, title: "밀봉 + 점등", duration: "10min", detail: "에폭시로 배기관 밀봉. 300-500V 인가 → 네온 글로우 확인!", color: "#D4A853" },
   ];
