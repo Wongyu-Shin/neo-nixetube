@@ -160,9 +160,9 @@ items:
       Protected from CTE fatigue by inner butyl cushion layer. Also used
       for metal-to-metal joints: feedthrough body, pin annuli, fill stem.
 
-total_cost_krw_estimate: 211500
+total_cost_krw_estimate: 217500
 notes:
   - "2-material seal architecture: butyl inner (CTE flex) + Torr Seal outer (gas barrier)."
   - "Total permeation path: 4mm butyl + 3mm Torr Seal = 7mm. Rate-limited by Torr Seal."
-  - "₩151,500 total — ₩33,500 under ₩185K target with 18% margin."
+  - "₩217,500 tube BOM total (end_cap qty 2). Full project cost higher with tools/safety."
   - "Cathode digit profile is 7-segment — stylized curved numerals are a future upgrade."
