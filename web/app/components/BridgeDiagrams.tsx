@@ -95,7 +95,7 @@ export function ButylSealDiagram() {
 
       {/* TO-8 Header */}
       <rect x={100} y={196} width={220} height={16} rx={3} fill="#B8A9C920" stroke="#B8A9C970" strokeWidth={1} />
-      <text x={210} y={207} fill="#B8A9C9" fontSize="6" fontWeight="bold" textAnchor="middle">TO-8 기밀 헤더 (14핀)</text>
+      <text x={210} y={207} fill="#B8A9C9" fontSize="6" fontWeight="bold" textAnchor="middle">커스텀 기밀 헤더 (12핀)</text>
 
       {/* Pins */}
       {[135, 155, 175, 195, 215, 235, 255, 275].map((px, i) => (

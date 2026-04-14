@@ -33,7 +33,7 @@ const LAYERS = [
     y: 124,
     h: 30,
     color: "#B8A9C9",
-    detail: "14핀 gold-plated 기밀 피드스루. 유리-금속 봉착 문제를 구매로 해결. ₩20-30K.",
+    detail: "12핀 커스텀 Kovar/glass-bead 압축 헤더. 유리-금속 봉착 문제를 해결. Body OD 12.7mm.",
   },
   {
     id: "solgel",

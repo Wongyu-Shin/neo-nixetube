@@ -35,7 +35,7 @@ const ITEMS = [
     traditional: "유리-금속 수작업",
     icon: "📌",
     solutions: [
-      { label: "TO-8 헤더", temp: "구매", color: "#D4A853", source: "Semi", detail: "반도체 패키징용 14핀 기밀 헤더. DigiKey에서 ₩20K에 즉시 입수." },
+      { label: "TO-8 헤더", temp: "구매", color: "#D4A853", source: "Semi", detail: "커스텀 12핀 Kovar/glass-bead 기밀 헤더. Schott/NTK/eBay surplus ₩15-85K." },
       { label: "MIL-spec", temp: "구매", color: "#6BA368", source: "Space", detail: "우주/항공 기밀 커넥터. D-sub, circular 등 다양한 형태 조달 가능." },
     ],
   },

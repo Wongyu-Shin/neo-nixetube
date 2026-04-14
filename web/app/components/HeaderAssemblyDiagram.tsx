@@ -14,7 +14,7 @@ const PARTS: Part[] = [
   { id: "anode", label: "양극 메쉬", detail: "니켈 메쉬. 최전면 배치. 숫자 전극 앞에서 균일한 전계 형성.", color: "#D4A853" },
   { id: "cathode", label: "음극 (숫자 전극)", detail: "전해 니켈 포일에서 레이저/에칭으로 제작한 숫자 '8'. 0.5-1mm 간격으로 적층.", color: "#ef8f44" },
   { id: "spacer", label: "마이카 스페이서", detail: "운모(마이카) 시트로 전극 간 절연 + 간격 유지. 크로스토크 방전 방지.", color: "#B8A9C9" },
-  { id: "header", label: "TO-8 기밀 헤더", detail: "14핀 금도금 기밀 피드스루. 유리-금속 봉착 문제를 기성품으로 해결. ₩20-30K.", color: "#6BA368" },
+  { id: "header", label: "TO-8 기밀 헤더", detail: "12핀 커스텀 Kovar/glass-bead 압축 헤더. 유리-금속 봉착 해결. Body OD 12.7mm.", color: "#6BA368" },
   { id: "pin", label: "핀 (피드스루)", detail: "금도금 코바르 핀. 유리-금속 기밀 봉착 완료 상태로 납품. 각 숫자 전극에 1:1 연결.", color: "#C17B5E" },
 ];
 
@@ -153,7 +153,7 @@ export default function HeaderAssemblyDiagram() {
           <text x={210} y={254} fill="#6BA368" fontSize="8" fontWeight="bold" textAnchor="middle" opacity={0.8}>
             TO-8 기밀 헤더
           </text>
-          <text x={115} y={254} fill="#6BA368" fontSize="6" textAnchor="end" opacity={0.8}>14핀</text>
+          <text x={115} y={254} fill="#6BA368" fontSize="6" textAnchor="end" opacity={0.8}>12핀</text>
         </g>
 
         {/* === Pins === */}

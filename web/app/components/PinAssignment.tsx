@@ -81,7 +81,7 @@ export default function PinAssignment() {
 
         {/* ========== TITLE ========== */}
         <text x={svgW / 2} y={22} fill="#e8e8e8" fontSize="11" fontWeight="bold" textAnchor="middle">
-          TO-8 14핀 헤더 핀 배치도 — 전극을 기밀 헤더에 장착
+          커스텀 12핀 헤더 핀 배치도 — 전극을 기밀 헤더에 장착
         </text>
 
         {/* ========== TOP VIEW ========== */}
@@ -332,7 +332,7 @@ export default function PinAssignment() {
         </div>
       ) : (
         <figcaption className="text-center text-stone-500 text-xs mt-2">
-          핀을 호버하여 배정 및 결선 정보 확인. 14핀 TO-8 기밀 헤더 — 각 숫자 전극 1:1 연결.
+          핀을 호버하여 배정 및 결선 정보 확인. 12핀 커스텀 기밀 헤더 — 각 숫자 전극 1:1 연결.
         </figcaption>
       )}
     </figure>
