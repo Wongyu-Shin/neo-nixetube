@@ -20,12 +20,12 @@ const LAYERS = [
     detail: "모든 고무 중 가스 투과율 최저. 네온 투과율 ~10⁻¹⁰ CGS. 200°C 히트건으로 연화 후 밀착.",
   },
   {
-    id: "polysulfide",
-    label: "폴리설파이드 (2차 실링)",
+    id: "torrseal",
+    label: "Torr Seal (외층 가스 차단)",
     y: 104,
     h: 20,
     color: "#D4A853",
-    detail: "구조적 강도 제공 + 추가 가스 차단. 24시간 경화. 건축 IGU에서 40년 산업 검증.",
+    detail: "UHV급 에폭시(Varian 9530001). 투과도 ~1×10⁻¹⁵. 부틸 외부 노출면 3mm 비드. 24시간 경화.",
   },
   {
     id: "header",
@@ -41,7 +41,7 @@ const LAYERS = [
     y: 80,
     h: 44,
     color: "#C17B5E",
-    detail: "부틸+폴리설파이드 위에 TEOS 졸-겔 코팅 → 투과율 10-100x 감소. 수명 100일→1000일+.",
+    detail: "부틸+Torr Seal 위에 TEOS 졸-겔 SiO₂ 오버코팅(선택) → 광학적 클래리티 향상. 기밀에는 불필요(Torr Seal이 충분).",
   },
 ];
 
@@ -149,7 +149,7 @@ export default function SealingDiagram() {
         </div>
       ) : (
         <figcaption className="text-center text-stone-500 text-xs mt-2">
-          각 층을 호버하여 재료와 역할 확인 — 부틸(가스차단) + 폴리설파이드(구조강도) 2중 실링
+          각 층을 호버하여 재료와 역할 확인 — 부틸 내층(CTE 흡수 + 가스차단) + Torr Seal 외층(가스 차단) 복합 실링
         </figcaption>
       )}
     </figure>

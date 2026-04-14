@@ -4,9 +4,9 @@ import { useState, useEffect } from "react";
 
 const PARTS = [
   { id: "tank", label: "네온 가스 실린더", detail: "소형 네온 실린더 또는 네온사인 업체에서 충전. 레귤레이터로 0.5 L/min 조절.", color: "#6BA368" },
-  { id: "tube", label: "닉시관 (봉착 완료)", detail: "부틸+폴리설파이드로 봉착된 관. 내부에 전극 어셈블리. 상단 배기관과 하단 배출구.", color: "#7B9EB8" },
-  { id: "inlet", label: "입구 (배기관)", detail: "유리 돔 상단의 가는 유리 튜브 (OD 5mm). 네온 가스가 이 관을 통해 유입.", color: "#D4A853" },
-  { id: "outlet", label: "출구 (배출구)", detail: "봉착부 하단의 가는 구멍 또는 2번째 튜브. 공기가 밀려나오는 경로.", color: "#C17B5E" },
+  { id: "tube", label: "닉시관 (봉착 완료)", detail: "부틸+Torr Seal 복합 실링으로 봉착된 관. 내부에 전극 어셈블리. 하단 fill stem으로 가스 주입.", color: "#7B9EB8" },
+  { id: "inlet", label: "입구 (fill stem)", detail: "하단 엔드캡의 1/16\" (1.59mm) Cu 캐필러리 튜브. 네온 가스가 이 관을 통해 유입.", color: "#D4A853" },
+  { id: "outlet", label: "출구 (배출구)", detail: "봉착부의 가스 배출 경로. 플러싱 후 크림프+Torr Seal로 밀봉.", color: "#C17B5E" },
   { id: "sensor", label: "O₂ 센서", detail: "전기화학식 O₂ 센서 모듈. 배출구에 배치하여 잔존 산소 농도 실시간 모니터링. 목표: < 0.5%.", color: "#ef4444" },
   { id: "seal", label: "최종 밀봉", detail: "O₂ < 0.5% 확인 후 에폭시로 입구+출구 밀봉. 경화 후 가스 치환 완료.", color: "#B8A9C9" },
 ];

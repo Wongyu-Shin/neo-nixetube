@@ -36,12 +36,12 @@ const STEPS: Step[] = [
       "히트건 200°C를 부틸에 10-15초 → 연화 → 유리 돔을 올려놓고 균일 압착. 편심 주의.",
   },
   {
-    id: "polysulfide",
+    id: "torrseal",
     num: 4,
-    title: "폴리설파이드 도포",
+    title: "Torr Seal 도포",
     color: "#D4A853",
     detail:
-      "부틸 봉착부 외부에 폴리설파이드 실란트를 연속 비드로 도포. 끊김 없이 한 바퀴. 24시간 경화.",
+      "부틸 봉착부 외부 노출면에 Torr Seal UHV 에폭시를 3mm 연속 비드로 도포. 끊김 없이 한 바퀴. 24시간 경화.",
   },
   {
     id: "cured",
@@ -444,7 +444,7 @@ function StepIllustration({
             textAnchor="middle"
             opacity={0.8}
           >
-            폴리설파이드
+            Torr Seal
           </text>
           {/* Syringe / applicator */}
           {active && (
