@@ -22,7 +22,7 @@ legal HITL channel for autoresearch Goals, plus a Stop-hook transcript
 linter that flags any in-loop `AskUserQuestion` as a protocol
 violation.
 
-Complementary to `hyperagent-planner-routing` (outer, multi-agent):
+Complementary to `fpt-hyperagent-multirole` (outer, multi-agent):
 both cover the same user-charter invariant, but via opposite axis-1
 implementations. Keeping both catalogued preserves the option to run
 either on a per-Goal basis.

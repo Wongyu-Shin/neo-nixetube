@@ -39,9 +39,23 @@ emit() { echo "$1" >> "$LOG"; }
 # ---------------------------------------------------------------
 # C1 — no stale references to the renamed entry
 # ---------------------------------------------------------------
+# Exclusions:
+#  - crosscheck.sh — the checker itself inspects the string
+#  - fpt-hyperagent-multirole.md — the attribution-correction note
+#    legitimately quotes the old name to document the rename
+#  - reports with superseded_by/superseded_at frontmatter — historical
 stale=$(grep -rlnI 'hyperagent-planner-routing' \
     "$ROOT/harness" "$REPORTS_DIR" 2>/dev/null | \
-    grep -vE '/build/|\.log$' || true)
+    grep -vE '/build/|\.log$|crosscheck\.sh$|fpt-hyperagent-multirole\.md$' || true)
+# Additionally drop any report file that declares itself superseded.
+if [ -n "$stale" ]; then
+    stale=$(echo "$stale" | while read -r path; do
+        if [ -f "$path" ] && head -30 "$path" 2>/dev/null | grep -q '^superseded_at:'; then
+            continue
+        fi
+        echo "$path"
+    done)
+fi
 if [ -z "$stale" ]; then
     pass=$((pass + 1))
     emit "C1_PASS no stale hyperagent-planner-routing references"

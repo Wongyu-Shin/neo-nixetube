@@ -91,7 +91,7 @@ leak rate < 0.1/goal without scaffold.
 
 ## Contrast
 
-`hyperagent-planner-routing` achieves the same HITL-out-of-loop
+`fpt-hyperagent-multirole` achieves the same HITL-out-of-loop
 invariant via *multi-agent role partitioning* (outer). Plan-mode
 discipline achieves it via a *single-agent mode gate* (inner). Both
 cover the same user charter but live on opposite sides of axis1;

@@ -12,10 +12,10 @@ grep -qi "AskUserQuestion" "$NOTE" || { echo "TC_FAIL plan-mode-discipline: miss
 grep -qi "pre-loop" "$NOTE" || { echo "TC_FAIL plan-mode-discipline: missing pre-loop mapping"; exit 1; }
 grep -qi "inner" "$NOTE" || { echo "TC_FAIL plan-mode-discipline: missing inner-harness anchor"; exit 1; }
 
-# Must establish contrast with hyperagent-planner-routing to justify
+# Must establish contrast with fpt-hyperagent-multirole to justify
 # existence as a separate catalog entry.
-grep -qi "hyperagent\|planner-routing\|multi-agent" "$NOTE" \
-    || { echo "TC_FAIL plan-mode-discipline: missing contrast with hyperagent"; exit 1; }
+grep -qi "fpt-hyperagent\|hyperagent-multirole\|multi-agent" "$NOTE" \
+    || { echo "TC_FAIL plan-mode-discipline: missing contrast with fpt-hyperagent"; exit 1; }
 
 # Rippable probe must define a measurable leak rate threshold.
 grep -qE "leak rate|HITL leak|N=5|0\.1/goal|0/goal" "$NOTE" \
