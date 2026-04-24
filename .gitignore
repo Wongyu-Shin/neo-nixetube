@@ -27,3 +27,11 @@ cad/*/autoresearch-*.tsv
 
 # autoresearch harness loop build artifacts
 harness/build/
+autoresearch-harness-results.tsv
+autoresearch-harness-crosscheck-results.tsv
+autoresearch-harness-gcli-results.tsv
+autoresearch-harness-ux-results.tsv
+loops/docs-*/results.tsv
+loops/docs-*/iter*
+loops/docs-*/tmux.out.log
+loops/docs-*/thresholds.txt
