@@ -4,6 +4,7 @@
 - OpenHands *Pause and Resume* + *Send Message While Running* +
   *Persistence / Resume Conversations*.
   https://docs.openhands.dev/sdk/guides/convo-pause-and-resume.md
+  (repo: https://github.com/All-Hands-AI/OpenHands)
 - Claude Code session-resume convention (existing transcripts).
 - Unix `SIGSTOP` / `SIGCONT` — process-level precedent the UX maps onto.
 
