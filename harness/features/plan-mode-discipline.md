@@ -33,3 +33,4 @@ rules, the leak-rate probe, and the transcript-linter contract.
 ## Referenced by
 
 - `harness-constitution`
+- `harness-loop-scaffold`

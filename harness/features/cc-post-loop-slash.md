@@ -34,3 +34,4 @@ the artifact-citation invariant, and the probe against CC-native
 ## Referenced by
 
 - `gcli-agent-run-telemetry`
+- `harness-loop-scaffold`
