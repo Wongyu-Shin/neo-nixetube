@@ -39,7 +39,9 @@ harness/wiki/
 ├── cad-path-2-room-temp.md       ← trigger: [nixie, cad, path-2, seal]
 ├── paschen-curve-fitting.md      ← trigger: [paschen, glow, simulation]
 ├── ratchet-anchor-discipline.md  ← trigger: [ratchet, anchor, noise]
-├── hyperagents-vocabulary.md     ← trigger: [hyperagent, DGM, metacog]
+├── hyperagents-vocabulary.md     ← trigger: [hyperagent, DGM, metacog, meta-hyperagents, fpt-hyperagent]
+│                                 (wiki entry covers BOTH Meta HyperAgents — Zhang 2026, arXiv:2603.19461 —
+│                                  AND FPT HyperAgent — Phan 2024, arXiv:2409.16299 — disambiguating each)
 ├── autoresearch-loop-vocabulary.md ← trigger: [autoresearch, verify, guard]
 ```
 
