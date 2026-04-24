@@ -2,7 +2,7 @@
 # TC for feature: adas-meta-agent-search
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-NOTE="$ROOT/harness/research/adas.md"
+NOTE="$ROOT/harness/research/adas-meta-agent-search.md"
 
 [ -f "$NOTE" ] || { echo "TC_FAIL adas: missing research note"; exit 1; }
 grep -q "arxiv.org/abs/2408.08435" "$NOTE" || { echo "TC_FAIL adas: missing primary citation"; exit 1; }

@@ -2,7 +2,7 @@
 # TC for feature: voyager-skill-library
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-NOTE="$ROOT/harness/research/voyager.md"
+NOTE="$ROOT/harness/research/voyager-skill-library.md"
 
 [ -f "$NOTE" ] || { echo "TC_FAIL voyager: missing research note"; exit 1; }
 grep -q "arxiv.org/abs/2305.16291" "$NOTE" || { echo "TC_FAIL voyager: missing primary citation"; exit 1; }

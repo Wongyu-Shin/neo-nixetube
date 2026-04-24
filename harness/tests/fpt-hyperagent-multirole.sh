@@ -2,7 +2,7 @@
 # TC for feature: fpt-hyperagent-multirole
 set -euo pipefail
 ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
-NOTE="$ROOT/harness/research/fpt-hyperagent.md"
+NOTE="$ROOT/harness/research/fpt-hyperagent-multirole.md"
 
 [ -f "$NOTE" ] || { echo "TC_FAIL fpt-hyperagent: missing research note"; exit 1; }
 grep -q "arxiv.org/abs/2409.16299" "$NOTE" || { echo "TC_FAIL fpt-hyperagent: missing primary citation"; exit 1; }
