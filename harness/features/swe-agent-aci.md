@@ -31,3 +31,4 @@ and the neo-nixetube implementation checklist.
 
 - `cc-hook-guardrail`
 - `fpt-hyperagent-multirole`
+- `harness-constitution`

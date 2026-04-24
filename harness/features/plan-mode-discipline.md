@@ -29,3 +29,7 @@ either on a per-Goal basis.
 
 See `harness/research/plan-mode-discipline.md` for the three discipline
 rules, the leak-rate probe, and the transcript-linter contract.
+
+## Referenced by
+
+- `harness-constitution`

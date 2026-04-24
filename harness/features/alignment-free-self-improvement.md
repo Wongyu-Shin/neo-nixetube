@@ -33,3 +33,7 @@ Neither subsumes the other.
 See `harness/research/alignment-free-self-improvement.md` for the
 three discipline rules, the `harness/SCOPE.md` implementation, and
 the cross-domain straddle probe.
+
+## Referenced by
+
+- `harness-constitution`
