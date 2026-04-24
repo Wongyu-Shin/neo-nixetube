@@ -37,3 +37,7 @@ substrate for the other observability-adjacent entries.
 See `harness/research/gcli-agent-run-telemetry.md` for the event
 schema, the 5-feature non-overlap table, and the OTel AI semantic
 conventions link.
+
+## Referenced by
+
+- `harness-pause-resume`

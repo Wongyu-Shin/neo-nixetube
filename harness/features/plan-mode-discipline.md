@@ -35,3 +35,4 @@ rules, the leak-rate probe, and the transcript-linter contract.
 - `harness-constitution`
 - `harness-loop-scaffold`
 - `harness-clarify-gate`
+- `harness-pause-resume`

@@ -36,3 +36,7 @@ if this rips, that one loses its evolutionary base.
 See `harness/research/dgm-h-archive-parent-selection.md` for the
 quoted §3 mechanism, the full comparison table vs. Voyager, and the
 two-local-optima fixture that drives the rippable probe.
+
+## Referenced by
+
+- `harness-pause-resume`
