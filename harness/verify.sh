@@ -12,7 +12,7 @@
 # Parallelism: tc_scripts are invoked concurrently (xargs -P) so that
 # slow TCs (web fetches, statistical sampling) don't serialize the loop.
 
-set -uo pipefail
+set -o pipefail
 
 PROJECT_ROOT="$(cd "$(dirname "$0")/.." && pwd)"
 FEATURES_DIR="$PROJECT_ROOT/harness/features"
@@ -32,10 +32,12 @@ if [ ! -d "$FEATURES_DIR" ] || [ -z "$(ls -A "$FEATURES_DIR" 2>/dev/null)" ]; th
     exit 0
 fi
 
-# Collect entries that passed guard.
-mapfile -t ok_entries < <(grep '^GUARD_OK ' "$guard_log" | awk '{print $2}')
+# Collect entries that passed guard (bash 3.2 compatible — no mapfile).
+ok_list="$BUILD_DIR/ok-entries.txt"
+grep '^GUARD_OK ' "$guard_log" | awk '{print $2}' > "$ok_list" || true
+ok_count=$(wc -l < "$ok_list" | tr -d ' ')
 
-if [ "${#ok_entries[@]}" -eq 0 ]; then
+if [ "$ok_count" -eq 0 ]; then
     total=$(ls "$FEATURES_DIR"/*.md 2>/dev/null | wc -l | tr -d ' ')
     echo "SCORE=0"
     echo "DETAIL total=$total schema_ok=0 tc_pass=0"
@@ -61,13 +63,14 @@ export -f run_tc
 export PROJECT_ROOT FEATURES_DIR BUILD_DIR
 
 tc_log="$BUILD_DIR/tc.log"
-printf '%s\n' "${ok_entries[@]}" \
-    | xargs -n1 -P "$PARALLELISM" -I{} bash -c 'run_tc "$@"' _ {} \
-    >"$tc_log" 2>&1
+xargs -n1 -P "$PARALLELISM" -I{} bash -c 'run_tc "$@"' _ {} \
+    < "$ok_list" \
+    > "$tc_log" 2>&1
 
-tc_pass=$(grep -c '^TC_PASS ' "$tc_log" || true)
+tc_pass=$(grep -c '^TC_PASS ' "$tc_log" 2>/dev/null | tr -d ' ')
+[ -z "$tc_pass" ] && tc_pass=0
 total=$(ls "$FEATURES_DIR"/*.md 2>/dev/null | wc -l | tr -d ' ')
-schema_ok=${#ok_entries[@]}
+schema_ok="$ok_count"
 
 echo "SCORE=$tc_pass"
 echo "DETAIL total=$total schema_ok=$schema_ok tc_pass=$tc_pass"
