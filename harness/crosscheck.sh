@@ -250,12 +250,21 @@ fi
 # ---------------------------------------------------------------
 c11_fail=0
 for f in "$RESEARCH_DIR"/*.md; do
-    # If the note has a "Primary source:" line, it must include http(s)://.
+    # Every "Primary source:" line must resolve to either (a) an http(s)
+    # URL on the line or the next 3 wrap-lines, or (b) a repo-local
+    # path that actually exists. Otherwise the citation is unverifiable.
     if grep -qE '^\*\*Primary source:\*\*' "$f"; then
-        if ! grep -E '^\*\*Primary source:\*\*' "$f" | grep -qE 'https?://'; then
-            emit "C11_FAIL $f Primary source line lacks http(s):// URL"
-            c11_fail=$((c11_fail + 1))
+        context=$(awk '/^\*\*Primary source:\*\*/{flag=1; n=0} flag{print; n++; if(n>=4) flag=0}' "$f")
+        if echo "$context" | grep -qE 'https?://'; then
+            continue
         fi
+        # Try to find a repo-local path (things like scripts/… or harness/…).
+        path=$(echo "$context" | grep -oE '`[^`]+`' | head -1 | tr -d '`' || true)
+        if [ -n "$path" ] && [ -e "$ROOT/$path" ]; then
+            continue
+        fi
+        emit "C11_FAIL $f Primary source neither URL nor resolvable repo path"
+        c11_fail=$((c11_fail + 1))
     fi
 done
 if [ "$c11_fail" -eq 0 ]; then
