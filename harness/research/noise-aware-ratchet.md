@@ -1,8 +1,9 @@
 # Noise-Aware Ratchet (Monotonic-MAX Anchor)
 
 **Primary source:** Chen, R.Y. et al. *Ranking and Selection under Uncertainty:
-a Unified Approach.* Operations Research, 2016. arXiv:1601.07077 — the
-"most-promising-best-so-far" selection rule that the ratchet implements.
+a Unified Approach.* Operations Research, 2016.
+https://arxiv.org/abs/1601.07077 — the "most-promising-best-so-far"
+selection rule that the ratchet implements.
 
 **Related references:**
 - Henderson, P. et al. *Deep Reinforcement Learning That Matters.* AAAI 2018.
