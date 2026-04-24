@@ -36,3 +36,4 @@ rippable signal (ratchet monotonicity over N iterations) differs.
 - `noise-aware-ratchet`
 - `gcli-eval-compare-primitive`
 - `gcli-agent-run-telemetry`
+- `harness-progress-cadence`

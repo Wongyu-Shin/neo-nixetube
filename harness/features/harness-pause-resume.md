@@ -37,3 +37,4 @@ argument.
 ## Referenced by
 
 - `harness-graduated-confirm`
+- `harness-progress-cadence`
