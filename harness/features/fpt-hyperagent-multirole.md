@@ -35,3 +35,7 @@ Complements `swe-agent-aci` (single-agent ACI tuning), `plan-mode-
 discipline` (single-agent HITL gate), and `voyager-skill-library`
 (cross-goal knowledge reuse). All three converge on the same user
 charter via different axis-1/axis-2 combinations.
+
+## Referenced by
+
+- `plan-mode-discipline`

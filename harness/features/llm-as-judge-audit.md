@@ -28,3 +28,9 @@ count, explicit rubric checklist, and ratchet-MAX rather than raw score.
 Post-loop primary. A separate `llm-as-judge-ratchet` (in-loop) feature
 may reuse the same judge prompt but is tracked independently because its
 rippable signal (ratchet monotonicity over N iterations) differs.
+
+## Referenced by
+
+- `cc-post-loop-slash`
+- `cross-domain-transfer-metric`
+- `noise-aware-ratchet`

@@ -32,3 +32,8 @@ therefore its own TC.
 
 See `harness/research/adas.md` for the Hu 2024 benchmark numbers and the
 concrete `scripts/harness/{propose,novelty}` implementation sketch.
+
+## Referenced by
+
+- `dgm-h-archive-parent-selection`
+- `meta-hyperagents-metacognitive`

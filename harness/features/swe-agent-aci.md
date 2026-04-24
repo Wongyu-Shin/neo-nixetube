@@ -26,3 +26,8 @@ ACI: once the defaults catch up, the custom curation is dead weight.
 
 See `harness/research/swe-agent-aci.md` for the Yang 2024 ablation numbers
 and the neo-nixetube implementation checklist.
+
+## Referenced by
+
+- `cc-hook-guardrail`
+- `fpt-hyperagent-multirole`

@@ -37,3 +37,7 @@ catalog entry keeps the dependency explicit.
 
 See `harness/research/statistical-tc-runner.md` for the decision-rule
 schema and the cache/short-circuit protocol.
+
+## Referenced by
+
+- `harness-rip-test`

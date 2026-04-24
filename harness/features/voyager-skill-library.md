@@ -25,3 +25,8 @@ recall), so the two are tracked as separate features.
 
 See `harness/research/voyager.md` for the full curriculum + skill-store
 protocol and the open question of cross-Goal skill transfer.
+
+## Referenced by
+
+- `dgm-h-archive-parent-selection`
+- `fpt-hyperagent-multirole`

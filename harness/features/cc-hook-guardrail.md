@@ -30,3 +30,7 @@ this feature shapes what tool *calls* are refused at runtime.
 
 See `harness/research/cc-hook-guardrail.md` for the full use-case survey
 and the `scripts/hooks/` implementation sketch.
+
+## Referenced by
+
+- `sandboxed-open-ended-exploration`

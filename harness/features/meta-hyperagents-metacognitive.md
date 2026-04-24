@@ -39,3 +39,7 @@ architecture, name prefix is the only overlap).
 See `harness/research/meta-hyperagents-metacognitive.md` for the
 system-vs-system comparison table, the quoted abstract, and the two-
 phase rippable probe.
+
+## Referenced by
+
+- `dgm-h-archive-parent-selection`
