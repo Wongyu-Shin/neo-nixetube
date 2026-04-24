@@ -42,3 +42,4 @@ conventions link.
 
 - `harness-pause-resume`
 - `harness-graduated-confirm`
+- `harness-llm-wiki`

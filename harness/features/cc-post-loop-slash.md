@@ -35,3 +35,4 @@ the artifact-citation invariant, and the probe against CC-native
 
 - `gcli-agent-run-telemetry`
 - `harness-loop-scaffold`
+- `harness-llm-wiki`

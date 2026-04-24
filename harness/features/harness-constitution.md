@@ -35,3 +35,4 @@ probe.
 ## Referenced by
 
 - `harness-clarify-gate`
+- `harness-llm-wiki`
