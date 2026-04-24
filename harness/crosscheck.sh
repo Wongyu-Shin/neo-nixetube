@@ -183,7 +183,7 @@ fi
 # C8 — SCHEMA.md field list matches guard.sh enforced list
 # ---------------------------------------------------------------
 schema_fields=$(awk '/^```yaml/,/^```$/' "$ROOT/harness/SCHEMA.md" | \
-    grep -oE '^[a-z_]+:' | sort -u | tr -d ':' | tr '\n' ' ')
+    grep -oE '^[a-z_][a-z0-9_]*:' | sort -u | tr -d ':' | tr '\n' ' ')
 guard_fields=$(grep -oE 'REQUIRED_FIELDS=\([^)]+\)' "$ROOT/harness/guard.sh" | \
     tr -d '()' | sed 's/REQUIRED_FIELDS=//' | tr ' ' '\n' | sort -u | tr '\n' ' ')
 if [ -n "$schema_fields" ] && [ -n "$guard_fields" ]; then
