@@ -1,0 +1,657 @@
+"use client";
+
+import { useState, useMemo } from "react";
+
+type ArticleId =
+  | "I"
+  | "II"
+  | "III"
+  | "IV"
+  | "V"
+  | "VI"
+  | "VII"
+  | "VIII"
+  | "IX";
+
+type Domain = "classify" | "mechanism" | "boundary" | "process" | "memory";
+
+interface Article {
+  id: ArticleId;
+  roman: string;
+  title: string;
+  oneLine: string;
+  must: string[];
+  domain: Domain;
+  features: string[];
+  pos: { x: number; y: number };
+  color: string;
+}
+
+const CX = 400;
+const CY = 400;
+const R = 270;
+const NODE_R = 58;
+
+const ARTICLES: Article[] = [
+  {
+    id: "I",
+    roman: "I",
+    title: "Axis Classification",
+    oneLine: "Every feature declares axis1 (inner|outer) × axis2 (pre|in|post-loop).",
+    must: [
+      "axis1 ∈ {inner, outer} — the rippability boundary",
+      "axis2 ∈ {pre-loop, in-loop, post-loop} — the HITL boundary",
+      "exactly one primary axis2, secondaries allowed as fractal links",
+    ],
+    domain: "classify",
+    features: ["harness-loop-scaffold", "adas-meta-agent-search"],
+    pos: { x: CX, y: CY - R },
+    color: "#B8A9C9",
+  },
+  {
+    id: "II",
+    roman: "II",
+    title: "Rippability",
+    oneLine: "Every feature carries a tc_script + rippable_check + applicability.",
+    must: [
+      "rippable_check frontmatter — empirical absorption signal",
+      "tc_script passes when still needed, fails when absorbed",
+      "applicability block declares CC semver + model list",
+    ],
+    domain: "mechanism",
+    features: ["harness-rip-test", "statistical-tc-runner"],
+    pos: { x: CX + R * Math.sin(Math.PI / 4), y: CY - R * Math.cos(Math.PI / 4) },
+    color: "#FF8C42",
+  },
+  {
+    id: "III",
+    roman: "III",
+    title: "HITL Belongs Outside the Loop",
+    oneLine: "No AskUserQuestion in-loop. Pre-loop / post-loop only.",
+    must: [
+      "pre-loop — goal design, clarify, plan approval (active HITL allowed)",
+      "post-loop — result handback, rubric audit (active HITL allowed)",
+      "in-loop — forbidden, except graduated confirm + Ctrl+C",
+    ],
+    domain: "boundary",
+    features: ["harness-graduated-confirm", "cc-hook-guardrail", "plan-mode-discipline"],
+    pos: { x: CX + R, y: CY },
+    color: "#7B9EB8",
+  },
+  {
+    id: "IV",
+    roman: "IV",
+    title: "Alignment-Free Separation",
+    oneLine: "Eval skill ≠ harness-modification skill. Scope lives in exactly one domain.",
+    must: [
+      "harness domain = {harness/, scripts/harness/, .claude/}",
+      "content domain = everything else (cad/, sim/, reason/, …)",
+      "one loop Scope: crosses neither",
+    ],
+    domain: "boundary",
+    features: [
+      "alignment-free-self-improvement",
+      "cross-domain-transfer-metric",
+      "dgm-h-archive-parent-selection",
+    ],
+    pos: { x: CX + R * Math.sin(Math.PI / 4), y: CY + R * Math.cos(Math.PI / 4) },
+    color: "#7B9EB8",
+  },
+  {
+    id: "V",
+    roman: "V",
+    title: "Explicit Clarification",
+    oneLine: "Loop spec MUST have a Clarifications section before in-loop.",
+    must: [
+      "every wizard question + operator answer recorded",
+      "implicit assumptions flagged [ASSUMPTION]",
+      "gate enforced by harness-clarify-gate",
+    ],
+    domain: "process",
+    features: ["harness-clarify-gate"],
+    pos: { x: CX, y: CY + R },
+    color: "#6BA368",
+  },
+  {
+    id: "VI",
+    roman: "VI",
+    title: "No Contradiction",
+    oneLine: "Every iter runs composite-guard: schema + crosscheck = 11/11.",
+    must: [
+      "harness/composite-guard.sh enforces both guards",
+      "asymmetric cross-ref / broken disambig / shrunk triad = auto-revert",
+      "Guard runs before Verify",
+    ],
+    domain: "mechanism",
+    features: ["statistical-tc-runner", "llm-as-judge-audit"],
+    pos: { x: CX - R * Math.sin(Math.PI / 4), y: CY + R * Math.cos(Math.PI / 4) },
+    color: "#FF8C42",
+  },
+  {
+    id: "VII",
+    roman: "VII",
+    title: "LLM-Wiki Persistence",
+    oneLine: "Cross-loop knowledge lives in harness/wiki/<slug>.md — nowhere else.",
+    must: [
+      "ephemeral outputs → harness/build/ (gitignored)",
+      "user-scoped memories → CC memory dir",
+      "project + cross-loop + committable → wiki only",
+    ],
+    domain: "memory",
+    features: ["harness-llm-wiki", "voyager-skill-library", "reflexion"],
+    pos: { x: CX - R, y: CY },
+    color: "#D4A853",
+  },
+  {
+    id: "VIII",
+    roman: "VIII",
+    title: "Git Is Memory",
+    oneLine: "Commit BEFORE Verify. git revert on discard — never reset --hard.",
+    must: [
+      "experiment(<scope>): <desc> commit before Verify",
+      "discard via git revert — keep discarded candidate in history",
+      "per-loop TSV row appended each iter",
+    ],
+    domain: "memory",
+    features: ["harness-loop-scaffold", "harness-progress-cadence"],
+    pos: { x: CX - R * Math.sin(Math.PI / 4), y: CY - R * Math.cos(Math.PI / 4) },
+    color: "#D4A853",
+  },
+  {
+    id: "IX",
+    roman: "IX",
+    title: "Amendment Procedure",
+    oneLine: "This Constitution can only be changed via the procedure it describes.",
+    must: [
+      "a loop whose Scope: is this file alone",
+      "spec states which Article changes + why",
+      "[RATIFIED] marker by operator in Clarifications",
+      "post-merge re-audit of every feature's applicability",
+    ],
+    domain: "process",
+    features: ["harness-constitution", "plan-mode-discipline"],
+    pos: { x: CX, y: CY },
+    color: "#6BA368",
+  },
+];
+
+// Dependency arcs — observable cross-references within CONSTITUTION.md
+const ARCS: Array<{ from: ArticleId; to: ArticleId; kind: "cites" | "governs" | "enforces" }> = [
+  { from: "V", to: "VI", kind: "enforces" },
+  { from: "VI", to: "VIII", kind: "enforces" },
+  { from: "VII", to: "VIII", kind: "cites" },
+  { from: "III", to: "V", kind: "cites" },
+  { from: "I", to: "III", kind: "cites" },
+  { from: "I", to: "II", kind: "cites" },
+  { from: "II", to: "VI", kind: "enforces" },
+  { from: "IV", to: "I", kind: "cites" },
+  { from: "IX", to: "I", kind: "governs" },
+  { from: "IX", to: "II", kind: "governs" },
+  { from: "IX", to: "III", kind: "governs" },
+  { from: "IX", to: "IV", kind: "governs" },
+  { from: "IX", to: "V", kind: "governs" },
+  { from: "IX", to: "VI", kind: "governs" },
+  { from: "IX", to: "VII", kind: "governs" },
+  { from: "IX", to: "VIII", kind: "governs" },
+];
+
+const DOMAIN_LABEL: Record<Domain, string> = {
+  classify: "Classification",
+  mechanism: "Mechanism",
+  boundary: "Boundary",
+  process: "Process",
+  memory: "Memory",
+};
+
+const ARC_STROKE: Record<typeof ARCS[number]["kind"], string> = {
+  cites: "#7B9EB8",
+  enforces: "#FF8C42",
+  governs: "#6BA368",
+};
+
+function arcPath(a: { x: number; y: number }, b: { x: number; y: number }, bend = 0.18) {
+  const mx = (a.x + b.x) / 2;
+  const my = (a.y + b.y) / 2;
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const nx = -dy;
+  const ny = dx;
+  const len = Math.hypot(nx, ny) || 1;
+  const cx = mx + (nx / len) * bend * Math.hypot(dx, dy);
+  const cy = my + (ny / len) * bend * Math.hypot(dx, dy);
+  return `M ${a.x},${a.y} Q ${cx},${cy} ${b.x},${b.y}`;
+}
+
+export default function ConstitutionArticlesMap() {
+  const [hoveredId, setHoveredId] = useState<ArticleId | null>(null);
+  const [pinnedId, setPinnedId] = useState<ArticleId | null>(null);
+
+  const activeId = hoveredId ?? pinnedId;
+  const active = useMemo(
+    () => ARTICLES.find((a) => a.id === activeId) ?? null,
+    [activeId],
+  );
+
+  const relatedIds = useMemo(() => {
+    if (!activeId) return new Set<ArticleId>();
+    const s = new Set<ArticleId>();
+    for (const arc of ARCS) {
+      if (arc.from === activeId) s.add(arc.to);
+      if (arc.to === activeId) s.add(arc.from);
+    }
+    return s;
+  }, [activeId]);
+
+  const getNodeOpacity = (id: ArticleId) => {
+    if (!activeId) return 1;
+    if (id === activeId) return 1;
+    if (relatedIds.has(id)) return 0.85;
+    return 0.25;
+  };
+
+  const getArcOpacity = (from: ArticleId, to: ArticleId) => {
+    if (!activeId) return 0.35;
+    if (from === activeId || to === activeId) return 0.9;
+    return 0.08;
+  };
+
+  return (
+    <figure className="my-10">
+      <div className="grid lg:grid-cols-[1.3fr_1fr] gap-6 items-start">
+        {/* ═════════════════ SVG map ═════════════════ */}
+        <div className="rounded-2xl bg-[#0e0a06] border border-[#D4A853]/15 p-2">
+          <svg
+            viewBox="0 0 800 820"
+            className="w-full"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-label="Harness Constitution — 9 Articles interactive map"
+            role="img"
+          >
+            <defs>
+              <radialGradient id="cmap-bg" cx="50%" cy="50%" r="60%">
+                <stop offset="0%" stopColor="#1a130a" />
+                <stop offset="100%" stopColor="#0a0705" />
+              </radialGradient>
+              <radialGradient id="cmap-ix-core" cx="50%" cy="50%" r="50%">
+                <stop offset="0%" stopColor="#FFDCB8" stopOpacity="0.35" />
+                <stop offset="55%" stopColor="#FF8C42" stopOpacity="0.12" />
+                <stop offset="100%" stopColor="#FF4500" stopOpacity="0" />
+              </radialGradient>
+              <linearGradient id="cmap-ring" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stopColor="#D4A853" stopOpacity="0.25" />
+                <stop offset="50%" stopColor="#7B9EB8" stopOpacity="0.18" />
+                <stop offset="100%" stopColor="#6BA368" stopOpacity="0.25" />
+              </linearGradient>
+              <filter id="cmap-glow" x="-40%" y="-40%" width="180%" height="180%">
+                <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="b1" />
+                <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="b2" />
+                <feMerge>
+                  <feMergeNode in="b2" />
+                  <feMergeNode in="b1" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <filter id="cmap-shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feGaussianBlur in="SourceAlpha" stdDeviation="2" />
+                <feOffset dx="0" dy="2" result="o" />
+                <feMerge>
+                  <feMergeNode in="o" />
+                  <feMergeNode in="SourceGraphic" />
+                </feMerge>
+              </filter>
+              <marker
+                id="cmap-arrow"
+                viewBox="0 0 10 10"
+                refX="9"
+                refY="5"
+                markerWidth="6"
+                markerHeight="6"
+                orient="auto-start-reverse"
+              >
+                <path d="M 0 0 L 10 5 L 0 10 z" fill="#D4A853" opacity="0.7" />
+              </marker>
+            </defs>
+
+            {/* Background */}
+            <rect width="800" height="820" fill="url(#cmap-bg)" rx="16" />
+
+            {/* Outer title strip */}
+            <text
+              x="400"
+              y="34"
+              textAnchor="middle"
+              fontFamily="ui-monospace, SFMono-Regular, monospace"
+              fontSize="13"
+              fill="#D4A853"
+              opacity="0.6"
+              letterSpacing="4"
+            >
+              HARNESS / CONSTITUTION.md — 9 ARTICLES
+            </text>
+
+            {/* Guide ring */}
+            <circle
+              cx={CX}
+              cy={CY}
+              r={R}
+              fill="none"
+              stroke="url(#cmap-ring)"
+              strokeWidth="1.2"
+              strokeDasharray="2 6"
+              opacity="0.7"
+            />
+            <circle
+              cx={CX}
+              cy={CY}
+              r={R + 36}
+              fill="none"
+              stroke="#D4A853"
+              strokeWidth="0.4"
+              opacity="0.2"
+            />
+
+            {/* Central IX glow */}
+            <circle cx={CX} cy={CY} r="150" fill="url(#cmap-ix-core)" />
+
+            {/* ═══ Dependency arcs ═══ */}
+            <g strokeWidth="1.4" fill="none">
+              {ARCS.map((arc, idx) => {
+                const from = ARTICLES.find((a) => a.id === arc.from)!;
+                const to = ARTICLES.find((a) => a.id === arc.to)!;
+                const bend = arc.kind === "governs" ? 0.02 : 0.22;
+                return (
+                  <path
+                    key={`arc-${idx}`}
+                    d={arcPath(from.pos, to.pos, bend)}
+                    stroke={ARC_STROKE[arc.kind]}
+                    strokeDasharray={arc.kind === "governs" ? "3 4" : "none"}
+                    opacity={getArcOpacity(arc.from, arc.to)}
+                    style={{ transition: "opacity 0.25s" }}
+                  />
+                );
+              })}
+            </g>
+
+            {/* ═══ Article nodes ═══ */}
+            {ARTICLES.map((art) => {
+              const isActive = art.id === activeId;
+              const isCenter = art.id === "IX";
+              const r = isCenter ? 82 : NODE_R;
+              return (
+                <g
+                  key={art.id}
+                  onMouseEnter={() => setHoveredId(art.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                  onClick={() =>
+                    setPinnedId((prev) => (prev === art.id ? null : art.id))
+                  }
+                  style={{
+                    cursor: "pointer",
+                    transition: "opacity 0.25s",
+                  }}
+                  opacity={getNodeOpacity(art.id)}
+                >
+                  {/* Outer halo on active */}
+                  {isActive && (
+                    <circle
+                      cx={art.pos.x}
+                      cy={art.pos.y}
+                      r={r + 10}
+                      fill="none"
+                      stroke={art.color}
+                      strokeWidth="1.5"
+                      opacity="0.55"
+                      filter="url(#cmap-glow)"
+                    />
+                  )}
+                  {/* Pinned ring */}
+                  {pinnedId === art.id && (
+                    <circle
+                      cx={art.pos.x}
+                      cy={art.pos.y}
+                      r={r + 16}
+                      fill="none"
+                      stroke={art.color}
+                      strokeWidth="0.8"
+                      strokeDasharray="2 3"
+                      opacity="0.8"
+                    />
+                  )}
+                  {/* Body */}
+                  <circle
+                    cx={art.pos.x}
+                    cy={art.pos.y}
+                    r={r}
+                    fill="#15100a"
+                    stroke={art.color}
+                    strokeWidth={isActive ? 2.5 : 1.4}
+                    filter="url(#cmap-shadow)"
+                  />
+                  {/* Inner accent */}
+                  <circle
+                    cx={art.pos.x}
+                    cy={art.pos.y}
+                    r={r - 6}
+                    fill="none"
+                    stroke={art.color}
+                    strokeWidth="0.5"
+                    opacity="0.5"
+                  />
+                  {/* Roman numeral */}
+                  <text
+                    x={art.pos.x}
+                    y={art.pos.y - (isCenter ? 12 : 6)}
+                    textAnchor="middle"
+                    fontFamily="ui-serif, Georgia, serif"
+                    fontSize={isCenter ? 40 : 28}
+                    fontWeight="600"
+                    fill={art.color}
+                    opacity="0.95"
+                  >
+                    {art.roman}
+                  </text>
+                  {/* Title snippet */}
+                  <text
+                    x={art.pos.x}
+                    y={art.pos.y + (isCenter ? 18 : 16)}
+                    textAnchor="middle"
+                    fontFamily="ui-sans-serif, system-ui, sans-serif"
+                    fontSize={isCenter ? 11 : 9}
+                    fontWeight="500"
+                    fill="#e8dbc2"
+                    opacity="0.82"
+                  >
+                    {art.title.split(" ").slice(0, isCenter ? 2 : 2).join(" ")}
+                  </text>
+                  {!isCenter && art.title.split(" ").length > 2 && (
+                    <text
+                      x={art.pos.x}
+                      y={art.pos.y + 28}
+                      textAnchor="middle"
+                      fontFamily="ui-sans-serif, system-ui, sans-serif"
+                      fontSize="9"
+                      fill="#e8dbc2"
+                      opacity="0.62"
+                    >
+                      {art.title.split(" ").slice(2).join(" ")}
+                    </text>
+                  )}
+                  {/* Domain pill */}
+                  {!isCenter && (
+                    <text
+                      x={art.pos.x}
+                      y={art.pos.y + 44}
+                      textAnchor="middle"
+                      fontFamily="ui-monospace, SFMono-Regular, monospace"
+                      fontSize="7"
+                      fill={art.color}
+                      opacity="0.6"
+                      letterSpacing="1"
+                    >
+                      {DOMAIN_LABEL[art.domain].toUpperCase()}
+                    </text>
+                  )}
+                </g>
+              );
+            })}
+
+            {/* ═══ Legend ═══ */}
+            <g transform="translate(24, 740)" fontFamily="ui-monospace, monospace" fontSize="10">
+              <text fill="#D4A853" opacity="0.7" y="0" letterSpacing="2">
+                ARCS
+              </text>
+              <g transform="translate(0, 14)">
+                <line x1="0" y1="6" x2="30" y2="6" stroke="#6BA368" strokeWidth="1.4" strokeDasharray="3 4" />
+                <text x="40" y="9" fill="#e8dbc2" opacity="0.75">governs (IX → *)</text>
+              </g>
+              <g transform="translate(0, 30)">
+                <line x1="0" y1="6" x2="30" y2="6" stroke="#FF8C42" strokeWidth="1.4" />
+                <text x="40" y="9" fill="#e8dbc2" opacity="0.75">enforces</text>
+              </g>
+              <g transform="translate(0, 46)">
+                <line x1="0" y1="6" x2="30" y2="6" stroke="#7B9EB8" strokeWidth="1.4" />
+                <text x="40" y="9" fill="#e8dbc2" opacity="0.75">cites</text>
+              </g>
+            </g>
+
+            <g
+              transform="translate(620, 740)"
+              fontFamily="ui-monospace, monospace"
+              fontSize="10"
+            >
+              <text fill="#D4A853" opacity="0.7" y="0" letterSpacing="2">
+                LEGEND
+              </text>
+              <text x="0" y="16" fill="#e8dbc2" opacity="0.6">
+                hover: highlight
+              </text>
+              <text x="0" y="32" fill="#e8dbc2" opacity="0.6">
+                click: pin / unpin
+              </text>
+              <text x="0" y="48" fill="#e8dbc2" opacity="0.6">
+                center: IX governs all
+              </text>
+            </g>
+          </svg>
+        </div>
+
+        {/* ═════════════════ Detail panel ═════════════════ */}
+        <aside
+          className="rounded-2xl border p-5 text-sm leading-relaxed min-h-[420px]"
+          style={{
+            borderColor: active ? `${active.color}40` : "#D4A85320",
+            background: active
+              ? `linear-gradient(180deg, ${active.color}08, transparent 60%)`
+              : "linear-gradient(180deg, #D4A85305, transparent)",
+          }}
+        >
+          {active ? (
+            <>
+              <div className="flex items-baseline gap-3">
+                <span
+                  className="font-serif text-4xl font-semibold"
+                  style={{ color: active.color }}
+                >
+                  {active.roman}
+                </span>
+                <div>
+                  <h3 className="text-stone-100 text-base font-medium m-0">
+                    Article {active.roman} — {active.title}
+                  </h3>
+                  <div className="text-xs font-mono tracking-wider opacity-60 mt-1" style={{ color: active.color }}>
+                    {DOMAIN_LABEL[active.domain].toUpperCase()}
+                  </div>
+                </div>
+              </div>
+
+              <p className="text-stone-300 mt-4 mb-3 italic opacity-90">
+                {active.oneLine}
+              </p>
+
+              <div className="text-xs text-stone-400 font-mono mb-2 opacity-70">
+                MUST CLAUSES
+              </div>
+              <ul className="mt-0 mb-4 space-y-1.5 list-none pl-0">
+                {active.must.map((m, i) => (
+                  <li
+                    key={i}
+                    className="text-stone-300 text-[13px] pl-4 relative before:content-['▸'] before:absolute before:left-0"
+                    style={{ ["--tw-before-color" as string]: active.color }}
+                  >
+                    {m}
+                  </li>
+                ))}
+              </ul>
+
+              <div className="text-xs text-stone-400 font-mono mb-2 opacity-70">
+                CATALOG FEATURES
+              </div>
+              <div className="flex flex-wrap gap-1.5">
+                {active.features.map((f) => (
+                  <code
+                    key={f}
+                    className="text-[11px] px-2 py-0.5 rounded-md border"
+                    style={{
+                      borderColor: `${active.color}50`,
+                      background: `${active.color}10`,
+                      color: active.color,
+                    }}
+                  >
+                    {f}
+                  </code>
+                ))}
+              </div>
+
+              {relatedIds.size > 0 && (
+                <>
+                  <div className="text-xs text-stone-400 font-mono mb-2 mt-5 opacity-70">
+                    CONNECTED ARTICLES
+                  </div>
+                  <div className="flex flex-wrap gap-1.5">
+                    {[...relatedIds].map((rid) => {
+                      const ra = ARTICLES.find((a) => a.id === rid)!;
+                      return (
+                        <button
+                          key={rid}
+                          onClick={() => setPinnedId(rid)}
+                          className="text-[11px] px-2 py-0.5 rounded-md border bg-transparent hover:bg-white/5 transition"
+                          style={{
+                            borderColor: `${ra.color}60`,
+                            color: ra.color,
+                          }}
+                        >
+                          Art. {ra.roman} · {ra.title}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </>
+              )}
+            </>
+          ) : (
+            <div className="text-stone-400 text-sm">
+              <div className="text-xs font-mono tracking-wider opacity-60 mb-3 text-[#D4A853]">
+                INTERACTIVE READER
+              </div>
+              <p className="m-0 mb-3">
+                Hover an Article node to read its one-line summary, MUST clauses,
+                and catalog features that implement it.
+              </p>
+              <p className="m-0 mb-3">
+                Click a node to pin it — connected Articles become clickable.
+                Article IX sits in the center because it <em>governs</em> the
+                other eight via the amendment procedure.
+              </p>
+              <p className="m-0 text-xs opacity-60">
+                Source of truth: <code className="text-[#D4A853]">harness/CONSTITUTION.md</code>
+              </p>
+            </div>
+          )}
+        </aside>
+      </div>
+      <figcaption className="text-xs text-stone-500 text-center mt-3">
+        Interactive map of the 9 Articles — arcs show the cross-references observable inside <code>harness/CONSTITUTION.md</code>.
+      </figcaption>
+    </figure>
+  );
+}
