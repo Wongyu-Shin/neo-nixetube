@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { NavDropdown, type DropdownItem } from "./NavDropdown";
 
 const NAV_ITEMS = [
   { href: "/", label: "Overview" },
@@ -15,6 +16,25 @@ const NAV_ITEMS = [
   { href: "/bom", label: "BOM" },
 ];
 
+const HARNESS_DROPDOWN: DropdownItem = {
+  id: "harness",
+  label: "Harness",
+  shortLabel: "Hrns",
+  activePrefixes: ["/harness"],
+  groups: [
+    {
+      label: "Harness Docs",
+      items: [
+        { href: "/harness", label: "Overview", hint: "axis matrix + 28 features" },
+        { href: "/harness/constitution", label: "Constitution", hint: "9 Articles" },
+        { href: "/harness/flow", label: "UX Flow", hint: "entry → completion" },
+        { href: "/harness/wiki", label: "LLM-Wiki", hint: "keyword-triggered knowledge" },
+        { href: "/harness/catalog", label: "Catalog", hint: "all 29 entries" },
+      ],
+    },
+  ],
+};
+
 export default function Nav() {
   const pathname = usePathname();
 
@@ -27,7 +47,7 @@ export default function Nav() {
             neo-nixietube
           </span>
         </Link>
-        <div className="flex gap-0.5">
+        <div className="flex gap-0.5 items-center">
           {NAV_ITEMS.map(item => {
             const active = pathname === item.href;
             return (
@@ -44,6 +64,7 @@ export default function Nav() {
               </Link>
             );
           })}
+          <NavDropdown item={HARNESS_DROPDOWN} pathname={pathname} />
         </div>
       </div>
     </nav>
