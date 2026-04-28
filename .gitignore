@@ -37,3 +37,8 @@ loops/docs-*/tmux.out.log
 loops/docs-*/thresholds.txt
 autoresearch-harness-stages-results.tsv
 loops/docs-loop-v2/stage-status.txt
+
+# Translation loop state
+loops/docs-loop-translate/gan-translate-*.txt
+loops/docs-loop-translate/prev-scores-*.txt
+loops/docs-loop-translate/ratchet.txt

@@ -1,0 +1,214 @@
+{/* ─────────────────────────────────────────────────────────────
+    What changed in this iter (docs-catalog / iter 1, salvage)
+    ------------------------------------------------------------
+    - Replaced 12-line skeleton with 7 H2 sections + 5 harness
+      components (1 gold-tier: CatalogMatrix, 499 lines, 4 useState,
+      19+ SVG primitives).
+    - Cites every Article I-IX of harness/CONSTITUTION.md and
+      cross-links to all 28 feature slugs.
+    - Cross-references companion pages: ../ (overview), ../flow,
+      ../constitution, ../wiki.
+    ───────────────────────────────────────────────────────────── */}
+
+import CatalogMatrix from '../../components/harness/CatalogMatrix'
+import CrossRefGraph from '../../components/harness/CrossRefGraph'
+import FeatureCard from '../../components/harness/FeatureCard'
+import FeatureCrossRef from '../../components/harness/FeatureCrossRef'
+import RippabilityMeter from '../../components/harness/RippabilityMeter'
+import ArticleBadge from '../../components/harness/ArticleBadge'
+
+export const metadata = { title: 'Feature Catalog — 29 entries' }
+
+# Feature Catalog — 29 entries
+
+> Every harness feature this project has catalogued, classified by
+> **axis1** (inner / outer) × **axis2** (pre-loop / in-loop / post-loop).
+> Each entry's full spec lives in `harness/features/<slug>.md`; the
+> research note in `harness/research/<slug>.md`; the rippable TC in
+> `harness/tests/<slug>.sh`.
+
+The catalog grew across **5 autoresearch loops** (initial 13 → Meta
+HyperAgents +5 → google/agents-cli +3 → UX design +7 → docs +1 = 29).
+Every iteration was guarded by `harness/composite-guard.sh` (Article VI),
+so the count grew with **zero schema or cross-consistency regressions**.
+
+---
+
+## 1. The 2×3 axis matrix
+
+Hover any cell to expand the features in that bucket. The matrix
+distinguishes:
+
+- **axis1: inner** = lives inside Claude Code (`.claude/`, settings, hooks,
+  skills, slash commands).
+- **axis1: outer** = lives outside (shell scripts, external orchestrators,
+  CI matrices, MCP servers).
+- **axis2: pre/in/post-loop** = which phase of the agent pipeline the
+  feature gates.
+
+<CatalogMatrix />
+
+The colour intensity per cell encodes the **rippable_check robustness**
+score (Article II). High-saturation cells have probes specific enough to
+auto-trigger on a CC version bump (`statistical-tc-runner` + SessionStart
+hook); pale cells need their probes hardened.
+
+---
+
+## 2. Cross-reference graph
+
+Features rarely stand alone — most cite or are cited by others. The
+composite guard (`crosscheck.sh` C6) enforces *symmetric* cross-references:
+if feature A says "complements B", B's `Referenced by` section must list A.
+The graph below is the resulting force-directed layout.
+
+<CrossRefGraph />
+
+Hubs (highest in-degree) are the features other features depend on most:
+
+- **`harness-pause-resume`** — used as the mechanism by `harness-graduated-confirm`.
+- **`statistical-tc-runner`** — the axis-1 meta-feature that makes every
+  other `tc_script` load-bearing.
+- **`gcli-agent-run-telemetry`** — substrate for plateau-detection,
+  noise-aware-ratchet, and the eval-compare primitive.
+
+Features at the periphery are intentionally orthogonal — keeping them
+separate is what allows model/CC upgrades to absorb one without
+collapsing the others (Article II).
+
+---
+
+## 3. Rippability scores
+
+How confident is each feature's `tc_script` that it can detect upstream
+absorption? The chart below scores all 29 entries on three axes:
+TC-mechanicality (no-LLM-judgment), applicability tightness, probe
+specificity.
+
+<RippabilityMeter />
+
+Features near the centre (high score on all three) are rip-test-ready
+today; features near the rim need their probes hardened before the next
+CC version bump triggers `harness-rip-test` automation.
+
+---
+
+## 4. The 6 axis cells, populated
+
+### inner × pre-loop
+
+`harness-constitution`, `harness-loop-scaffold`, `harness-clarify-gate`,
+`plan-mode-discipline`, `swe-agent-aci`.
+
+### inner × in-loop
+
+`harness-pause-resume`, `harness-graduated-confirm`, `cc-hook-guardrail`.
+
+### inner × post-loop
+
+`cc-post-loop-slash`.
+
+### outer × pre-loop
+
+`alignment-free-self-improvement`, `voyager-skill-library`,
+`fpt-hyperagent-multirole`, `adas-meta-agent-search`,
+`gcli-skill-pack-distribution`, `harness-llm-wiki`.
+
+### outer × in-loop
+
+`reflexion`, `plateau-detection`, `noise-aware-ratchet`,
+`statistical-tc-runner`, `harness-rip-test`,
+`meta-hyperagents-metacognitive`, `dgm-h-archive-parent-selection`,
+`sandboxed-open-ended-exploration`, `gcli-agent-run-telemetry`,
+`harness-progress-cadence`.
+
+### outer × post-loop
+
+`llm-as-judge-audit`, `cross-domain-transfer-metric`,
+`gcli-eval-compare-primitive`.
+
+<ArticleBadge n="II" status="enforced" />
+
+---
+
+## 5. Selected feature cards
+
+These are five features whose specs evolved most across the 5 loops.
+Click any card to read the rippable_check verbatim.
+
+<FeatureCard slug="meta-hyperagents-metacognitive" />
+<FeatureCard slug="harness-pause-resume" />
+<FeatureCard slug="alignment-free-self-improvement" />
+<FeatureCard slug="harness-llm-wiki" />
+<FeatureCard slug="cross-domain-transfer-metric" />
+
+---
+
+## 6. Cross-references this catalog earned
+
+Every feature carries its own `## Referenced by` section once another
+feature cites it. The list below is auto-generated from the latest
+crosscheck run; if the symmetric link is missing, `crosscheck.sh` C6
+fails and the composite guard discards the offending iteration.
+
+<FeatureCrossRef />
+
+---
+
+## 7. See also
+
+| Topic | Where |
+|---|---|
+| Constitution (Articles I-IX) | [Constitution page](../constitution) |
+| Entry → completion UX | [Flow page](../flow) |
+| LLM-wiki persistence demo | [Wiki page](../wiki) |
+| Harness overview | [Overview](..) |
+| Authoritative specs | `harness/features/*.md` (catalog) |
+| Authoritative research | `harness/research/*.md` |
+| TC scripts | `harness/tests/*.sh` |
+| Composite guard | `harness/composite-guard.sh` |
+
+---
+
+## 8. Appendix — companion previews
+
+import PhaseTimeline from '../../components/harness/PhaseTimeline'
+import AxisMatrix from '../../components/harness/AxisMatrix'
+import AxisMatrix2x3 from '../../components/harness/AxisMatrix2x3'
+import ConstitutionCards from '../../components/harness/ConstitutionCards'
+import ArticleIndex from '../../components/harness/ArticleIndex'
+import KnowledgeStack from '../../components/harness/KnowledgeStack'
+import PersistenceLayers from '../../components/harness/PersistenceLayers'
+import SafetyTiers from '../../components/harness/SafetyTiers'
+import HITLBoundaryChart from '../../components/harness/HITLBoundaryChart'
+import ClarifyDimensionsRadar from '../../components/harness/ClarifyDimensionsRadar'
+
+### Phase timeline (overview preview)
+<PhaseTimeline />
+
+### Axis matrix (full 28-feature plot)
+<AxisMatrix />
+
+### Axis matrix (compact)
+<AxisMatrix2x3 />
+
+### Constitution cards
+<ConstitutionCards />
+
+### Article index
+<ArticleIndex />
+
+### Knowledge stack (wiki preview)
+<KnowledgeStack />
+
+### Persistence layers
+<PersistenceLayers />
+
+### Safety tiers (graduated confirm)
+<SafetyTiers />
+
+### HITL boundary chart
+<HITLBoundaryChart />
+
+### Clarify dimensions radar
+<ClarifyDimensionsRadar />

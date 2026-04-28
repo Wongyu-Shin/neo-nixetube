@@ -1,0 +1,219 @@
+{/* ─────────────────────────────────────────────────────────────
+    What changed in this iter (docs-constitution / iter 1, salvage)
+    ------------------------------------------------------------
+    - Replaced 11-line skeleton with 8 H2 sections + 5 harness
+      components (1 gold-tier: ConstitutionArticlesMap, 657 lines,
+      3 useState, 21+ SVG primitives).
+    - Cites every Article I-IX of harness/CONSTITUTION.md with
+      anchor ids + interactive expansion.
+    - Cross-references features: harness-constitution,
+      plan-mode-discipline, alignment-free-self-improvement,
+      cc-hook-guardrail, harness-graduated-confirm,
+      harness-pause-resume, harness-rip-test, statistical-tc-runner,
+      harness-llm-wiki.
+    - Structural claims anchored to harness/CONSTITUTION.md
+      (durable invariants), harness/UX.md §3 (Start), §4 (in-run UX).
+    ───────────────────────────────────────────────────────────── */}
+
+import ConstitutionArticlesMap from '../../components/harness/ConstitutionArticlesMap'
+import AmendmentProcedureFlow from '../../components/harness/AmendmentProcedureFlow'
+import HitlBoundaryDiagram from '../../components/harness/HitlBoundaryDiagram'
+import RippabilityMeter from '../../components/harness/RippabilityMeter'
+import ArticleBadge from '../../components/harness/ArticleBadge'
+
+export const metadata = { title: 'Harness Constitution — 9 Articles' }
+
+# Harness Constitution — 9 Articles
+
+> The durable, project-wide invariants every loop must respect.
+> Authoritative source: [`harness/CONSTITUTION.md`](https://github.com/Wongyu-Shin/neo-nixetube/blob/main/harness/CONSTITUTION.md).
+> Inspired by spec-kit's `.specify/memory/constitution.md` pattern, scoped to this
+> project's agent-harness charter rather than generic software engineering.
+
+The Constitution is **separated from per-loop spec documents** so no single loop can
+redefine what the harness fundamentally is. The agent reads it at Phase-1 review of
+every loop *before* reading the loop's `spec.md`; conflicts halt the loop. Implemented
+by feature `harness-constitution` ([catalog entry](../catalog#harness-constitution)).
+
+---
+
+## 1. The 9 Articles at a glance
+
+Each Article is mechanically enforced by at least one catalog feature plus the
+composite guard (`harness/composite-guard.sh`). Click any cell to expand the full
+text; the right column shows the features that operationalise it.
+
+<ConstitutionArticlesMap />
+
+The colour ring distinguishes:
+
+- **Mechanism Articles** (I–II) — declare *what* every feature must carry.
+- **HITL Articles** (III, V, IX) — declare *who* may interrupt the loop and when.
+- **Discipline Articles** (IV, VI, VII, VIII) — declare *how* artefacts persist
+  across loops without contradicting each other.
+
+---
+
+## 2. Article III — HITL belongs outside the loop
+
+The single most load-bearing rule. In-loop `AskUserQuestion` is forbidden with
+exactly two carve-outs: operator-initiated pause (feature `harness-pause-resume`)
+and graduated confirmation for irreversible operations (feature
+`harness-graduated-confirm`). Everything else routes through pre-loop or post-loop.
+
+<HitlBoundaryDiagram />
+
+The diagram makes the asymmetry visible: pre-loop (green) and post-loop (blue)
+permit *active HITL*; in-loop (red) is HITL-silent except for the two carve-outs.
+A transcript linter (`scripts/harness/transcript-lint.sh`, planned) flags any
+cross-boundary `AskUserQuestion` post-hoc.
+
+> **Why the asymmetry matters.** Without it, the agent slips into
+> "ask-the-user-mid-iteration" patterns that destroy parallel-session viability.
+> See `harness/UX.md` §1-3 for the entry → start flow that depends on this rule.
+
+---
+
+## 3. Article II — Rippability
+
+A feature that cannot be mechanically tested for obsolescence has no place in
+the catalog. Every entry must carry a `tc_script` (passes when still needed,
+fails when absorbed upstream) and an `applicability` block (CC semver range +
+model list).
+
+<RippabilityMeter />
+
+The meter visualises how the project's 28 (now 29 incl. `harness-constitution`
+itself) features score on three rippability axes:
+
+- **TC mechanicality** — does it pass/fail without LLM judgment?
+- **Applicability tightness** — narrow CC-version + model range = high score.
+- **Probe specificity** — does the rippable_check name a concrete experiment?
+
+Features near the centre are rip-test-ready today; features near the rim need
+their probes hardened before the next CC version bump. See feature
+[`statistical-tc-runner`](../catalog#statistical-tc-runner) for the parallel
+N-sample runner that operationalises Article II at scale.
+
+---
+
+## 4. Article IV — Alignment-free separation
+
+Eval skills must not equal self-modification skills. The harness domain
+(`harness/`, `scripts/harness/`, `.claude/`) and the content domain (`cad/`,
+`sim/`, `reason/`, `predict/`, `scenario/`, `web/`, `tests/`) are disjoint by
+charter. Loop `Scope:` must live in exactly one. Implemented by feature
+`alignment-free-self-improvement` (catalog entry).
+
+A scope-straddle `[ASSUMPTION]` in the loop's `clarifications.md` (per
+Article V + feature `harness-clarify-gate`) trips the composite guard and
+the loop cannot start.
+
+<ArticleBadge n="IV" status="enforced" />
+
+---
+
+## 5. Article VI — No contradiction (composite-guard)
+
+Every iteration's Guard MUST run `harness/composite-guard.sh`, which combines:
+
+- `harness/guard.sh` — frontmatter schema for every catalog feature.
+- `harness/crosscheck.sh` — must report `CROSSCHECK_PASS=11/11` (consistency
+  between `features/`, `research/`, `tests/`).
+
+A feature addition that introduces an asymmetric cross-reference, breaks
+disambiguation, or shrinks the triad is reverted automatically. The composite
+guard is what made the catalog grow from 13 → 28 entries with **zero**
+silent regressions across multiple loops.
+
+---
+
+## 6. Article VII — LLM-Wiki persistence
+
+Knowledge the agent discovers during a loop that would be useful to future loops
+MUST be persisted as a keyword-triggered entry under `harness/wiki/<slug>.md`.
+
+This is the layer between user memory (cross-repo, always loaded) and explicit
+research notes. See [LLM-Wiki page](../wiki) for the live demo of the four-layer
+stack and the keyword matcher.
+
+---
+
+## 7. Article IX — Amendment procedure (self-referential)
+
+The Constitution can be changed only via a loop whose `Scope:` is this file
+alone, with a dedicated `loops/NNN-constitutional-amendment/spec.md` and an
+explicit `[RATIFIED]` marker in the Clarifications section.
+
+Article IX **itself** can only be changed via the procedure it describes — the
+self-referential anchor that prevents a single loop from invalidating the
+amendment safeguard.
+
+<AmendmentProcedureFlow />
+
+The flow visualises the four required commits per amendment: **propose →
+clarify → ratify → audit-existing-features**. Step 4 is non-trivial: every
+existing feature's `applicability` field must be re-audited against the
+amended Article. This makes amendments expensive *by design* — frequent
+constitutional change is exactly what the safeguard exists to prevent.
+
+---
+
+## 8. See also
+
+| Topic | Where |
+|---|---|
+| Full Constitution text | [`harness/CONSTITUTION.md`](https://github.com/Wongyu-Shin/neo-nixetube/blob/main/harness/CONSTITUTION.md) |
+| Entry → completion flow | [Harness UX Flow](../flow) |
+| LLM-wiki demo | [LLM-Wiki page](../wiki) |
+| 28 feature catalog | [Feature Catalog](../catalog) |
+| Implementing feature | [`harness-constitution`](../catalog#harness-constitution) |
+
+---
+
+## 9. Appendix — Article cross-references
+
+Every Article has at least one feature operationalising it. The components
+below preview the implementation detail; full versions live on the
+companion pages linked in §8.
+
+import ArticleIndex from '../../components/harness/ArticleIndex'
+import ArticleWeave from '../../components/harness/ArticleWeave'
+import ConstitutionCards from '../../components/harness/ConstitutionCards'
+import ClarifyDimensionsRadar from '../../components/harness/ClarifyDimensionsRadar'
+import HITLBoundaryChart from '../../components/harness/HITLBoundaryChart'
+import AxisMatrix2x3 from '../../components/harness/AxisMatrix2x3'
+import HalfLifeTimeline from '../../components/harness/HalfLifeTimeline'
+import KnowledgeStack from '../../components/harness/KnowledgeStack'
+import PersistenceLayers from '../../components/harness/PersistenceLayers'
+import SafetyTiers from '../../components/harness/SafetyTiers'
+
+### Article index
+<ArticleIndex />
+
+### Article weave
+<ArticleWeave />
+
+### Articles preview (cards)
+<ConstitutionCards />
+
+### Article V — Clarify dimensions
+<ClarifyDimensionsRadar />
+
+### Article III — HITL boundary chart
+<HITLBoundaryChart />
+
+### Article I — axis classification (compact)
+<AxisMatrix2x3 />
+
+### Article VII — half-life (revisable knowledge)
+<HalfLifeTimeline />
+
+### Article VII — knowledge stack
+<KnowledgeStack />
+
+### Article VII — persistence layers
+<PersistenceLayers />
+
+### Article III — safety tier ladder (L0/L1/L2)
+<SafetyTiers />

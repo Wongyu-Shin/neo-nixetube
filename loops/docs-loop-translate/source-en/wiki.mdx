@@ -1,0 +1,238 @@
+{/* ─────────────────────────────────────────────────────────────
+    What changed in this iter (docs-wiki / iter 1)
+    ------------------------------------------------------------
+    - Replaced skeleton TODO list with 6 section H2 + 5 harness
+      components (1 gold-tier: KeywordMatcher, 666 lines, 31 SVG
+      primitives, useState).
+    - Cites Articles III, VII, VIII, IX of harness/CONSTITUTION.md
+      and feature slugs: harness-llm-wiki, cc-post-loop-slash,
+      gcli-agent-run-telemetry, voyager-skill-library,
+      harness-rip-test, harness-progress-cadence,
+      harness-constitution, harness-clarify-gate,
+      harness-pause-resume.
+    - Structural claims anchored to harness/UX.md §7
+      ("Persistence layers") and harness/research/harness-llm-wiki.md
+      §Loading-mechanic / §Write-mechanic / §Rippable-signal.
+    ───────────────────────────────────────────────────────────── */}
+
+import KnowledgeStack from '../../components/harness/KnowledgeStack'
+import KeywordMatcher from '../../components/harness/KeywordMatcher'
+import WikiEntrySchema from '../../components/harness/WikiEntrySchema'
+import HalfLifeTimeline from '../../components/harness/HalfLifeTimeline'
+import ReadWriteFlow from '../../components/harness/ReadWriteFlow'
+import FeatureCrossRef from '../../components/harness/FeatureCrossRef'
+
+export const metadata = { title: 'LLM-Wiki — Keyword-Triggered Knowledge' }
+
+# LLM-Wiki — Keyword-Triggered Knowledge
+
+> The missing fourth knowledge layer: committable, project-scoped, surfaced
+> only when the operator's message tokens match an entry's triggers. Implements
+> **Article VII** of the [Constitution](../constitution) via the feature
+> `harness-llm-wiki`.
+
+The operator's recurring question — *"LLM 위키의 영속화는 어떤 과정으로 진행되지?"* —
+has four load-bearing answers below. Each H2 maps to a specific section of
+`harness/research/harness-llm-wiki.md`; each interactive block is a live
+demo of the mechanic it annotates.
+
+---
+
+## 1. The four-layer stack
+
+Claude Code already ships three persistence layers; none is
+project-scoped **and** keyword-triggered at once. That gap is the reason
+Article VII exists.
+
+<KnowledgeStack />
+
+The stack is described at `harness/UX.md §7 "Persistence layers"`. L0–L1
+are CC-native (user memory, `CLAUDE.md`). L2 (wiki) is defined by feature
+`harness-llm-wiki`. L3 (research notes) is explicit-read only — never
+auto-surfaced — so it can host long-form proofs without burning every
+session's context budget.
+
+---
+
+## 2. Anatomy of a wiki entry
+
+Every entry under `harness/wiki/<slug>.md` carries a fixed frontmatter
+schema. Hover any field to see its role; the invariants are enforced by
+`harness/wiki/SCHEMA.md` and by the composite guard
+(`harness/composite-guard.sh`, per **Article VI**).
+
+<WikiEntrySchema />
+
+The schema deliberately includes *provenance* (`created`,
+`last_verified`, `sources`) alongside *matching* (`triggers`) and
+*decay* (`half_life_days`) — revisable knowledge must know its own age.
+Bodies stay short (under ~40 lines); long-form rationale lives in
+`harness/research/*.md` with a back-link.
+
+---
+
+## 3. Live keyword matcher
+
+This is the core mechanic. The SessionStart hook tokenizes the operator's
+initial message, scores every wiki entry by trigger overlap, and injects
+the top-3 as `<system-reminder>` blocks. Try editing the textarea below —
+the constellation redraws live, and cards re-rank by hit count.
+
+<KeywordMatcher />
+
+Backed by `scripts/harness/wiki_match.sh` (see feature
+`harness-llm-wiki` §"Minimal viable implementation" step 2). The cap of
+three keeps the surfaced-context cost bounded; the 4th-Nth matches are
+reachable via `/harness:wiki-search` but never auto-injected. This is
+the same "no in-loop flooding" discipline **Article III** (HITL
+boundary) imposes on `AskUserQuestion`.
+
+---
+
+## 4. Half-life & re-verification
+
+Wiki entries are *revisable*, not permanent. Each carries
+`half_life_days`; after `last_verified + half_life_days`, the entry
+still surfaces — Article VII permits stale knowledge — but with a
+`restale-due` flag that prompts re-verification on the next loop that
+cites it.
+
+<HalfLifeTimeline />
+
+The zones map directly to the reporter's behavior:
+
+- **fresh** (0-50% hl) — surfaced silently.
+- **warming** (50-100% hl) — surfaced with a green check.
+- **restale-due** (>100% hl) — surfaced with a stale banner; the
+  post-loop reporter (`cc-post-loop-slash`) prompts the operator to
+  either bump `last_verified` or edit the body.
+- **purge candidate** (>150% hl) — operator-only decision, via
+  `/harness:wiki-add --cull`. Deletion follows the amendment template
+  of **Article IX** so the culled knowledge lineage survives in `git
+  log`.
+
+This decay model is why the wiki can't be replaced by a big CLAUDE.md:
+CLAUDE.md has no notion of verification age.
+
+---
+
+## 5. Read / write flow
+
+The wiki is bidirectional by design (feature `harness-llm-wiki`,
+`axis2: pre-loop (primary) + post-loop (secondary)`). The tab below
+toggles between the two halves:
+
+<ReadWriteFlow />
+
+Both flows respect **Article III**: the operator interacts only at
+pre-loop SessionStart (read side, via the hook) and post-loop
+(`/harness:wiki-add`, write side). The in-loop body never calls
+`AskUserQuestion` about the wiki — the operator's carve-outs are
+**graduated-confirm** (`harness-graduated-confirm`, L2 irreversible
+ops) and **pause/resume** (`harness-pause-resume`). The wiki simply
+surfaces and is cited; citations are logged by
+`gcli-agent-run-telemetry` for audit.
+
+**Article VIII** applies too: the commit of each accepted wiki entry
+is an iteration artifact. `loops/NNN-<slug>/wiki-refs.md` records what
+the loop read *and* wrote, so the knowledge lineage is recoverable
+from `git log` even years later.
+
+---
+
+## 6. Integration map
+
+The wiki sits at the center of six other features. None of the
+integrations is optional — each solves a problem the wiki inherits from
+its axis position (outer / pre-loop primary, post-loop secondary).
+
+<FeatureCrossRef />
+
+The most load-bearing edges:
+
+- **`cc-post-loop-slash`** hosts the write mechanic. Without it, no
+  entries are ever proposed.
+- **`gcli-agent-run-telemetry`** closes the usage-audit loop — every
+  `see wiki:<slug>` citation inside an iteration is recorded.
+- **`harness-rip-test`** runs the rippable probe: migrate one entry
+  into CC-native memory, start a fresh session, check whether the
+  entry surfaces without prompting. If it does, feature `harness-llm-wiki`
+  is absorbed upstream and the outer scripts become dead weight
+  (**Article II**).
+- **`voyager-skill-library`** is deliberately *non-overlap*: skills are
+  authored procedures, wiki entries are facts. Mixing them produces the
+  "skill catalog as knowledge base" anti-pattern described in the
+  research note's §Contrast.
+
+---
+
+## 7. Rippable signal
+
+Per **Article II**, every feature must declare the empirical signal
+that tells the operator it has been absorbed upstream. For
+`harness-llm-wiki`:
+
+> Migrate one wiki entry (e.g. `cad-path-2-room-temp.md`) into CC's
+> native memory primitive. Start a fresh session, send a message
+> containing two trigger keywords. If CC surfaces the entry unprompted
+> with a cite-able source, **rip**.
+
+The `tc_script` at `harness/tests/harness-llm-wiki.sh` runs this probe
+automatically on every CC version bump. Passing = still needed;
+failing = time to delete the outer scripts and the
+`.claude/skills/wiki-surface/` directory.
+
+---
+
+## 8. See also
+
+| From | Reads | Writes |
+|---|---|---|
+| [Catalog](../catalog) | `features/harness-llm-wiki.md` frontmatter | — |
+| [Constitution](../constitution) | Article VII (mandate) | — |
+| [Flow](../flow) | UX §7 (persistence layers) | post-loop `wiki-refs.md` |
+
+*Feature slugs referenced on this page:* `harness-llm-wiki`,
+`harness-constitution`, `cc-post-loop-slash`, `gcli-agent-run-telemetry`,
+`voyager-skill-library`, `harness-rip-test`, `harness-progress-cadence`,
+`harness-clarify-gate`, `harness-pause-resume`, `harness-graduated-confirm`.
+
+---
+
+## 9. Appendix — wiki adjacent visuals
+
+import AxisMatrix2x3 from '../../components/harness/AxisMatrix2x3'
+import ArticleBadge from '../../components/harness/ArticleBadge'
+import ArticleIndex from '../../components/harness/ArticleIndex'
+import ConstitutionCards from '../../components/harness/ConstitutionCards'
+import RippabilityMeter from '../../components/harness/RippabilityMeter'
+import RatchetTimeline from '../../components/harness/RatchetTimeline'
+import FeatureCard from '../../components/harness/FeatureCard'
+import CommandCheatsheet from '../../components/harness/CommandCheatsheet'
+import ArtifactTree from '../../components/harness/ArtifactTree'
+
+### Wiki feature on the 2×3 axis matrix (compact)
+<AxisMatrix2x3 />
+
+### Article badge: <ArticleBadge n="VII" status="enforced" />
+
+### Article index quick reference
+<ArticleIndex />
+
+### Constitution cards (read on the constitution page)
+<ConstitutionCards />
+
+### Wiki feature rippability score
+<RippabilityMeter />
+
+### Wiki vs ratchet — different timelines
+<RatchetTimeline />
+
+### Feature card: harness-llm-wiki
+<FeatureCard slug="harness-llm-wiki" />
+
+### Wiki-related slash commands
+<CommandCheatsheet />
+
+### Per-loop wiki-refs.md placement
+<ArtifactTree />

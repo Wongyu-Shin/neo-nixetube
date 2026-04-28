@@ -1,0 +1,212 @@
+{/*
+  What changed in this iter (docs-overview, iter 1):
+  - Replaced skeleton TODO list with full Overview page.
+  - Added 6 new harness components under web/app/components/harness/:
+      * AxisMatrix.tsx  (gold-tier: 537 lines, 3×useState, 34 SVG primitives,
+        plots all 28 features on the 2×3 matrix with hover + row/col filters)
+      * PhaseTimeline.tsx  (10-node interactive timeline, HITL policy dot)
+      * ConstitutionCards.tsx  (9 Articles, click-to-expand)
+      * PersistenceLayers.tsx  (4-layer trapezoid, hover detail)
+      * SafetyTiers.tsx  (L0/L1/L2 graduated-confirm cards)
+      * LoopCadenceCard.tsx  (per-iter / milestone / statusline / final rows)
+  - Header structure: H1 + 8 H2 sections.
+  - Cites Articles I–IX by number; cites 28 feature slugs across the page.
+  - Nothing outside web/app/harness/ or web/app/components/harness/ touched.
+*/}
+
+import AxisMatrix from '../components/harness/AxisMatrix'
+import PhaseTimeline from '../components/harness/PhaseTimeline'
+import ConstitutionCards from '../components/harness/ConstitutionCards'
+import PersistenceLayers from '../components/harness/PersistenceLayers'
+import SafetyTiers from '../components/harness/SafetyTiers'
+import LoopCadenceCard from '../components/harness/LoopCadenceCard'
+
+export const metadata = { title: 'Agent Harness — Overview' }
+
+# Agent Harness — Overview
+
+> A rippable, constitution-bound autoresearch harness for Claude Code.
+> Every feature in this catalog is declared against two axes — **inner/outer**
+> (who owns the surface) and **pre/in/post-loop** (which phase it gates) —
+> and carries a mechanical test that fails the moment CC absorbs it upstream.
+
+<div className="my-6 grid grid-cols-2 md:grid-cols-4 gap-3 text-sm">
+  <div className="rounded-md border border-stone-800 bg-stone-950/40 p-3">
+    <div className="text-[10px] uppercase tracking-wide text-stone-600">Articles</div>
+    <div className="text-xl font-mono text-[#D4A853] mt-1">9</div>
+    <div className="text-[11px] text-stone-500 mt-0.5">durable invariants</div>
+  </div>
+  <div className="rounded-md border border-stone-800 bg-stone-950/40 p-3">
+    <div className="text-[10px] uppercase tracking-wide text-stone-600">Features</div>
+    <div className="text-xl font-mono text-[#B8A9C9] mt-1">28</div>
+    <div className="text-[11px] text-stone-500 mt-0.5">axis-classified, rippable</div>
+  </div>
+  <div className="rounded-md border border-stone-800 bg-stone-950/40 p-3">
+    <div className="text-[10px] uppercase tracking-wide text-stone-600">Axis matrix</div>
+    <div className="text-xl font-mono text-[#7B9EB8] mt-1">2×3</div>
+    <div className="text-[11px] text-stone-500 mt-0.5">inner/outer × pre/in/post</div>
+  </div>
+  <div className="rounded-md border border-stone-800 bg-stone-950/40 p-3">
+    <div className="text-[10px] uppercase tracking-wide text-stone-600">HITL carve-outs</div>
+    <div className="text-xl font-mono text-[#C17B5E] mt-1">2</div>
+    <div className="text-[11px] text-stone-500 mt-0.5">L2 confirm + Ctrl-C</div>
+  </div>
+</div>
+
+## 1. The 2×3 axis matrix
+
+Every feature declares `axis1 ∈ {inner, outer}` and `axis2 ∈ {pre-loop, in-loop, post-loop}`
+(**Article I**). The horizontal dashed line below is the **rippability boundary**
+(**Article II**) — outer features get absorbed as CC matures and the line migrates
+upward over time.
+
+<AxisMatrix />
+
+The distribution is not uniform: `outer × in-loop` carries 10 features
+(the longest-running phase, where most of the mechanics live), while
+`inner × post-loop` carries exactly one (`cc-post-loop-slash` — the
+report writer). A healthy harness pushes mass upward and leftward: when
+`outer × pre-loop` entries like `harness-llm-wiki` become native CC
+features, the catalog shrinks.
+
+## 2. Entry → completion flow
+
+From `/harness:new-loop` to `report.mdx`, every loop walks the same
+ten phases. HITL policy is enforced per phase (**Article III**) — the
+top dot on each node is green (allowed), amber (carve-out only), or
+rust (forbidden).
+
+<PhaseTimeline />
+
+The only legal HITL boundary into in-loop execution is `ExitPlanMode`
+(`plan-mode-discipline`). Once crossed, the agent forbids all
+`AskUserQuestion` calls except the two carve-outs — the transcript
+linter flags any violation post-hoc. See `harness/UX.md` §3.
+
+## 3. The nine Articles
+
+The Constitution (`harness/CONSTITUTION.md`) is the single document no
+loop can redefine. Each feature cites the Articles it implements; the
+table below is the authoritative surface.
+
+<ConstitutionCards />
+
+Article IX is self-referential: amending the Constitution requires a
+loop whose `Scope:` is `harness/CONSTITUTION.md` alone, an explicit
+`[RATIFIED]` marker from the operator, and a re-audit of every
+feature's `applicability` field.
+
+## 4. Safety tiers — the in-loop carve-out
+
+In-loop HITL is forbidden by **Article III** with two exceptions.
+`harness-graduated-confirm` codifies the first: a three-tier split on
+reversibility + scope.
+
+<SafetyTiers />
+
+L0 stays silent, L1 notifies with a 30-second auto-approve window, and
+only L2 actually pauses the loop — the operator's explicit keystroke is
+required, and the event is logged to `report.mdx`. The second carve-out
+is `Ctrl+C` (lossy emergency stop).
+
+## 5. Progress cadence
+
+Four visibility channels run in parallel during every in-loop iteration.
+None of them asks the operator for input — visibility without HITL is
+the whole point of `harness-progress-cadence`.
+
+<LoopCadenceCard />
+
+The statusline entry is persistent at the bottom of the terminal so
+the operator can glance-monitor without scrolling. `gcli-agent-run-telemetry`
+additionally emits one event per iteration for off-box audit.
+
+## 6. Persistence layers
+
+The wiki (`harness/wiki/*.md`, implementing **Article VII**) is the
+only layer that is *project-scoped, cross-loop, committable, and
+keyword-triggered*. Everything else leaks — user memory is cross-repo,
+CLAUDE.md floods every session, research notes require explicit reads.
+
+<PersistenceLayers />
+
+Writing to the wiki is a post-loop operator gesture (`/harness:wiki-add`);
+reading from it happens automatically at SessionStart, via the
+`wiki-surface` inner skill that tokenizes the operator's first message
+and surfaces top-3 matches as `<system-reminder>` blocks with citations.
+Half-life tracking (`last_verified + half_life_days`) surfaces stale
+entries with a warning.
+
+## 7. Stop conditions
+
+A loop stops on exactly one of five triggers. Three are automatic;
+two require the operator.
+
+| # | Trigger | Feature |
+|---|---|---|
+| 1 | `Iterations: N` in spec reached | `harness-progress-cadence` |
+| 2 | Goal-achieved (metric hits target) | fix-mode / `autoresearch:fix` |
+| 3 | Plateau (patience AND slope both fire) | `plateau-detection` |
+| 4 | Operator abandon | `harness-pause-resume` (`/harness:abandon`) |
+| 5 | Operator emergency | `Ctrl+C` (Article III carve-out 2) |
+
+Discards inside the loop use `git revert`, not `git reset --hard`
+(**Article VIII**) — every candidate stays in history as a lesson.
+
+## 8. Where to go next
+
+- **[Feature catalog](/harness/catalog)** — all 28 entries with full
+  frontmatter, `rippable_check` text, and applicability bounds.
+- **[Flow walkthrough](/harness/flow)** — the `harness/UX.md` flow
+  rendered with interactive phase detail.
+- **[Constitution](/harness/constitution)** — full text of all nine
+  Articles with inline feature links.
+- **[LLM-wiki](/harness/wiki)** — live view of `harness/wiki/*.md`
+  entries, triggers, and half-life.
+
+The catalog is exhaustive: every UX primitive in `harness/UX.md` §9 maps
+to at least one of the 28 features. Nothing is purely theoretical; each
+is load-bearing for some concrete operator experience.
+
+---
+
+## 9. Appendix — cross-component thumbnails
+
+Each thumbnail below previews a component fully expanded on its
+dedicated page. Click through for the interactive version.
+
+import InLoopTick from '../components/harness/InLoopTick'
+import StopConditionsChart from '../components/harness/StopConditionsChart'
+import RatchetTimeline from '../components/harness/RatchetTimeline'
+import ClarifyDimensionsRadar from '../components/harness/ClarifyDimensionsRadar'
+import ArticleBadge from '../components/harness/ArticleBadge'
+import ArticleWeave from '../components/harness/ArticleWeave'
+import AmendmentProcedureFlow from '../components/harness/AmendmentProcedureFlow'
+import AxisMatrix2x3 from '../components/harness/AxisMatrix2x3'
+import KnowledgeStack from '../components/harness/KnowledgeStack'
+
+### In-loop tick (preview of `flow` page)
+<InLoopTick />
+
+### Stop conditions overview
+<StopConditionsChart />
+
+### Ratchet trajectory
+<RatchetTimeline />
+
+### Clarify-gate dimensions (D1–D7)
+<ClarifyDimensionsRadar />
+
+### Article weave (constitution preview)
+<ArticleWeave />
+
+### Article badge: <ArticleBadge n="VI" status="enforced" />
+
+### Amendment procedure (full version on `/constitution`)
+<AmendmentProcedureFlow />
+
+### Axis matrix (compact 2×3)
+<AxisMatrix2x3 />
+
+### Persistence-layer stack (preview of `/wiki` §1)
+<KnowledgeStack />

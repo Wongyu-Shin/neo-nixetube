@@ -1,0 +1,221 @@
+import HarnessFlowDiagram from '../../components/harness/HarnessFlowDiagram'
+import SafetyTierLadder from '../../components/harness/SafetyTierLadder'
+import CommandCheatsheet from '../../components/harness/CommandCheatsheet'
+import HITLBoundaryChart from '../../components/harness/HITLBoundaryChart'
+import StopConditionMatrix from '../../components/harness/StopConditionMatrix'
+import PersistenceLayers from '../../components/harness/PersistenceLayers'
+import ArtifactTree from '../../components/harness/ArtifactTree'
+
+export const metadata = { title: 'Harness UX Flow — Entry to Completion' }
+
+{/*
+  ─────────────────────────────────────────────────────────────
+  What changed in this iter (docs-flow)
+  ─────────────────────────────────────────────────────────────
+  · Replaced the TODO skeleton with a full narrative of the
+    pre-/in-/post-loop lifecycle from harness/UX.md.
+  · Added 7 harness-scoped components under
+    web/app/components/harness/*, including one gold-tier
+    interactive diagram (HarnessFlowDiagram, 721 lines, 76 SVG
+    primitives, 2 useState hooks).
+  · Structured the page as H1 + 8 H2 sections with Article and
+    feature citations on every structural claim.
+  · No external asset URLs; every visual is self-contained
+    SVG + Tailwind.
+  ─────────────────────────────────────────────────────────────
+*/}
+
+# Harness UX Flow — Entry → Completion
+
+> How an operator kicks off a loop, what the agent does between
+> iterations, and what the agent hands back at the end. This page is
+> the interactive companion to <code>harness/UX.md</code> and
+> <code>harness/CONSTITUTION.md</code>.
+
+The diagram below is the spine of the whole page: the green column is
+the **pre-loop** (HITL active, Articles III + V), the amber ring is
+**in-loop** (HITL forbidden except the two carve-outs in Article III),
+and the violet column is **post-loop** (HITL active, Articles VII +
+VIII). Hover any node for a preview; click to lock the side panel.
+
+<HarnessFlowDiagram />
+
+## 1 · Article III — the HITL boundary
+
+The single most load-bearing invariant in the harness. **Active
+human-in-the-loop input is legal only in pre-loop and post-loop.** The
+in-loop segment is machine-driven and forbids <code>AskUserQuestion</code>
+outright. The post-hoc transcript linter flags any violation.
+
+<HITLBoundaryChart />
+
+There are exactly two in-loop carve-outs, both specified in Article III
+clause (c):
+
+- **L2 graduated-confirm** for irreversible operations
+  (`cc-hook-guardrail` deny + `harness-graduated-confirm` prompt).
+- **Ctrl+C** for emergency stop, which is lossy by design.
+
+Everything else happening inside the amber ring — iterating, committing,
+verifying, guarding, logging — is agent-driven with zero interactive
+prompts. Operator hints arrive asynchronously via `/harness:send` and
+are consumed at the next atomic-step boundary.
+
+## 2 · Pre-loop — scaffold, clarify, plan
+
+Three slash commands staircase the operator from a raw intent to an
+executable plan:
+
+<CommandCheatsheet />
+
+- **`/harness:new-loop <slug>`** (feature `harness-loop-scaffold`,
+  Article VIII): auto-increments NNN, copies `loops/TEMPLATE/`, opens
+  `spec.md` for Goal/Scope/Metric entry, and wires the loop to the
+  Article III–VII invariants.
+- **`/harness:clarify`** (feature `harness-clarify-gate`, Article V):
+  walks the seven coverage dimensions D1–D7 and writes
+  `clarifications.md`. Unresolved `[ASSUMPTION]` markers for D1 fail
+  `composite-guard` (Article VI) — the loop cannot proceed.
+- **`/autoresearch:plan`** (feature `plan-mode-discipline`, Article V):
+  consumes `clarifications.md`, dry-runs verify, records the baseline.
+  `ExitPlanMode` is the **only** legal HITL gate into in-loop (Article III).
+
+## 3 · In-loop — the eight-phase ring
+
+Each iteration walks eight phases in order. Phase 1 loads the
+Constitution, surfaces wiki entries by keyword (Article VII), and
+re-reads prior `reflexion` notes. Phases 2–5 ideate, modify, commit,
+verify and guard. Phase 6 decides keep/discard/rework gated by
+`composite-guard` (Article VI). Phase 7 writes one log line and the
+milestone block via `harness-progress-cadence`. Phase 8 repeats, or
+exits on a stop condition.
+
+Ratcheting is performed by `noise-aware-ratchet` with a `SUM=MAX`
+ratchet so LLM-as-judge noise (±10) never weakens the anchor. Plateau
+detection by `plateau-detection` combines `ratchet-patience` and
+`trend-slope` under the measured σ; tripping either is insufficient.
+
+## 4 · In-loop safety tiers
+
+Operations inside the ring are not homogeneous. The graduated-confirm
+ladder classifies each op and decides whether it may run silently, ping
+the statusline for 30 seconds, or block the loop entirely until the
+operator acks it with a keystroke.
+
+<SafetyTierLadder />
+
+L2 events are appended to `report.mdx` and shown in the statusline. A
+loop that hits L2 three times in five iterations auto-escalates to
+operator attention regardless of per-event verdict.
+
+## 5 · Stop conditions — automatic and manual
+
+A loop ends for one of six reasons, split between the agent and the
+operator.
+
+<StopConditionMatrix />
+
+Automatic stops (bounded N, goal-achieved, plateau) all run the
+post-loop report cleanly. Manual pause and abandon preserve the
+checkpoint. Emergency stop (Ctrl+C) is the only lossy path and should
+be avoided when `/harness:abandon` or `/harness:pause` are available.
+
+## 6 · Post-loop — report and wiki
+
+Once the ring has exited, two post-loop slash commands hand the loop's
+output back to the operator.
+
+- **`/harness:report`** (feature `cc-post-loop-slash`, Article VIII):
+  renders `report.mdx` with TL;DR, axis-coverage delta, kept/reworked/
+  discarded experiments with commit hashes, L2 confirmation log, wiki
+  contributions, and next steps.
+- **`/harness:wiki-add`** (feature `harness-llm-wiki`, Article VII):
+  the agent proposes 0–N keyword-triggered entries, the operator
+  approves/edits/rejects each, and accepted entries land under
+  `harness/wiki/<slug>.md`. A `wiki-refs.md` in the loop directory
+  records **both** the wiki entries read during the loop and the ones
+  it wrote, so future readers can trace the knowledge lineage in
+  either direction.
+
+Optional post-loop audits attach on demand: `llm-as-judge-audit` (with
+self-enhancement-bias control via a different judge model),
+`cross-domain-transfer-metric` on a held-out paired domain, and
+`gcli-eval-compare-primitive` for paired A/B vs. a baseline ref.
+
+## 7 · Persistence layers — the LLM-wiki question
+
+"How does LLM-wiki persistence actually work?" turns out to have a
+four-layer answer, of which only one (the harness wiki) is
+simultaneously keyword-triggered, project-scoped, committable, and
+half-life tracked.
+
+<PersistenceLayers />
+
+Article VII names this layer as the sole project-scoped cross-loop
+knowledge store. `CLAUDE.md` is equivalent in scope but floods every
+session, and user memory is cross-repo. Research notes live next door
+to wiki entries but require explicit reads; the wiki's SessionStart
+matcher is what makes the difference.
+
+## 8 · Per-loop artifact tree
+
+Every completed loop leaves the same tree under `loops/NNN-<slug>/`.
+Hover a node for what it is, which command writes it, and which
+Article governs it.
+
+<ArtifactTree />
+
+`results.tsv` is gitignored because it is reconstructable from the
+commit series (Article VIII — "git is memory"). Everything else is
+committed: spec, clarifications, plan, checkpoints, report, and the
+two-directional wiki-refs.
+
+---
+
+## Further reading
+
+- `harness/UX.md` — the authoritative flow spec this page visualises.
+- `harness/CONSTITUTION.md` — the nine Articles cited throughout.
+- `harness/features/*.md` — the 28 feature specs; each UX primitive
+  above maps to at least one (`harness/UX.md §9` has the full
+  phase-to-feature index).
+- Companion pages: [/harness](/harness) (overview),
+  [/harness/constitution](/harness/constitution),
+  [/harness/catalog](/harness/catalog),
+  [/harness/wiki](/harness/wiki).
+
+---
+
+## 10. Appendix — flow auxiliary visuals
+
+import RatchetTimeline from '../../components/harness/RatchetTimeline'
+import IterationPhaseRing from '../../components/harness/IterationPhaseRing'
+import ArticleBadge from '../../components/harness/ArticleBadge'
+import ArticleIndex from '../../components/harness/ArticleIndex'
+import LoopCadenceCard from '../../components/harness/LoopCadenceCard'
+import KnowledgeStack from '../../components/harness/KnowledgeStack'
+import StopConditionsChart from '../../components/harness/StopConditionsChart'
+import ClarifyDimensionsRadar from '../../components/harness/ClarifyDimensionsRadar'
+
+### Ratchet trajectory across iterations
+<RatchetTimeline />
+
+### Iteration phase ring (Phase 1-8 detail)
+<IterationPhaseRing />
+
+### Article badge: <ArticleBadge n="III" status="enforced" />
+
+### Article index (cross-page reference)
+<ArticleIndex />
+
+### Loop cadence overview
+<LoopCadenceCard />
+
+### Persistence layers (UX §7)
+<KnowledgeStack />
+
+### Stop conditions chart
+<StopConditionsChart />
+
+### Clarify-gate radar
+<ClarifyDimensionsRadar />
