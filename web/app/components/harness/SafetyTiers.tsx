@@ -16,27 +16,27 @@ const TIERS: Tier[] = [
   {
     id: "l0",
     level: "L0",
-    label: "read / scoped edit",
+    label: "읽기 / 범위 내 편집",
     color: "#6BA368",
-    behavior: "Silent. No operator signal.",
+    behavior: "침묵. 운영자 신호 없음.",
     examples: ["Read", "Grep / Glob", "Edit files in Scope", "Run Verify"],
     carveOut: false,
   },
   {
     id: "l1",
     level: "L1",
-    label: "reversible mutation",
+    label: "가역적 변경",
     color: "#D4A853",
-    behavior: "Notify in statusline + 30s auto-approve window. No pause.",
+    behavior: "상태 줄에 알림 + 30초 자동 승인 창. 일시 정지 없음.",
     examples: ["rm inside Scope", "package install", "git commit (non-force)", "Write new file"],
     carveOut: false,
   },
   {
     id: "l2",
     level: "L2",
-    label: "irreversible / out-of-scope",
+    label: "비가역 / 범위 밖",
     color: "#C17B5E",
-    behavior: "Pause loop, write checkpoint, require explicit operator keystroke. Logged to report.mdx.",
+    behavior: "루프 일시 정지, 체크포인트 기록, 운영자의 명시적 키 입력 필요. report.mdx에 로깅.",
     examples: ["git push --force", "rm outside Scope", "sudo", "release publish", "DELETE on prod"],
     carveOut: true,
   },
@@ -71,7 +71,7 @@ export default function SafetyTiers() {
                 <span className="text-sm text-stone-300">{t.label}</span>
                 {t.carveOut && (
                   <span className="ml-auto text-[10px] px-1.5 py-0.5 rounded border border-[#C17B5E]/50 text-[#C17B5E]">
-                    Article III carve-out
+                    조항 III 예외
                   </span>
                 )}
               </div>
@@ -79,7 +79,7 @@ export default function SafetyTiers() {
                 {t.behavior}
               </div>
               <div className="mt-3 pt-3 border-t border-stone-800">
-                <div className="text-[10px] uppercase tracking-wide text-stone-600 mb-1">examples</div>
+                <div className="text-[10px] uppercase tracking-wide text-stone-600 mb-1">예시</div>
                 <div className="flex flex-wrap gap-1">
                   {t.examples.map((e) => (
                     <code
@@ -96,8 +96,8 @@ export default function SafetyTiers() {
         })}
       </div>
       <div className="text-xs text-stone-500 text-center mt-3 italic">
-        Implemented by <code className="text-stone-400">harness-graduated-confirm</code> +{" "}
-        <code className="text-stone-400">cc-hook-guardrail</code>. Only L2 constitutes an in-loop HITL carve-out (Article III).
+        구현 피처: <code className="text-stone-400">harness-graduated-confirm</code> +{" "}
+        <code className="text-stone-400">cc-hook-guardrail</code>. L2만이 루프 내부 HITL 예외에 해당한다 (조항 III).
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ type Layer = {
   id: string;
   name: string;
   location: string;
-  scope: "cross-repo" | "project" | "project (on-demand)";
+  scope: "레포 횡단" | "프로젝트" | "프로젝트 (요청 시)";
   trigger: string;
   lifetime: string;
   article: string;
@@ -21,41 +21,41 @@ type Layer = {
 const LAYERS: Layer[] = [
   {
     id: "user",
-    name: "User memory",
+    name: "사용자 메모리",
     location: "~/.claude/.../memory/*.md",
-    scope: "cross-repo",
-    trigger: "Always loaded",
-    lifetime: "Indefinite",
+    scope: "레포 횡단",
+    trigger: "항상 로드됨",
+    lifetime: "무기한",
     article: "—",
     color: "#B8A9C9",
   },
   {
     id: "claudemd",
     name: "CLAUDE.md",
-    location: "repo root",
-    scope: "project",
-    trigger: "Always loaded",
-    lifetime: "Indefinite; floods every session",
+    location: "레포 루트",
+    scope: "프로젝트",
+    trigger: "항상 로드됨",
+    lifetime: "무기한, 모든 세션에 범람",
     article: "—",
     color: "#D4A853",
   },
   {
     id: "wiki",
-    name: "Harness wiki",
+    name: "하네스 위키",
     location: "harness/wiki/*.md",
-    scope: "project",
-    trigger: "Keyword-triggered (SessionStart)",
-    lifetime: "last_verified + half_life_days; stales flagged",
+    scope: "프로젝트",
+    trigger: "키워드 트리거 (SessionStart)",
+    lifetime: "last_verified + half_life_days, 노후 항목 플래그",
     article: "VII",
     color: "#6BA368",
   },
   {
     id: "research",
-    name: "Research notes",
+    name: "리서치 노트",
     location: "harness/research/*.md",
-    scope: "project (on-demand)",
-    trigger: "Explicit read only",
-    lifetime: "Versioned with the repo",
+    scope: "프로젝트 (요청 시)",
+    trigger: "명시적 읽기 전용",
+    lifetime: "레포와 함께 버저닝",
     article: "—",
     color: "#7B9EB8",
   },
@@ -85,7 +85,7 @@ export default function PersistenceLayers() {
                 className="text-[10px] uppercase tracking-widest mb-1"
                 style={{ color: l.color }}
               >
-                layer · {l.scope}
+                계층 · {l.scope}
               </div>
               <div className="text-sm font-semibold text-amber-200">{l.name}</div>
               <code className="block text-[10px] text-stone-500 mt-1 truncate">
@@ -110,35 +110,35 @@ export default function PersistenceLayers() {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 mt-3 text-xs">
           <div>
-            <div className="text-stone-500 mb-1">Load trigger</div>
+            <div className="text-stone-500 mb-1">로드 트리거</div>
             <div className="text-stone-200">{layer.trigger}</div>
           </div>
           <div>
-            <div className="text-stone-500 mb-1">Lifetime</div>
+            <div className="text-stone-500 mb-1">수명</div>
             <div className="text-stone-200">{layer.lifetime}</div>
           </div>
           <div>
-            <div className="text-stone-500 mb-1">Scope</div>
+            <div className="text-stone-500 mb-1">범위</div>
             <div className="text-stone-200">{layer.scope}</div>
           </div>
           <div>
-            <div className="text-stone-500 mb-1">Article</div>
+            <div className="text-stone-500 mb-1">조항</div>
             <div className="text-stone-200">{layer.article}</div>
           </div>
         </div>
         {layer.id === "wiki" && (
           <p className="text-xs text-stone-400 mt-4 leading-relaxed">
-            The wiki is the only project-scoped, cross-loop, committable
-            knowledge store. Entries are surfaced on SessionStart by matching
-            the operator's opening message + last N transcript lines against
-            each entry's <code className="text-amber-200">triggers</code> field
-            (top-3 surfaced as <code className="text-amber-200">&lt;system-reminder&gt;</code>).
+            위키는 프로젝트 범위, 루프 횡단, 커밋 가능을 동시에 만족하는 유일한 지식
+            저장소다. 항목은 SessionStart 시점에 표면화된다. 운영자의 첫 메시지와
+            트랜스크립트 마지막 N줄을 각 항목의{" "}
+            <code className="text-amber-200">triggers</code> 필드와 매칭해 상위 3개를{" "}
+            <code className="text-amber-200">&lt;system-reminder&gt;</code> 로 띄운다.
           </p>
         )}
       </div>
       <figcaption className="text-xs text-stone-500 text-center mt-3">
-        Source: <code className="text-amber-200">harness/UX.md</code> §7 ·
-        Feature: <code className="text-amber-200">harness-llm-wiki</code>.
+        출처: <code className="text-amber-200">harness/UX.md</code> §7 · 피처:{" "}
+        <code className="text-amber-200">harness-llm-wiki</code>.
       </figcaption>
     </figure>
   );

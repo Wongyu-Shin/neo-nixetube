@@ -13,65 +13,65 @@ type Article = {
 const ARTICLES: Article[] = [
   {
     num: "I",
-    title: "Axis Classification",
-    oneLine: "Every feature declares axis1 (inner/outer) + axis2 (pre/in/post-loop).",
-    body: "axis1 is the rippability boundary — outer features get absorbed by CC upstream and must be removed. axis2 is the HITL boundary (→ Article III).",
+    title: "축 분류",
+    oneLine: "모든 피처는 axis1 (내부/외부) + axis2 (루프 진입 전/내부/종료 후) 를 선언한다.",
+    body: "axis1은 흡수 가능성 경계다 — 외부 피처는 CC 본체로 흡수되면 제거되어야 한다. axis2는 HITL 경계다 (→ 조항 III).",
     keyFeatures: ["harness-constitution"],
   },
   {
     num: "II",
-    title: "Rippability",
-    oneLine: "Every feature carries a mechanical obsolescence test.",
-    body: "rippable_check frontmatter + tc_script passes when the feature is still needed, fails when absorbed. applicability block declares CC semver + model list.",
+    title: "흡수 가능성",
+    oneLine: "모든 피처는 기계적 노후화 테스트를 함께 가진다.",
+    body: "rippable_check 프론트매터 + tc_script 가 피처가 여전히 필요하면 통과하고 흡수되면 실패한다. applicability 블록은 CC semver + 모델 목록을 선언한다.",
     keyFeatures: ["harness-rip-test"],
   },
   {
     num: "III",
-    title: "HITL Belongs Outside the Loop",
-    oneLine: "In-loop AskUserQuestion is forbidden — two carve-outs only.",
-    body: "(a) harness-graduated-confirm L2 for irreversible ops; (b) Ctrl-C emergency stop. Transcript linter flags violations post-hoc.",
+    title: "HITL은 루프 바깥에 산다",
+    oneLine: "루프 내부의 AskUserQuestion은 금지된다 — 예외는 둘뿐.",
+    body: "(a) 비가역 작업에 대한 harness-graduated-confirm L2; (b) Ctrl-C 비상 정지. 트랜스크립트 린터가 위반을 사후에 표시한다.",
     keyFeatures: ["plan-mode-discipline", "harness-graduated-confirm", "harness-pause-resume"],
   },
   {
     num: "IV",
-    title: "Alignment-Free Separation",
-    oneLine: "Scope lives in exactly one of {harness/, content/} — never both.",
-    body: "Skills required to evaluate a Goal must differ from skills required to improve the harness. DGM-style aligned self-improvement fails when eval skill ≈ self-mod skill.",
+    title: "정렬 무관 분리",
+    oneLine: "Scope는 {harness/, content/} 중 정확히 한쪽에만 산다 — 양쪽 동시 금지.",
+    body: "Goal 평가에 필요한 스킬과 하네스 자기 개선에 필요한 스킬은 달라야 한다. eval 스킬 ≈ self-mod 스킬일 때 DGM 스타일 정렬 자기 개선은 실패한다.",
     keyFeatures: ["alignment-free-self-improvement", "cross-domain-transfer-metric"],
   },
   {
     num: "V",
-    title: "Explicit Clarification",
-    oneLine: "7-dim Q/A record before any in-loop execution.",
-    body: "spec-kit /speckit.clarify pattern. [ASSUMPTION] markers for implicit agent assumptions; unresolved D1 (scope straddle) fails composite-guard.",
+    title: "명시적 명료화",
+    oneLine: "루프 내부 실행 전에 7차원 Q/A 기록.",
+    body: "spec-kit /speckit.clarify 패턴. 암묵적인 에이전트 가정에 대한 [ASSUMPTION] 마커. D1 (범위 가로지름) 미해결 시 composite-guard 실패.",
     keyFeatures: ["harness-clarify-gate"],
   },
   {
     num: "VI",
-    title: "No Contradiction",
-    oneLine: "Every iteration runs composite-guard.sh (schema + crosscheck 11/11).",
-    body: "Asymmetric cross-references, broken disambiguation, or triad shrink is reverted automatically.",
+    title: "모순 금지",
+    oneLine: "매 이터레이션은 composite-guard.sh를 실행한다 (스키마 + crosscheck 11/11).",
+    body: "비대칭 교차 참조, 명확한 구분 깨짐, 삼각 구조 축소는 자동으로 리버트된다.",
     keyFeatures: ["noise-aware-ratchet", "statistical-tc-runner", "llm-as-judge-audit"],
   },
   {
     num: "VII",
-    title: "LLM-Wiki Persistence",
-    oneLine: "Cross-loop knowledge lives in harness/wiki/ — keyword-triggered, half-life tracked.",
-    body: "Only project-scoped, cross-loop, committable knowledge store. Ephemeral outputs → harness/build/ (gitignored); user-scoped memories stay in CC memory dir.",
+    title: "LLM 위키 영속",
+    oneLine: "루프 횡단 지식은 harness/wiki/ 에 산다 — 키워드 트리거, 반감기 추적.",
+    body: "프로젝트 범위, 루프 횡단, 커밋 가능을 동시에 만족하는 유일한 지식 저장소. 일시적 출력은 harness/build/ (gitignored), 사용자 범위 메모리는 CC memory 디렉터리에 머문다.",
     keyFeatures: ["harness-llm-wiki", "voyager-skill-library", "reflexion"],
   },
   {
     num: "VIII",
-    title: "Git Is Memory",
-    oneLine: "Commit before Verify. Discard via git revert, not git reset.",
-    body: "Every iter commits experiment(<scope>): <desc> BEFORE Verify. Discarded candidates stay in history as lessons. Per-loop TSV row under autoresearch-harness-<slug>-results.tsv.",
+    title: "Git이 곧 메모리",
+    oneLine: "Verify 전에 커밋. 폐기는 git reset이 아니라 git revert로.",
+    body: "매 이터레이션은 Verify 이전에 experiment(<scope>): <desc> 를 커밋한다. 폐기된 후보는 교훈으로서 히스토리에 남는다. 루프별 TSV 행은 autoresearch-harness-<slug>-results.tsv 에 기록.",
     keyFeatures: ["cc-post-loop-slash", "sandboxed-open-ended-exploration"],
   },
   {
     num: "IX",
-    title: "Amendment Procedure",
-    oneLine: "Changing the Constitution requires its own scoped loop + [RATIFIED] marker.",
-    body: "Loop whose Scope: is this file alone. spec.md states which Article + why. After merge, every feature's applicability is re-audited.",
+    title: "개정 절차",
+    oneLine: "헌법 변경은 전용 범위 루프 + [RATIFIED] 마커를 요구한다.",
+    body: "Scope: 가 이 파일 하나뿐인 루프. spec.md가 어느 조항을 왜 바꾸는지 명시. 머지 후 모든 피처의 applicability를 재감사한다.",
     keyFeatures: ["harness-constitution"],
   },
 ];
@@ -102,9 +102,9 @@ export default function ConstitutionCards() {
                   background: open ? "rgba(212,168,83,0.1)" : "rgba(255,255,255,0.03)",
                 }}
               >
-                Article {a.num}
+                조항 {a.num}
               </span>
-              <span className="text-xs text-stone-600">{a.keyFeatures.length} feature{a.keyFeatures.length === 1 ? "" : "s"}</span>
+              <span className="text-xs text-stone-600">피처 {a.keyFeatures.length}개</span>
             </div>
             <div className="mt-2 text-sm font-semibold text-stone-200">{a.title}</div>
             <div className="mt-1 text-xs text-stone-400 leading-relaxed">{a.oneLine}</div>

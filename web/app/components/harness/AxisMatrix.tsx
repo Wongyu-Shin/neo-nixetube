@@ -14,47 +14,47 @@ type Feature = {
 };
 
 const FEATURES: Feature[] = [
-  { slug: "harness-constitution", axis1: "inner", axis2: "pre-loop", short: "9 Articles, pinned", article: "I, IX" },
-  { slug: "harness-loop-scaffold", axis1: "inner", axis2: "pre-loop", short: "loops/NNN dir template", article: "VIII" },
-  { slug: "harness-clarify-gate", axis1: "inner", axis2: "pre-loop", short: "7-dim Q/A pass", article: "V" },
-  { slug: "plan-mode-discipline", axis1: "inner", axis2: "pre-loop", short: "ExitPlanMode = HITL gate", article: "III" },
-  { slug: "swe-agent-aci", axis1: "inner", axis2: "pre-loop", short: "agent-computer interface", article: "I" },
-  { slug: "cc-hook-guardrail", axis1: "inner", axis2: "in-loop", short: "Bash deny hook", article: "III" },
-  { slug: "harness-graduated-confirm", axis1: "inner", axis2: "in-loop", short: "L0/L1/L2 tiers", article: "III" },
-  { slug: "harness-pause-resume", axis1: "inner", axis2: "in-loop", short: "checkpoint + resume", article: "III, VIII" },
-  { slug: "cc-post-loop-slash", axis1: "inner", axis2: "post-loop", short: "report.mdx writer", article: "VIII" },
-  { slug: "adas-meta-agent-search", axis1: "outer", axis2: "pre-loop", short: "search over agent programs", article: "IV" },
-  { slug: "alignment-free-self-improvement", axis1: "outer", axis2: "pre-loop", short: "split eval ≠ modify skill", article: "IV" },
-  { slug: "fpt-hyperagent-multirole", axis1: "outer", axis2: "pre-loop", short: "multi-role orchestration", article: "IV" },
-  { slug: "gcli-skill-pack-distribution", axis1: "outer", axis2: "pre-loop", short: "skill pack fetch", article: "II" },
-  { slug: "harness-llm-wiki", axis1: "outer", axis2: "pre-loop", short: "keyword-triggered store", article: "VII" },
-  { slug: "voyager-skill-library", axis1: "outer", axis2: "pre-loop", short: "reusable skill accrual", article: "VII" },
-  { slug: "dgm-h-archive-parent-selection", axis1: "outer", axis2: "in-loop", short: "parent pick from archive", article: "IV" },
-  { slug: "gcli-agent-run-telemetry", axis1: "outer", axis2: "in-loop", short: "per-iter event log", article: "VI, VIII" },
-  { slug: "harness-progress-cadence", axis1: "outer", axis2: "in-loop", short: "iter/milestone/statusline", article: "III" },
-  { slug: "harness-rip-test", axis1: "outer", axis2: "in-loop", short: "obsolescence probe", article: "II" },
-  { slug: "meta-hyperagents-metacognitive", axis1: "outer", axis2: "in-loop", short: "self-observing loop", article: "IV" },
-  { slug: "noise-aware-ratchet", axis1: "outer", axis2: "in-loop", short: "σ-aware MAX ratchet", article: "VI" },
+  { slug: "harness-constitution", axis1: "inner", axis2: "pre-loop", short: "9개 조항, 고정", article: "I, IX" },
+  { slug: "harness-loop-scaffold", axis1: "inner", axis2: "pre-loop", short: "loops/NNN 디렉터리 템플릿", article: "VIII" },
+  { slug: "harness-clarify-gate", axis1: "inner", axis2: "pre-loop", short: "7차원 Q/A 통과", article: "V" },
+  { slug: "plan-mode-discipline", axis1: "inner", axis2: "pre-loop", short: "ExitPlanMode = HITL 게이트", article: "III" },
+  { slug: "swe-agent-aci", axis1: "inner", axis2: "pre-loop", short: "에이전트-컴퓨터 인터페이스", article: "I" },
+  { slug: "cc-hook-guardrail", axis1: "inner", axis2: "in-loop", short: "Bash 거부 훅", article: "III" },
+  { slug: "harness-graduated-confirm", axis1: "inner", axis2: "in-loop", short: "L0/L1/L2 등급", article: "III" },
+  { slug: "harness-pause-resume", axis1: "inner", axis2: "in-loop", short: "체크포인트 + 재개", article: "III, VIII" },
+  { slug: "cc-post-loop-slash", axis1: "inner", axis2: "post-loop", short: "report.mdx 작성기", article: "VIII" },
+  { slug: "adas-meta-agent-search", axis1: "outer", axis2: "pre-loop", short: "에이전트 프로그램 탐색", article: "IV" },
+  { slug: "alignment-free-self-improvement", axis1: "outer", axis2: "pre-loop", short: "평가 ≠ 수정 스킬 분리", article: "IV" },
+  { slug: "fpt-hyperagent-multirole", axis1: "outer", axis2: "pre-loop", short: "다중 역할 오케스트레이션", article: "IV" },
+  { slug: "gcli-skill-pack-distribution", axis1: "outer", axis2: "pre-loop", short: "스킬 팩 가져오기", article: "II" },
+  { slug: "harness-llm-wiki", axis1: "outer", axis2: "pre-loop", short: "키워드 트리거 저장소", article: "VII" },
+  { slug: "voyager-skill-library", axis1: "outer", axis2: "pre-loop", short: "재사용 스킬 축적", article: "VII" },
+  { slug: "dgm-h-archive-parent-selection", axis1: "outer", axis2: "in-loop", short: "아카이브에서 부모 선택", article: "IV" },
+  { slug: "gcli-agent-run-telemetry", axis1: "outer", axis2: "in-loop", short: "이터레이션별 이벤트 로그", article: "VI, VIII" },
+  { slug: "harness-progress-cadence", axis1: "outer", axis2: "in-loop", short: "iter/마일스톤/상태 줄", article: "III" },
+  { slug: "harness-rip-test", axis1: "outer", axis2: "in-loop", short: "노후화 프로브", article: "II" },
+  { slug: "meta-hyperagents-metacognitive", axis1: "outer", axis2: "in-loop", short: "자기 관찰 루프", article: "IV" },
+  { slug: "noise-aware-ratchet", axis1: "outer", axis2: "in-loop", short: "σ 인지 MAX 래칫", article: "VI" },
   { slug: "plateau-detection", axis1: "outer", axis2: "in-loop", short: "patience + slope", article: "VI" },
-  { slug: "reflexion", axis1: "outer", axis2: "in-loop", short: "self-critique trace", article: "VII" },
-  { slug: "sandboxed-open-ended-exploration", axis1: "outer", axis2: "in-loop", short: "worktree sandbox", article: "III, VIII" },
-  { slug: "statistical-tc-runner", axis1: "outer", axis2: "in-loop", short: "n-trial verify", article: "VI" },
-  { slug: "cross-domain-transfer-metric", axis1: "outer", axis2: "post-loop", short: "held-out domain verify", article: "IV" },
-  { slug: "gcli-eval-compare-primitive", axis1: "outer", axis2: "post-loop", short: "paired A/B", article: "VI" },
-  { slug: "llm-as-judge-audit", axis1: "outer", axis2: "post-loop", short: "rubric grade, diff model", article: "VI" },
+  { slug: "reflexion", axis1: "outer", axis2: "in-loop", short: "자기 비평 트레이스", article: "VII" },
+  { slug: "sandboxed-open-ended-exploration", axis1: "outer", axis2: "in-loop", short: "워크트리 샌드박스", article: "III, VIII" },
+  { slug: "statistical-tc-runner", axis1: "outer", axis2: "in-loop", short: "n회 verify", article: "VI" },
+  { slug: "cross-domain-transfer-metric", axis1: "outer", axis2: "post-loop", short: "보류 도메인 verify", article: "IV" },
+  { slug: "gcli-eval-compare-primitive", axis1: "outer", axis2: "post-loop", short: "짝 A/B 비교", article: "VI" },
+  { slug: "llm-as-judge-audit", axis1: "outer", axis2: "post-loop", short: "루브릭 채점, 다른 모델", article: "VI" },
 ];
 
 const AXIS1_ORDER: Axis1[] = ["inner", "outer"];
 const AXIS2_ORDER: Axis2[] = ["pre-loop", "in-loop", "post-loop"];
 
 const AXIS1_LABEL: Record<Axis1, string> = {
-  inner: "INNER · .claude/, hooks, skills",
-  outer: "OUTER · scripts/, MCP, shell",
+  inner: "내부 · .claude/, 훅, 스킬",
+  outer: "외부 · scripts/, MCP, 셸",
 };
 const AXIS2_LABEL: Record<Axis2, string> = {
-  "pre-loop": "PRE-LOOP",
-  "in-loop": "IN-LOOP",
-  "post-loop": "POST-LOOP",
+  "pre-loop": "루프 진입 전",
+  "in-loop": "루프 내부",
+  "post-loop": "루프 종료 후",
 };
 
 const PHASE_COLOR: Record<Axis2, string> = {
@@ -138,7 +138,7 @@ export default function AxisMatrix() {
   return (
     <figure className="my-8">
       <div className="flex flex-wrap gap-2 justify-center mb-4 text-xs">
-        <span className="text-stone-500 self-center mr-2">filter:</span>
+        <span className="text-stone-500 self-center mr-2">필터:</span>
         {AXIS1_ORDER.map((a) => (
           <button
             key={a}
@@ -184,7 +184,7 @@ export default function AxisMatrix() {
             }}
             className="px-3 py-1 rounded-full border border-stone-800 text-stone-500 hover:text-stone-300"
           >
-            reset
+            초기화
           </button>
         )}
       </div>
@@ -194,7 +194,7 @@ export default function AxisMatrix() {
         className="w-full max-w-5xl mx-auto"
         xmlns="http://www.w3.org/2000/svg"
         role="img"
-        aria-label="Harness 2x2 axis matrix plotting 28 features by axis1 (inner/outer) and axis2 (pre/in/post-loop)"
+        aria-label="28개 피처를 axis1 (내부/외부) 와 axis2 (루프 진입 전/내부/종료 후) 로 분류한 하네스 2x3 축 매트릭스"
       >
         <defs>
           <radialGradient id="am-bg" cx="50%" cy="45%" r="60%">
@@ -310,7 +310,7 @@ export default function AxisMatrix() {
           fontFamily="ui-monospace, monospace"
           opacity="0.8"
         >
-          ↕ rippability boundary (Article I, II)
+          ↕ 흡수 가능성 경계 (조항 I, II)
         </text>
 
         {/* axis2 column headers */}
@@ -369,7 +369,7 @@ export default function AxisMatrix() {
               fontWeight="600"
               style={{ pointerEvents: "none" }}
             >
-              {a1.toUpperCase()}
+              {a1 === "inner" ? "내부" : "외부"}
             </text>
             <text
               x={24}
@@ -470,17 +470,17 @@ export default function AxisMatrix() {
             fontSize="10"
             fontFamily="ui-monospace, monospace"
           >
-            28 features · axis1 fill = inner/outer · axis2 ring = phase
+            28개 피처 · axis1 채움 = 내부/외부 · axis2 테두리 = 단계
           </text>
           <g transform="translate(0, 14)">
             <circle cx="6" cy="6" r="6" fill={AXIS1_COLOR.inner} stroke={PHASE_COLOR["pre-loop"]} strokeWidth="1.5" />
-            <text x="18" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">inner · pre-loop (5)</text>
+            <text x="18" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">내부 · 진입 전 (5)</text>
             <circle cx="170" cy="6" r="6" fill={AXIS1_COLOR.inner} stroke={PHASE_COLOR["in-loop"]} strokeWidth="1.5" />
-            <text x="182" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">inner · in-loop (3)</text>
+            <text x="182" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">내부 · 내부 (3)</text>
             <circle cx="320" cy="6" r="6" fill={AXIS1_COLOR.outer} stroke={PHASE_COLOR["in-loop"]} strokeWidth="1.5" />
-            <text x="332" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">outer · in-loop (10)</text>
+            <text x="332" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">외부 · 내부 (10)</text>
             <circle cx="480" cy="6" r="6" fill={AXIS1_COLOR.outer} stroke={PHASE_COLOR["post-loop"]} strokeWidth="1.5" />
-            <text x="492" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">outer · post-loop (3)</text>
+            <text x="492" y="10" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">외부 · 종료 후 (3)</text>
           </g>
         </g>
       </svg>
@@ -515,22 +515,22 @@ export default function AxisMatrix() {
                 axis2: {activeFeature.axis2}
               </span>
               <span className="text-xs text-stone-500">
-                binds Article {activeFeature.article}
+                조항 {activeFeature.article} 결속
               </span>
             </div>
             <div className="mt-2 text-stone-300">{activeFeature.short}</div>
           </div>
         ) : (
           <div className="text-stone-500 italic">
-            28 features across the 2×3 matrix. Hover a node to inspect; click a row/column header to isolate.
-            The dashed line between rows is the <span className="text-[#C17B5E]">rippability boundary</span> (Article I + II) —
-            when Claude Code absorbs an outer feature upstream, it crosses this line and becomes removable.
+            2×3 매트릭스 위의 28개 피처. 노드 위에 마우스를 올리면 상세가 뜨고, 행/열 헤더를 클릭하면 분리 표시된다.
+            행 사이 점선이 <span className="text-[#C17B5E]">흡수 가능성 경계</span> 다 (조항 I + II) —
+            Claude Code가 외부 피처를 본체로 흡수하면, 그 피처는 이 선을 넘어 제거 가능해진다.
           </div>
         )}
       </div>
 
       <figcaption className="text-xs text-stone-500 text-center mt-2">
-        2×3 axis matrix · inner vs outer (rippability) × pre/in/post-loop (HITL phase, Article III)
+        2×3 축 매트릭스 · 내부 vs 외부 (흡수 가능성) × 루프 진입 전/내부/종료 후 (HITL 단계, 조항 III)
       </figcaption>
     </figure>
   );

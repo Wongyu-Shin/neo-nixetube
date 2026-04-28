@@ -15,89 +15,89 @@ const PHASES: Phase[] = [
   {
     id: "scaffold",
     num: 0,
-    title: "Scaffold",
-    detail: "/harness:new-loop <slug> creates loops/NNN-<slug>/ with spec, clarif, plan skeletons.",
+    title: "스캐폴드",
+    detail: "/harness:new-loop <slug> 가 loops/NNN-<slug>/ 를 spec, clarif, plan 스켈레톤과 함께 생성한다.",
     features: ["harness-loop-scaffold"],
     hitl: "allowed",
   },
   {
     id: "clarify",
     num: 1,
-    title: "Clarify (7-dim)",
-    detail: "Scope, metric, direction, HITL, stop, wiki, guard. [ASSUMPTION] markers on D1 fail guard.",
+    title: "명료화 (7차원)",
+    detail: "Scope, metric, direction, HITL, stop, wiki, guard. D1의 [ASSUMPTION] 마커는 가드를 실패시킨다.",
     features: ["harness-clarify-gate", "harness-constitution"],
     hitl: "allowed",
   },
   {
     id: "plan",
     num: 2,
-    title: "Plan + ExitPlanMode",
-    detail: "autoresearch:plan wizard produces config, dry-runs verify. Operator ExitPlanMode = sole HITL gate.",
+    title: "계획 + ExitPlanMode",
+    detail: "autoresearch:plan 위저드가 컨피그를 생성하고 verify를 드라이런한다. 운영자의 ExitPlanMode가 유일한 HITL 게이트.",
     features: ["plan-mode-discipline"],
     hitl: "allowed",
   },
   {
     id: "review",
     num: 3,
-    title: "Review",
-    detail: "Per-iter: git log, TSV, wiki keyword-surfaced, reflexion entries.",
+    title: "리뷰",
+    detail: "이터레이션마다: git log, TSV, 키워드로 표면화된 위키, reflexion 항목.",
     features: ["harness-llm-wiki", "reflexion"],
     hitl: "forbidden",
   },
   {
     id: "ideate-modify",
     num: 4,
-    title: "Ideate → Modify → Commit",
-    detail: "L0 silent, L1 notify+30s auto-approve, L2 pause+blocking. Commit before Verify (Article VIII).",
+    title: "발상 → 수정 → 커밋",
+    detail: "L0 침묵, L1 알림 + 30초 자동 승인, L2 일시 정지 + 블로킹. Verify 전에 커밋 (조항 VIII).",
     features: ["harness-graduated-confirm", "cc-hook-guardrail", "sandboxed-open-ended-exploration"],
     hitl: "carve-out",
   },
   {
     id: "verify",
     num: 5,
-    title: "Verify + Guard",
-    detail: "n-trial statistical verify. composite-guard.sh must pass (schema + crosscheck 11/11).",
+    title: "검증 + 가드",
+    detail: "n회 통계적 verify. composite-guard.sh 통과 필수 (스키마 + crosscheck 11/11).",
     features: ["statistical-tc-runner", "harness-rip-test"],
     hitl: "forbidden",
   },
   {
     id: "decide",
     num: 6,
-    title: "Decide keep/discard/rework",
-    detail: "Noise-aware MAX ratchet. Discards use git revert, not reset (Article VIII).",
+    title: "keep/discard/rework 결정",
+    detail: "노이즈 인지 MAX 래칫. 폐기는 git reset이 아니라 git revert로 (조항 VIII).",
     features: ["noise-aware-ratchet", "dgm-h-archive-parent-selection"],
     hitl: "forbidden",
   },
   {
     id: "log",
     num: 7,
-    title: "Log + cadence",
-    detail: "Per-iter line, 5-iter milestone block, persistent statusline, telemetry event.",
+    title: "로그 + 케이던스",
+    detail: "이터레이션 행, 5회마다 마일스톤 블록, 영구 상태 줄, 텔레메트리 이벤트.",
     features: ["harness-progress-cadence", "gcli-agent-run-telemetry"],
     hitl: "forbidden",
   },
   {
     id: "repeat",
     num: 8,
-    title: "Repeat | plateau | bounded",
-    detail: "Stop on Iterations=N, goal-achieved, plateau (patience+slope), or operator abandon.",
+    title: "반복 | 플래토 | 종료",
+    detail: "Iterations=N 도달, 목표 달성, 플래토 (patience + slope), 또는 운영자의 포기에서 정지한다.",
     features: ["plateau-detection", "harness-pause-resume"],
     hitl: "carve-out",
   },
   {
     id: "report",
     num: 9,
-    title: "Report + wiki-add",
-    detail: "/harness:report → report.mdx. /harness:wiki-add → keyword-triggered entries. Optional: judge audit, cross-domain, A/B.",
+    title: "리포트 + wiki-add",
+    detail: "/harness:report → report.mdx. /harness:wiki-add → 키워드 트리거 항목. 선택: 저지 감사, 교차 도메인, A/B.",
     features: ["cc-post-loop-slash", "llm-as-judge-audit", "cross-domain-transfer-metric", "gcli-eval-compare-primitive"],
     hitl: "allowed",
   },
 ];
 
 const GROUPS: { label: string; ids: string[]; color: string; article: string }[] = [
-  { label: "PRE-LOOP", ids: ["scaffold", "clarify", "plan"], color: "#7B9EB8", article: "V, III" },
-  { label: "IN-LOOP", ids: ["review", "ideate-modify", "verify", "decide", "log", "repeat"], color: "#D4A853", article: "III, VI, VIII" },
-  { label: "POST-LOOP", ids: ["report"], color: "#6BA368", article: "VII, VIII" },
+  { label: "루프 진입 전", ids: ["scaffold", "clarify", "plan"], color: "#7B9EB8", article: "V, III" },
+  { label: "루프 내부", ids: ["review", "ideate-modify", "verify", "decide", "log", "repeat"], color: "#D4A853", article: "III, VI, VIII" },
+  { label: "루프 종료 후", ids: ["report"], color: "#6BA368", article: "VII, VIII" },
 ];
 
 const HITL_COLOR: Record<Phase["hitl"], string> = {
@@ -107,9 +107,9 @@ const HITL_COLOR: Record<Phase["hitl"], string> = {
 };
 
 const HITL_LABEL: Record<Phase["hitl"], string> = {
-  allowed: "HITL allowed",
-  "carve-out": "HITL carve-out only",
-  forbidden: "HITL forbidden",
+  allowed: "HITL 허용",
+  "carve-out": "HITL 예외만",
+  forbidden: "HITL 금지",
 };
 
 export default function PhaseTimeline() {
@@ -130,7 +130,7 @@ export default function PhaseTimeline() {
         className="w-full max-w-5xl mx-auto"
         xmlns="http://www.w3.org/2000/svg"
         role="img"
-        aria-label="10-phase harness timeline from scaffold to report"
+        aria-label="스캐폴드부터 리포트까지의 10단계 하네스 타임라인"
       >
         <defs>
           <linearGradient id="pt-track" x1="0" x2="1" y1="0" y2="0">
@@ -184,7 +184,7 @@ export default function PhaseTimeline() {
                 fontSize="9"
                 fontFamily="ui-monospace, monospace"
               >
-                Article {g.article}
+                조항 {g.article}
               </text>
             </g>
           );
@@ -265,14 +265,14 @@ export default function PhaseTimeline() {
         {/* legend */}
         <g transform={`translate(${PAD}, ${H - 40})`}>
           <text x="0" y="0" fill="#888" fontSize="10" fontFamily="ui-monospace, monospace">
-            top dot = HITL policy (Article III):
+            상단 점 = HITL 정책 (조항 III):
           </text>
           <circle cx="4" cy="18" r="4" fill={HITL_COLOR.allowed} />
-          <text x="14" y="22" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">allowed</text>
+          <text x="14" y="22" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">허용</text>
           <circle cx="104" cy="18" r="4" fill={HITL_COLOR["carve-out"]} />
-          <text x="114" y="22" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">carve-out</text>
+          <text x="114" y="22" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">예외</text>
           <circle cx="214" cy="18" r="4" fill={HITL_COLOR.forbidden} />
-          <text x="224" y="22" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">forbidden</text>
+          <text x="224" y="22" fill="#aaa" fontSize="10" fontFamily="ui-monospace, monospace">금지</text>
         </g>
       </svg>
 
@@ -280,7 +280,7 @@ export default function PhaseTimeline() {
         {activePhase ? (
           <div>
             <div className="flex flex-wrap items-baseline gap-3">
-              <span className="text-stone-500 font-mono text-xs">phase {activePhase.num}</span>
+              <span className="text-stone-500 font-mono text-xs">단계 {activePhase.num}</span>
               <span className="text-base font-semibold text-stone-200">{activePhase.title}</span>
               <span
                 className="text-xs px-2 py-0.5 rounded border"
@@ -303,8 +303,8 @@ export default function PhaseTimeline() {
           </div>
         ) : (
           <div className="text-stone-500 italic">
-            Hover a phase node. HITL policy per phase follows Article III —
-            pre/post-loop allow active HITL, in-loop is forbidden except for L2 graduated-confirm and Ctrl-C.
+            단계 노드 위에 마우스를 올린다. 단계별 HITL 정책은 조항 III를 따른다 —
+            루프 진입 전/종료 후는 능동적 HITL을 허용하고, 루프 내부는 L2 단계적 확인과 Ctrl-C를 제외하면 금지된다.
           </div>
         )}
       </div>
