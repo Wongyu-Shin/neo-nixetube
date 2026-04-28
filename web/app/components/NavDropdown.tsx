@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 
 export interface DropdownGroup {
@@ -83,7 +84,7 @@ export function NavDropdown({ item, pathname }: { item: DropdownItem; pathname: 
                 {group.items.map((entry) => {
                   const active = pathname === entry.href || pathname.startsWith(entry.href + "/");
                   return (
-                    <a
+                    <Link
                       key={entry.href}
                       href={entry.href}
                       role="menuitem"
@@ -98,7 +99,7 @@ export function NavDropdown({ item, pathname }: { item: DropdownItem; pathname: 
                         {entry.label}
                       </div>
                       {entry.hint ? <div className="text-xs text-stone-500 mt-0.5">{entry.hint}</div> : null}
-                    </a>
+                    </Link>
                   );
                 })}
               </div>
