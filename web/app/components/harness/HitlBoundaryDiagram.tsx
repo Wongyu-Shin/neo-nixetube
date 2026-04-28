@@ -7,66 +7,66 @@ type Zone = "pre" | "in" | "post";
 const ACTIONS = [
   {
     id: "goal-design",
-    label: "Goal design",
+    label: "목표 설계",
     zone: "pre" as Zone,
     allowed: true,
-    note: "active HITL",
+    note: "능동 HITL",
   },
   {
     id: "clarify",
     label: "/harness:clarify",
     zone: "pre" as Zone,
     allowed: true,
-    note: "Art. V",
+    note: "조항 V",
   },
   {
     id: "plan-approve",
     label: "ExitPlanMode",
     zone: "pre" as Zone,
     allowed: true,
-    note: "operator approves",
+    note: "운영자 승인",
   },
   {
     id: "askuser-in-loop",
-    label: "AskUserQuestion (in-loop)",
+    label: "AskUserQuestion (루프 내부)",
     zone: "in" as Zone,
     allowed: false,
-    note: "protocol violation",
+    note: "프로토콜 위반",
   },
   {
     id: "guardrail-deny",
-    label: "hook-guardrail deny → graduated-confirm",
+    label: "hook-guardrail 거부 → 단계적 확인",
     zone: "in" as Zone,
     allowed: true,
-    note: "exception (a)",
+    note: "예외 (a)",
   },
   {
     id: "ctrl-c",
-    label: "Ctrl+C emergency stop",
+    label: "Ctrl+C 비상 정지",
     zone: "in" as Zone,
     allowed: true,
-    note: "exception (b)",
+    note: "예외 (b)",
   },
   {
     id: "handback",
-    label: "/harness:report handback",
+    label: "/harness:report 인계",
     zone: "post" as Zone,
     allowed: true,
-    note: "active HITL",
+    note: "능동 HITL",
   },
   {
     id: "rubric-audit",
     label: "llm-as-judge-audit",
     zone: "post" as Zone,
     allowed: true,
-    note: "optional",
+    note: "선택",
   },
 ];
 
 const ZONE_META: Record<Zone, { label: string; color: string; x: number; w: number }> = {
-  pre: { label: "PRE-LOOP", color: "#6BA368", x: 20, w: 220 },
-  in: { label: "IN-LOOP", color: "#FF8C42", x: 260, w: 220 },
-  post: { label: "POST-LOOP", color: "#7B9EB8", x: 500, w: 220 },
+  pre: { label: "루프 진입 전", color: "#6BA368", x: 20, w: 220 },
+  in: { label: "루프 내부", color: "#FF8C42", x: 260, w: 220 },
+  post: { label: "루프 종료 후", color: "#7B9EB8", x: 500, w: 220 },
 };
 
 export default function HitlBoundaryDiagram() {
@@ -79,7 +79,7 @@ export default function HitlBoundaryDiagram() {
         viewBox="0 0 740 320"
         className="w-full"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Article III HITL boundary — pre/in/post-loop zones"
+        aria-label="조항 III HITL 경계 — 루프 진입 전/내부/종료 후 영역"
       >
         <defs>
           <linearGradient id="hitl-pre" x1="0" y1="0" x2="0" y2="1">
@@ -205,11 +205,11 @@ export default function HitlBoundaryDiagram() {
       </svg>
 
       <figcaption className="text-xs text-stone-500 mt-3 text-center">
-        <strong className="text-[#D4A853]">Article III</strong> — HITL allowed pre-loop and post-loop; forbidden in-loop except graduated-confirm + Ctrl+C.
+        <strong className="text-[#D4A853]">조항 III</strong> — HITL은 루프 진입 전과 종료 후에 허용된다. 루프 내부에서는 단계적 확인과 Ctrl+C를 제외하면 금지.
         {active && (
           <span className="block mt-1 text-stone-400">
             <code className="text-[#D4A853]">{active.label}</code>
-            {active.allowed ? " — allowed. " : " — FORBIDDEN. "}
+            {active.allowed ? " — 허용. " : " — 금지. "}
             {active.note}.
           </span>
         )}

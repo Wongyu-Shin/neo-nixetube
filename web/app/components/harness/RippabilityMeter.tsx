@@ -19,7 +19,7 @@ const SCENARIOS: Array<{
     model: "claude-opus-4-7",
     tcOutcome: "needed",
     explanation:
-      "Fresh session without the skill-wrapper does not cite Article III unprompted. tc_script passes — feature still load-bearing.",
+      "스킬 래퍼 없이 시작한 새 세션은 조항 III를 프롬프트 없이 인용하지 않는다. tc_script 통과 — 피처가 여전히 하중을 떠받친다.",
   },
   {
     id: "edge",
@@ -28,7 +28,7 @@ const SCENARIOS: Array<{
     model: "claude-opus-4-7",
     tcOutcome: "borderline",
     explanation:
-      "Agent sometimes produces a Clarifications section unprompted but not always. Statistical tc_script (N=10 runs) needed to disambiguate.",
+      "에이전트가 가끔 Clarifications 절을 프롬프트 없이 만들지만 항상은 아니다. 통계적 tc_script (N=10회) 가 모호함 해소에 필요하다.",
   },
   {
     id: "absorbed",
@@ -37,14 +37,14 @@ const SCENARIOS: Array<{
     model: "claude-opus-5-x",
     tcOutcome: "absorbed",
     explanation:
-      "CC ships native post-loop slash-command hook. rippable_check fires green. Feature must be removed per Article II.",
+      "CC가 네이티브 루프 종료 후 슬래시 명령 훅을 출하한다. rippable_check이 초록으로 발화. 조항 II에 따라 피처는 제거되어야 한다.",
   },
 ];
 
 const STATE_META: Record<State, { color: string; label: string; x: number }> = {
-  needed: { color: "#6BA368", label: "STILL NEEDED", x: 60 },
-  borderline: { color: "#D4A853", label: "BORDERLINE", x: 280 },
-  absorbed: { color: "#FF5555", label: "ABSORBED — RIP", x: 500 },
+  needed: { color: "#6BA368", label: "여전히 필요", x: 60 },
+  borderline: { color: "#D4A853", label: "경계", x: 280 },
+  absorbed: { color: "#FF5555", label: "흡수됨 — 폐기", x: 500 },
 };
 
 export default function RippabilityMeter() {
@@ -62,7 +62,7 @@ export default function RippabilityMeter() {
         viewBox="0 0 680 280"
         className="w-full"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Article II rippability meter"
+        aria-label="조항 II 흡수 가능성 미터"
       >
         <defs>
           <linearGradient id="rip-scale" x1="0" y1="0" x2="1" y2="0">
@@ -125,7 +125,7 @@ export default function RippabilityMeter() {
         <g transform="translate(40, 160)">
           <rect width="600" height="92" rx="8" fill="#1a1208" stroke={meta.color} strokeOpacity="0.5" strokeWidth="1" />
           <text x="16" y="22" fontFamily="ui-monospace, monospace" fontSize="9" fill="#D4A853" opacity="0.6" letterSpacing="2">
-            FEATURE
+            피처
           </text>
           <text x="16" y="42" fontFamily="ui-monospace, monospace" fontSize="13" fill="#e8dbc2" fontWeight="500">
             {scenario.feature}
@@ -161,7 +161,7 @@ export default function RippabilityMeter() {
       </div>
 
       <figcaption className="text-xs text-stone-500 text-center mt-3">
-        <strong className="text-[#D4A853]">Article II</strong> — <code>tc_script</code> + <code>rippable_check</code> decide when a feature has been absorbed upstream.
+        <strong className="text-[#D4A853]">조항 II</strong> — <code>tc_script</code> + <code>rippable_check</code> 가 피처가 본체로 흡수되었는지를 판정한다.
       </figcaption>
     </figure>
   );

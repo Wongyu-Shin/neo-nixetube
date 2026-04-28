@@ -5,33 +5,33 @@ import { useState } from "react";
 const STEPS = [
   {
     n: 1,
-    label: "Scope lock",
-    detail: "A loop is opened whose Scope: is harness/CONSTITUTION.md alone — nothing else.",
-    cite: "Art. IV",
+    label: "Scope 잠금",
+    detail: "Scope: 가 harness/CONSTITUTION.md 하나뿐인 루프를 연다 — 다른 파일 없음.",
+    cite: "조항 IV",
   },
   {
     n: 2,
-    label: "Amendment spec",
-    detail: "loops/NNN-constitutional-amendment/spec.md states WHICH Article and WHY.",
-    cite: "Art. IX.2",
+    label: "개정 spec",
+    detail: "loops/NNN-constitutional-amendment/spec.md가 어느 조항을 왜 바꾸는지 명시한다.",
+    cite: "조항 IX.2",
   },
   {
     n: 3,
-    label: "Clarification + [RATIFIED]",
-    detail: "Operator writes [RATIFIED] in the Clarifications section of the spec.",
-    cite: "Art. V + Art. IX.3",
+    label: "명료화 + [RATIFIED]",
+    detail: "운영자가 spec의 Clarifications 절에 [RATIFIED] 마커를 적는다.",
+    cite: "조항 V + 조항 IX.3",
   },
   {
     n: 4,
-    label: "Iteration + Guard",
-    detail: "Loop runs. Every iter: commit → composite-guard (schema + 11/11 crosscheck) → verify.",
-    cite: "Art. VI + Art. VIII",
+    label: "이터레이션 + 가드",
+    detail: "루프 실행. 매 이터레이션: 커밋 → composite-guard (스키마 + 11/11 crosscheck) → verify.",
+    cite: "조항 VI + 조항 VIII",
   },
   {
     n: 5,
-    label: "Post-merge audit",
-    detail: "Every feature's applicability is re-checked against the amended Articles.",
-    cite: "Art. IX.4",
+    label: "머지 후 감사",
+    detail: "모든 피처의 applicability를 개정된 조항에 비추어 재검토한다.",
+    cite: "조항 IX.4",
   },
 ];
 
@@ -44,7 +44,7 @@ export default function AmendmentProcedureFlow() {
         viewBox="0 0 820 260"
         className="w-full"
         xmlns="http://www.w3.org/2000/svg"
-        aria-label="Article IX amendment procedure — self-referential flow"
+        aria-label="조항 IX 개정 절차 — 자기 참조 플로우"
       >
         <defs>
           <linearGradient id="amend-grad" x1="0" y1="0" x2="1" y2="0">
@@ -167,7 +167,7 @@ export default function AmendmentProcedureFlow() {
           opacity="0.55"
           letterSpacing="1"
         >
-          this procedure governs changes to this procedure
+          이 절차가 자기 자신의 변경을 관장한다
         </text>
       </svg>
 
@@ -176,18 +176,18 @@ export default function AmendmentProcedureFlow() {
       >
         {active ? (
           <>
-            <strong className="text-[#6BA368]">Step {active} — {STEPS[active - 1].label}</strong>
+            <strong className="text-[#6BA368]">단계 {active} — {STEPS[active - 1].label}</strong>
             <span className="block text-stone-400 mt-1">{STEPS[active - 1].detail}</span>
           </>
         ) : (
           <span className="text-stone-400 italic">
-            Hover a step. Article IX is self-referential — changing it requires using the procedure it describes.
+            단계 위에 마우스를 올린다. 조항 IX는 자기 참조적이다 — 이를 바꾸려면 자신이 기술하는 절차를 거쳐야 한다.
           </span>
         )}
       </div>
 
       <figcaption className="text-xs text-stone-500 text-center mt-3">
-        <strong className="text-[#6BA368]">Article IX</strong> — Amendment procedure is fixed-point: it applies to itself.
+        <strong className="text-[#6BA368]">조항 IX</strong> — 개정 절차는 고정점이다: 자기 자신에게 적용된다.
       </figcaption>
     </figure>
   );

@@ -36,12 +36,12 @@ const ARTICLES: Article[] = [
   {
     id: "I",
     roman: "I",
-    title: "Axis Classification",
-    oneLine: "Every feature declares axis1 (inner|outer) × axis2 (pre|in|post-loop).",
+    title: "축 분류",
+    oneLine: "모든 피처는 axis1 (내부|외부) × axis2 (진입 전|내부|종료 후) 를 선언한다.",
     must: [
-      "axis1 ∈ {inner, outer} — the rippability boundary",
-      "axis2 ∈ {pre-loop, in-loop, post-loop} — the HITL boundary",
-      "exactly one primary axis2, secondaries allowed as fractal links",
+      "axis1 ∈ {내부, 외부} — 흡수 가능성 경계",
+      "axis2 ∈ {진입 전, 내부, 종료 후} — HITL 경계",
+      "일차 axis2는 정확히 하나, 이차 axis2는 프랙탈 링크로 허용",
     ],
     domain: "classify",
     features: ["harness-loop-scaffold", "adas-meta-agent-search"],
@@ -51,12 +51,12 @@ const ARTICLES: Article[] = [
   {
     id: "II",
     roman: "II",
-    title: "Rippability",
-    oneLine: "Every feature carries a tc_script + rippable_check + applicability.",
+    title: "흡수 가능성",
+    oneLine: "모든 피처는 tc_script + rippable_check + applicability를 가진다.",
     must: [
-      "rippable_check frontmatter — empirical absorption signal",
-      "tc_script passes when still needed, fails when absorbed",
-      "applicability block declares CC semver + model list",
+      "rippable_check 프론트매터 — 경험적 흡수 신호",
+      "tc_script은 여전히 필요할 때 통과, 흡수되면 실패",
+      "applicability 블록은 CC semver + 모델 목록을 선언",
     ],
     domain: "mechanism",
     features: ["harness-rip-test", "statistical-tc-runner"],
@@ -66,12 +66,12 @@ const ARTICLES: Article[] = [
   {
     id: "III",
     roman: "III",
-    title: "HITL Belongs Outside the Loop",
-    oneLine: "No AskUserQuestion in-loop. Pre-loop / post-loop only.",
+    title: "HITL은 루프 바깥에 산다",
+    oneLine: "루프 내부 AskUserQuestion 금지. 진입 전 / 종료 후만 허용.",
     must: [
-      "pre-loop — goal design, clarify, plan approval (active HITL allowed)",
-      "post-loop — result handback, rubric audit (active HITL allowed)",
-      "in-loop — forbidden, except graduated confirm + Ctrl+C",
+      "루프 진입 전 — 목표 설계, 명료화, 계획 승인 (능동 HITL 허용)",
+      "루프 종료 후 — 결과 인계, 루브릭 감사 (능동 HITL 허용)",
+      "루프 내부 — 금지, 단계적 확인과 Ctrl+C는 예외",
     ],
     domain: "boundary",
     features: ["harness-graduated-confirm", "cc-hook-guardrail", "plan-mode-discipline"],
@@ -81,12 +81,12 @@ const ARTICLES: Article[] = [
   {
     id: "IV",
     roman: "IV",
-    title: "Alignment-Free Separation",
-    oneLine: "Eval skill ≠ harness-modification skill. Scope lives in exactly one domain.",
+    title: "정렬 무관 분리",
+    oneLine: "평가 스킬 ≠ 하네스 수정 스킬. Scope는 정확히 한 도메인에만 산다.",
     must: [
-      "harness domain = {harness/, scripts/harness/, .claude/}",
-      "content domain = everything else (cad/, sim/, reason/, …)",
-      "one loop Scope: crosses neither",
+      "하네스 도메인 = {harness/, scripts/harness/, .claude/}",
+      "콘텐츠 도메인 = 그 외 모두 (cad/, sim/, reason/, …)",
+      "한 루프의 Scope는 두 도메인을 가로지르지 못한다",
     ],
     domain: "boundary",
     features: [
@@ -100,12 +100,12 @@ const ARTICLES: Article[] = [
   {
     id: "V",
     roman: "V",
-    title: "Explicit Clarification",
-    oneLine: "Loop spec MUST have a Clarifications section before in-loop.",
+    title: "명시적 명료화",
+    oneLine: "루프 spec은 루프 내부 진입 전에 Clarifications 절을 반드시 가져야 한다.",
     must: [
-      "every wizard question + operator answer recorded",
-      "implicit assumptions flagged [ASSUMPTION]",
-      "gate enforced by harness-clarify-gate",
+      "모든 위저드 질문과 운영자의 답을 기록",
+      "암묵적 가정은 [ASSUMPTION] 으로 표시",
+      "harness-clarify-gate가 게이트를 강제",
     ],
     domain: "process",
     features: ["harness-clarify-gate"],
@@ -115,12 +115,12 @@ const ARTICLES: Article[] = [
   {
     id: "VI",
     roman: "VI",
-    title: "No Contradiction",
-    oneLine: "Every iter runs composite-guard: schema + crosscheck = 11/11.",
+    title: "모순 금지",
+    oneLine: "매 이터레이션은 composite-guard를 실행한다: 스키마 + crosscheck = 11/11.",
     must: [
-      "harness/composite-guard.sh enforces both guards",
-      "asymmetric cross-ref / broken disambig / shrunk triad = auto-revert",
-      "Guard runs before Verify",
+      "harness/composite-guard.sh가 두 가드를 함께 강제",
+      "비대칭 교차 참조 / 명확한 구분 깨짐 / 삼각 구조 축소 = 자동 리버트",
+      "Verify 전에 가드 실행",
     ],
     domain: "mechanism",
     features: ["statistical-tc-runner", "llm-as-judge-audit"],
@@ -130,12 +130,12 @@ const ARTICLES: Article[] = [
   {
     id: "VII",
     roman: "VII",
-    title: "LLM-Wiki Persistence",
-    oneLine: "Cross-loop knowledge lives in harness/wiki/<slug>.md — nowhere else.",
+    title: "LLM 위키 영속",
+    oneLine: "루프 횡단 지식은 harness/wiki/<slug>.md 에만 산다 — 그 외는 없음.",
     must: [
-      "ephemeral outputs → harness/build/ (gitignored)",
-      "user-scoped memories → CC memory dir",
-      "project + cross-loop + committable → wiki only",
+      "일시적 출력 → harness/build/ (gitignored)",
+      "사용자 범위 메모리 → CC memory 디렉터리",
+      "프로젝트 + 루프 횡단 + 커밋 가능 → 위키만",
     ],
     domain: "memory",
     features: ["harness-llm-wiki", "voyager-skill-library", "reflexion"],
@@ -145,12 +145,12 @@ const ARTICLES: Article[] = [
   {
     id: "VIII",
     roman: "VIII",
-    title: "Git Is Memory",
-    oneLine: "Commit BEFORE Verify. git revert on discard — never reset --hard.",
+    title: "Git이 곧 메모리",
+    oneLine: "Verify 전에 커밋. 폐기는 git revert — reset --hard 절대 금지.",
     must: [
-      "experiment(<scope>): <desc> commit before Verify",
-      "discard via git revert — keep discarded candidate in history",
-      "per-loop TSV row appended each iter",
+      "Verify 전에 experiment(<scope>): <desc> 커밋",
+      "폐기는 git revert로 — 폐기된 후보를 히스토리에 보존",
+      "루프별 TSV 행을 이터레이션마다 추가",
     ],
     domain: "memory",
     features: ["harness-loop-scaffold", "harness-progress-cadence"],
@@ -160,13 +160,13 @@ const ARTICLES: Article[] = [
   {
     id: "IX",
     roman: "IX",
-    title: "Amendment Procedure",
-    oneLine: "This Constitution can only be changed via the procedure it describes.",
+    title: "개정 절차",
+    oneLine: "이 헌법은 자신이 기술하는 절차를 통해서만 변경될 수 있다.",
     must: [
-      "a loop whose Scope: is this file alone",
-      "spec states which Article changes + why",
-      "[RATIFIED] marker by operator in Clarifications",
-      "post-merge re-audit of every feature's applicability",
+      "Scope: 가 이 파일 하나뿐인 루프",
+      "spec.md가 어느 조항이 어떻게 왜 바뀌는지 명시",
+      "Clarifications 절에 운영자의 [RATIFIED] 마커",
+      "머지 후 모든 피처의 applicability 재감사",
     ],
     domain: "process",
     features: ["harness-constitution", "plan-mode-discipline"],
@@ -196,11 +196,11 @@ const ARCS: Array<{ from: ArticleId; to: ArticleId; kind: "cites" | "governs" | 
 ];
 
 const DOMAIN_LABEL: Record<Domain, string> = {
-  classify: "Classification",
-  mechanism: "Mechanism",
-  boundary: "Boundary",
-  process: "Process",
-  memory: "Memory",
+  classify: "분류",
+  mechanism: "메커니즘",
+  boundary: "경계",
+  process: "절차",
+  memory: "메모리",
 };
 
 const ARC_STROKE: Record<typeof ARCS[number]["kind"], string> = {
@@ -264,7 +264,7 @@ export default function ConstitutionArticlesMap() {
             viewBox="0 0 800 820"
             className="w-full"
             xmlns="http://www.w3.org/2000/svg"
-            aria-label="Harness Constitution — 9 Articles interactive map"
+            aria-label="하네스 헌법 — 9개 조항 인터랙티브 지도"
             role="img"
           >
             <defs>
@@ -556,7 +556,7 @@ export default function ConstitutionArticlesMap() {
                 </span>
                 <div>
                   <h3 className="text-stone-100 text-base font-medium m-0">
-                    Article {active.roman} — {active.title}
+                    조항 {active.roman} — {active.title}
                   </h3>
                   <div className="text-xs font-mono tracking-wider opacity-60 mt-1" style={{ color: active.color }}>
                     {DOMAIN_LABEL[active.domain].toUpperCase()}
@@ -569,7 +569,7 @@ export default function ConstitutionArticlesMap() {
               </p>
 
               <div className="text-xs text-stone-400 font-mono mb-2 opacity-70">
-                MUST CLAUSES
+                필수 조항
               </div>
               <ul className="mt-0 mb-4 space-y-1.5 list-none pl-0">
                 {active.must.map((m, i) => (
@@ -584,7 +584,7 @@ export default function ConstitutionArticlesMap() {
               </ul>
 
               <div className="text-xs text-stone-400 font-mono mb-2 opacity-70">
-                CATALOG FEATURES
+                카탈로그 피처
               </div>
               <div className="flex flex-wrap gap-1.5">
                 {active.features.map((f) => (
@@ -605,7 +605,7 @@ export default function ConstitutionArticlesMap() {
               {relatedIds.size > 0 && (
                 <>
                   <div className="text-xs text-stone-400 font-mono mb-2 mt-5 opacity-70">
-                    CONNECTED ARTICLES
+                    연결된 조항
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {[...relatedIds].map((rid) => {
@@ -620,7 +620,7 @@ export default function ConstitutionArticlesMap() {
                             color: ra.color,
                           }}
                         >
-                          Art. {ra.roman} · {ra.title}
+                          조항 {ra.roman} · {ra.title}
                         </button>
                       );
                     })}
@@ -631,26 +631,26 @@ export default function ConstitutionArticlesMap() {
           ) : (
             <div className="text-stone-400 text-sm">
               <div className="text-xs font-mono tracking-wider opacity-60 mb-3 text-[#D4A853]">
-                INTERACTIVE READER
+                인터랙티브 리더
               </div>
               <p className="m-0 mb-3">
-                Hover an Article node to read its one-line summary, MUST clauses,
-                and catalog features that implement it.
+                조항 노드 위에 마우스를 올리면 한 줄 요약, 필수 조항, 그것을 구현하는
+                카탈로그 피처가 보인다.
               </p>
               <p className="m-0 mb-3">
-                Click a node to pin it — connected Articles become clickable.
-                Article IX sits in the center because it <em>governs</em> the
-                other eight via the amendment procedure.
+                노드를 클릭하면 고정된다 — 연결된 조항이 클릭 가능해진다.
+                조항 IX는 개정 절차를 통해 나머지 8개를 <em>관장</em>하기 때문에
+                중앙에 자리한다.
               </p>
               <p className="m-0 text-xs opacity-60">
-                Source of truth: <code className="text-[#D4A853]">harness/CONSTITUTION.md</code>
+                권위 있는 출처: <code className="text-[#D4A853]">harness/CONSTITUTION.md</code>
               </p>
             </div>
           )}
         </aside>
       </div>
       <figcaption className="text-xs text-stone-500 text-center mt-3">
-        Interactive map of the 9 Articles — arcs show the cross-references observable inside <code>harness/CONSTITUTION.md</code>.
+        9개 조항의 인터랙티브 지도 — 호는 <code>harness/CONSTITUTION.md</code> 안에서 관측 가능한 교차 참조를 보여준다.
       </figcaption>
     </figure>
   );

@@ -19,65 +19,65 @@ type Art = {
 const ARTICLES: Art[] = [
   {
     n: "I",
-    title: "Axis Classification",
+    title: "축 분류",
     phase: "pre",
-    summary: "axis1 ∈ {inner, outer}; axis2 ∈ {pre, in, post}. Exactly one primary phase per feature.",
-    bindsTo: "spec.md — feature frontmatter",
+    summary: "axis1 ∈ {내부, 외부}; axis2 ∈ {진입 전, 내부, 종료 후}. 피처별 일차 단계는 정확히 하나.",
+    bindsTo: "spec.md — 피처 프론트매터",
   },
   {
     n: "II",
-    title: "Rippability",
+    title: "흡수 가능성",
     phase: "all",
-    summary: "Every feature carries rippable_check + tc_script + applicability. No aspirational rippability.",
-    bindsTo: "features/*.md frontmatter; harness-rip-test",
+    summary: "모든 피처는 rippable_check + tc_script + applicability를 가진다. 희망적 흡수 가능성은 금지.",
+    bindsTo: "features/*.md 프론트매터; harness-rip-test",
   },
   {
     n: "III",
-    title: "HITL Belongs Outside the Loop",
+    title: "HITL은 루프 바깥에 산다",
     phase: "in",
-    summary: "In-loop HITL forbidden except L2 graduated-confirm + emergency Ctrl+C.",
+    summary: "루프 내부 HITL 금지, 예외는 L2 단계적 확인과 비상 Ctrl+C 둘뿐.",
     bindsTo: "HarnessFlowDiagram, IterationPhaseRing, HITLBoundaryChart",
   },
   {
     n: "IV",
-    title: "Alignment-Free Separation",
+    title: "정렬 무관 분리",
     phase: "pre",
-    summary: "Eval-skill ≠ self-mod-skill. Scope lives in exactly one of {harness, content}.",
-    bindsTo: "D1 clarify dimension; ClarifyDimensionsRadar",
+    summary: "평가 스킬 ≠ 자기 수정 스킬. Scope는 {harness, content} 중 정확히 한쪽에만 산다.",
+    bindsTo: "D1 명료화 차원; ClarifyDimensionsRadar",
   },
   {
     n: "V",
-    title: "Explicit Clarification",
+    title: "명시적 명료화",
     phase: "pre",
-    summary: "Clarifications section mandatory before in-loop. Assumptions flagged [ASSUMPTION].",
+    summary: "루프 내부 진입 전 Clarifications 절 필수. 가정은 [ASSUMPTION] 으로 표시.",
     bindsTo: "/harness:clarify; harness-clarify-gate",
   },
   {
     n: "VI",
-    title: "No Contradiction",
+    title: "모순 금지",
     phase: "in",
-    summary: "Every iteration runs composite-guard = guard.sh + crosscheck.sh = 11/11.",
-    bindsTo: "Phase 6 Decide; composite-guard.sh",
+    summary: "매 이터레이션은 composite-guard = guard.sh + crosscheck.sh = 11/11 을 실행한다.",
+    bindsTo: "Phase 6 결정; composite-guard.sh",
   },
   {
     n: "VII",
-    title: "LLM-Wiki Persistence",
+    title: "LLM 위키 영속",
     phase: "post",
-    summary: "Project-scoped cross-loop knowledge → harness/wiki/<slug>.md only. Nothing else qualifies.",
+    summary: "프로젝트 범위 루프 횡단 지식 → harness/wiki/<slug>.md 만 자격이 있다. 그 외는 해당 없음.",
     bindsTo: "PersistenceLayers, WikiLineageFlow, /harness:wiki-add",
   },
   {
     n: "VIII",
-    title: "Git Is Memory",
+    title: "Git이 곧 메모리",
     phase: "in",
-    summary: "Commit before verify. git revert on discard. One TSV per loop (gitignored).",
-    bindsTo: "Phase 4 Commit; harness-loop-scaffold",
+    summary: "Verify 전에 커밋. 폐기는 git revert로. 루프당 TSV 하나 (gitignored).",
+    bindsTo: "Phase 4 커밋; harness-loop-scaffold",
   },
   {
     n: "IX",
-    title: "Amendment Procedure",
+    title: "개정 절차",
     phase: "all",
-    summary: "Amending this Constitution requires its own loop, [RATIFIED] marker, and re-audit.",
+    summary: "이 헌법의 개정은 전용 루프 + [RATIFIED] 마커 + 재감사를 요구한다.",
     bindsTo: "loops/NNN-constitutional-amendment/",
   },
 ];
@@ -90,10 +90,10 @@ const PHASE_COLOR: Record<Art["phase"], string> = {
 };
 
 const PHASE_LABEL: Record<Art["phase"], string> = {
-  pre: "pre-loop",
-  in: "in-loop",
-  post: "post-loop",
-  all: "all phases",
+  pre: "진입 전",
+  in: "내부",
+  post: "종료 후",
+  all: "모든 단계",
 };
 
 export default function ArticleIndex() {
@@ -122,7 +122,7 @@ export default function ArticleIndex() {
           >
             <div className="flex items-baseline justify-between">
               <span className="font-mono text-sm font-bold text-neutral-900 dark:text-neutral-100">
-                Article {a.n}
+                조항 {a.n}
               </span>
               <span
                 className="rounded-full px-1.5 py-0.5 text-[9px] font-semibold uppercase"
@@ -147,7 +147,7 @@ export default function ArticleIndex() {
             </div>
             {isHover && (
               <div className="mt-1 border-t border-neutral-300/50 pt-1.5 text-[10.5px] text-neutral-500 dark:border-neutral-700/50">
-                <span className="font-mono">binds:</span> {a.bindsTo}
+                <span className="font-mono">결속:</span> {a.bindsTo}
               </div>
             )}
           </button>

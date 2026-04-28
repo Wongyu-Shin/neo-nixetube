@@ -11,75 +11,75 @@ import { useState } from "react";
 type Cell = { phase: number; article: number; note: string };
 
 const PHASE_LABELS = [
-  "0·Scaffold",
-  "1·Clarify",
-  "2·Plan",
-  "3·Review",
-  "4·Modify",
-  "5·Verify",
-  "6·Decide",
-  "7·Log",
-  "8·Repeat",
-  "9·Report",
+  "0·스캐폴드",
+  "1·명료화",
+  "2·계획",
+  "3·리뷰",
+  "4·수정",
+  "5·검증",
+  "6·결정",
+  "7·로그",
+  "8·반복",
+  "9·리포트",
 ];
 
 const ARTICLE_NAMES = [
-  "I · Axis declaration",
-  "II · Rippability",
-  "III · HITL policy",
-  "IV · Agent programs",
-  "V · Clarify gate",
-  "VI · Verify + ratchet",
-  "VII · Persistence",
-  "VIII · Commit history",
-  "IX · Amendment",
+  "I · 축 선언",
+  "II · 흡수 가능성",
+  "III · HITL 정책",
+  "IV · 에이전트 프로그램",
+  "V · 명료화 게이트",
+  "VI · 검증 + 래칫",
+  "VII · 영속",
+  "VIII · 커밋 히스토리",
+  "IX · 개정",
 ];
 
 const CELLS: Cell[] = [
-  // Article I — axis declaration (touches clarify, plan, report)
-  { phase: 1, article: 1, note: "every feature declares axis1/axis2 in clarif" },
-  { phase: 2, article: 1, note: "plan wizard cross-checks axis against catalog" },
-  { phase: 9, article: 1, note: "report.mdx § Axis coverage delta" },
-  // Article II — rippability
-  { phase: 1, article: 2, note: "clarify flags outer features whose rip-check nears trip" },
-  { phase: 5, article: 2, note: "harness-rip-test ships one-line mechanical check" },
-  { phase: 9, article: 2, note: "report notes any features ripped during the loop" },
-  // Article III — HITL
-  { phase: 2, article: 3, note: "ExitPlanMode = sole legal HITL entry into in-loop" },
-  { phase: 3, article: 3, note: "review is silent to operator; no AskUserQuestion" },
-  { phase: 4, article: 3, note: "L0/L1/L2 tiers; L2 may pause (carve-out 1)" },
-  { phase: 5, article: 3, note: "verify runs unattended; no prompts" },
-  { phase: 6, article: 3, note: "decide is deterministic; no operator judgment" },
-  { phase: 7, article: 3, note: "statusline/telemetry are visibility, not HITL" },
-  { phase: 8, article: 3, note: "Ctrl+C (carve-out 2); abandon command allowed" },
-  // Article IV — agent programs
-  { phase: 2, article: 4, note: "plan wizard selects modify strategy (adas/dgm)" },
-  { phase: 3, article: 4, note: "reflexion trace reads → modulates parent selection" },
-  { phase: 6, article: 4, note: "dgm-h parent-pick from archive" },
-  { phase: 9, article: 4, note: "optional cross-domain-transfer audit" },
-  // Article V — clarify gate
-  { phase: 1, article: 5, note: "7-dim Q/A; [ASSUMPTION] on D1 fails guard" },
-  { phase: 2, article: 5, note: "plan consumes clarif as input" },
-  // Article VI — verify + ratchet
-  { phase: 2, article: 6, note: "plan dry-runs verify to measure baseline" },
-  { phase: 5, article: 6, note: "statistical-tc-runner with ≥N trials" },
-  { phase: 6, article: 6, note: "noise-aware MAX ratchet; σ tolerance" },
-  { phase: 8, article: 6, note: "plateau-detection (patience AND slope)" },
-  { phase: 9, article: 6, note: "optional llm-as-judge-audit with rubric grade" },
-  // Article VII — persistence
-  { phase: 0, article: 7, note: "scaffold reads prior-loop wiki entries" },
-  { phase: 3, article: 7, note: "wiki keyword-surfaced as <system-reminder>" },
-  { phase: 7, article: 7, note: "reflexion entries appended to harness/reflexion/" },
-  { phase: 9, article: 7, note: "/harness:wiki-add proposes new entries" },
-  // Article VIII — commit history
-  { phase: 0, article: 8, note: "loops/NNN-<slug>/ committed at scaffold" },
-  { phase: 4, article: 8, note: "every candidate commits before verify" },
-  { phase: 6, article: 8, note: "discards use git revert, not git reset" },
-  { phase: 7, article: 8, note: "telemetry + per-iter line are committable artifacts" },
-  { phase: 9, article: 8, note: "report.mdx is the handback artifact" },
-  // Article IX — amendment
-  { phase: 1, article: 9, note: "clarif can cite proposed amendment, but cannot redefine" },
-  { phase: 9, article: 9, note: "report may propose amendment — separate loop to ratify" },
+  // 조항 I — 축 선언
+  { phase: 1, article: 1, note: "모든 피처는 clarif에서 axis1/axis2를 선언한다" },
+  { phase: 2, article: 1, note: "계획 위저드가 카탈로그에 대해 축을 교차 확인한다" },
+  { phase: 9, article: 1, note: "report.mdx § 축 커버리지 델타" },
+  // 조항 II — 흡수 가능성
+  { phase: 1, article: 2, note: "명료화가 rip-check 트립이 임박한 외부 피처를 표시한다" },
+  { phase: 5, article: 2, note: "harness-rip-test가 한 줄짜리 기계적 검사를 출하한다" },
+  { phase: 9, article: 2, note: "리포트가 루프 도중 폐기된 피처를 기록한다" },
+  // 조항 III — HITL
+  { phase: 2, article: 3, note: "ExitPlanMode = 루프 내부로 진입하는 유일한 HITL 게이트" },
+  { phase: 3, article: 3, note: "리뷰는 운영자에게 침묵; AskUserQuestion 없음" },
+  { phase: 4, article: 3, note: "L0/L1/L2 등급; L2는 일시 정지 가능 (예외 1)" },
+  { phase: 5, article: 3, note: "검증은 무인 실행; 프롬프트 없음" },
+  { phase: 6, article: 3, note: "결정은 결정적; 운영자 판단 없음" },
+  { phase: 7, article: 3, note: "상태 줄/텔레메트리는 가시성이지 HITL이 아님" },
+  { phase: 8, article: 3, note: "Ctrl+C (예외 2); abandon 명령 허용" },
+  // 조항 IV — 에이전트 프로그램
+  { phase: 2, article: 4, note: "계획 위저드가 수정 전략 선택 (adas/dgm)" },
+  { phase: 3, article: 4, note: "reflexion 트레이스 읽기 → 부모 선택 조정" },
+  { phase: 6, article: 4, note: "dgm-h 아카이브에서 부모 선택" },
+  { phase: 9, article: 4, note: "선택적 교차 도메인 전이 감사" },
+  // 조항 V — 명료화 게이트
+  { phase: 1, article: 5, note: "7차원 Q/A; D1의 [ASSUMPTION] 은 가드를 실패시킨다" },
+  { phase: 2, article: 5, note: "계획이 clarif을 입력으로 소비한다" },
+  // 조항 VI — 검증 + 래칫
+  { phase: 2, article: 6, note: "계획이 verify를 드라이런해 baseline을 측정한다" },
+  { phase: 5, article: 6, note: "statistical-tc-runner가 N회 이상 시행" },
+  { phase: 6, article: 6, note: "노이즈 인지 MAX 래칫; σ 허용" },
+  { phase: 8, article: 6, note: "플래토 감지 (patience AND slope)" },
+  { phase: 9, article: 6, note: "선택적 llm-as-judge-audit으로 루브릭 채점" },
+  // 조항 VII — 영속
+  { phase: 0, article: 7, note: "스캐폴드가 직전 루프의 위키 항목을 읽는다" },
+  { phase: 3, article: 7, note: "위키가 <system-reminder> 로 키워드 표면화" },
+  { phase: 7, article: 7, note: "reflexion 항목이 harness/reflexion/ 에 추가된다" },
+  { phase: 9, article: 7, note: "/harness:wiki-add가 새 항목을 제안한다" },
+  // 조항 VIII — 커밋 히스토리
+  { phase: 0, article: 8, note: "loops/NNN-<slug>/ 가 스캐폴드 시 커밋된다" },
+  { phase: 4, article: 8, note: "모든 후보가 verify 전에 커밋된다" },
+  { phase: 6, article: 8, note: "폐기는 git reset이 아니라 git revert로" },
+  { phase: 7, article: 8, note: "텔레메트리 + 이터레이션 행은 커밋 가능한 산출물" },
+  { phase: 9, article: 8, note: "report.mdx가 인계 산출물" },
+  // 조항 IX — 개정
+  { phase: 1, article: 9, note: "clarif은 제안된 개정을 인용할 수 있지만 재정의는 못 한다" },
+  { phase: 9, article: 9, note: "리포트가 개정을 제안할 수 있다 — 비준은 별도 루프" },
 ];
 
 const COLORS = [
@@ -116,7 +116,7 @@ export default function ArticleWeave() {
           className="w-full"
           xmlns="http://www.w3.org/2000/svg"
           role="img"
-          aria-label="Weave of 9 Articles across 10 loop phases"
+          aria-label="9개 조항을 10개 루프 단계에 걸쳐 짠 위빙"
         >
           <rect x="0" y="0" width={W} height={H} fill="#0b0b0b" />
 
@@ -223,7 +223,7 @@ export default function ArticleWeave() {
             fontFamily="ui-monospace, monospace"
             letterSpacing="1"
           >
-            PRE-LOOP
+            진입 전
           </text>
           <text
             x={LEFT + CELL_W * 6}
@@ -234,7 +234,7 @@ export default function ArticleWeave() {
             fontFamily="ui-monospace, monospace"
             letterSpacing="1"
           >
-            IN-LOOP
+            루프 내부
           </text>
           <text
             x={LEFT + CELL_W * 9.5}
@@ -245,7 +245,7 @@ export default function ArticleWeave() {
             fontFamily="ui-monospace, monospace"
             letterSpacing="1"
           >
-            POST
+            종료 후
           </text>
         </svg>
 
@@ -263,21 +263,21 @@ export default function ArticleWeave() {
                   {ARTICLE_NAMES[hoverCell.article - 1]}
                 </span>
                 <span className="text-stone-500 text-xs font-mono">
-                  × phase {PHASE_LABELS[hoverCell.phase]}
+                  × 단계 {PHASE_LABELS[hoverCell.phase]}
                 </span>
               </div>
               <div className="mt-2 text-stone-300 text-[13px]">{hoverCell.note}</div>
             </div>
           ) : hover ? (
             <div className="text-stone-600 italic text-[13px]">
-              {ARTICLE_NAMES[hover.article - 1]} does not govern phase{" "}
-              {PHASE_LABELS[hover.phase]} — empty cell is a signal, not an omission.
+              {ARTICLE_NAMES[hover.article - 1]} 는 단계 {PHASE_LABELS[hover.phase]} 를
+              관장하지 않는다 — 빈 셀은 누락이 아니라 신호다.
             </div>
           ) : (
             <div className="text-stone-500 italic text-[13px]">
-              Hover any cell. Filled = Article governs that phase. Empty columns
-              are rare (phase 0 touches only Art. VII + VIII); Article III is the
-              most horizontal — HITL policy is enforced at nearly every phase.
+              어느 셀이든 호버한다. 채워진 셀 = 그 조항이 그 단계를 관장. 빈 열은 드물다
+              (단계 0은 조항 VII + VIII만 건드린다). 조항 III가 가장 수평적이다 —
+              HITL 정책은 거의 모든 단계에서 강제된다.
             </div>
           )}
         </div>
