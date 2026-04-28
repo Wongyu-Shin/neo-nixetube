@@ -42,3 +42,4 @@ loops/docs-loop-v2/stage-status.txt
 loops/docs-loop-translate/gan-translate-*.txt
 loops/docs-loop-translate/prev-scores-*.txt
 loops/docs-loop-translate/ratchet.txt
+autoresearch-translate-results.tsv
