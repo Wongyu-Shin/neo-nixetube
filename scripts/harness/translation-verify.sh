@@ -112,8 +112,9 @@ if [ "$MODE" = "dry" ]; then
     exit 0
 fi
 
-# --- Run: invoke GAN per page, apply ratchet MAX ---
-total=0
+# --- Run: invoke GAN per requested page, apply ratchet MAX ---
+ALL_PAGES=(overview constitution flow wiki catalog)
+
 for slug in "${PAGES[@]}"; do
     echo "=== translate-verify $slug ==="
     raw=$(bash "$ROOT/scripts/harness/page-translate-verify.sh" "$slug" 2>&1 | tail -1 | tr -d '[:space:]')
@@ -126,12 +127,17 @@ for slug in "${PAGES[@]}"; do
     if awk -v p="$prev" -v r="$raw" 'BEGIN{exit !(r>p)}'; then
         write_ratchet "$slug" "$raw"
         echo "  $slug: raw=$raw > prev=$prev → RATCHET UP"
-        eff=$raw
     else
         echo "  $slug: raw=$raw ≤ prev=$prev → keep $prev (anchor sticky)"
-        eff=$prev
     fi
-    total=$(awk -v t="$total" -v v="$eff" 'BEGIN{print t+v}')
+done
+
+# PROGRESS is always over ALL 5 pages, regardless of which subset was processed
+# this run. Pages not processed retain their previous ratchet contribution.
+total=0
+for slug in "${ALL_PAGES[@]}"; do
+    v=$(read_ratchet "$slug")
+    total=$(awk -v t="$total" -v v="$v" 'BEGIN{print t+v}')
 done
 
 progress=$(awk -v t="$total" 'BEGIN{printf "%.1f", t/300*100}')
