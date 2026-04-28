@@ -25,168 +25,149 @@ export const metadata = { title: 'Harness UX Flow — Entry to Completion' }
   ─────────────────────────────────────────────────────────────
 */}
 
-# Harness UX Flow — Entry → Completion
+# 하네스 UX 플로우 — 진입 → 종료
 
-> How an operator kicks off a loop, what the agent does between
-> iterations, and what the agent hands back at the end. This page is
-> the interactive companion to <code>harness/UX.md</code> and
-> <code>harness/CONSTITUTION.md</code>.
+> 운영자가 어떻게 루프를 시작하고, 에이전트가 이터레이션 사이에 무엇을 하며,
+> 종료 시 무엇을 돌려주는지를 다룬다. 이 페이지는 <code>harness/UX.md</code> 와
+> <code>harness/CONSTITUTION.md</code> 의 인터랙티브 동반본이다.
 
-The diagram below is the spine of the whole page: the green column is
-the **pre-loop** (HITL active, Articles III + V), the amber ring is
-**in-loop** (HITL forbidden except the two carve-outs in Article III),
-and the violet column is **post-loop** (HITL active, Articles VII +
-VIII). Hover any node for a preview; click to lock the side panel.
+아래 다이어그램이 페이지 전체의 척추다. 초록 열은 **루프 진입 전**(HITL 활성, 조항
+III + V), 호박색 고리는 **루프 내부**(HITL 금지, 조항 III의 두 예외만 허용), 보라
+열은 **루프 종료 후**(HITL 활성, 조항 VII + VIII) 다. 어느 노드든 호버하면
+미리보기가 뜨고, 클릭하면 사이드 패널이 고정된다.
 
 <HarnessFlowDiagram />
 
-## 1 · Article III — the HITL boundary
+## 1 · 조항 III — HITL 경계
 
-The single most load-bearing invariant in the harness. **Active
-human-in-the-loop input is legal only in pre-loop and post-loop.** The
-in-loop segment is machine-driven and forbids <code>AskUserQuestion</code>
-outright. The post-hoc transcript linter flags any violation.
+하네스에서 가장 결정적인 단일 불변 조건이다. **능동적 사람 개입은 루프 진입 전과
+종료 후에서만 합법이다.** 루프 내부 구간은 머신 주도이며 <code>AskUserQuestion</code>
+을 단호히 금지한다. 사후 트랜스크립트 린터가 위반을 표시한다.
 
 <HITLBoundaryChart />
 
-There are exactly two in-loop carve-outs, both specified in Article III
-clause (c):
+루프 내부 예외는 정확히 둘이며, 모두 조항 III 항목 (c) 에 명시되어 있다.
 
-- **L2 graduated-confirm** for irreversible operations
-  (`cc-hook-guardrail` deny + `harness-graduated-confirm` prompt).
-- **Ctrl+C** for emergency stop, which is lossy by design.
+- 비가역적 작업에 대한 **L2 단계적 확인** (`cc-hook-guardrail` 의 거부 +
+  `harness-graduated-confirm` 의 프롬프트).
+- 설계상 손실을 감수하는 비상 정지인 **Ctrl+C**.
 
-Everything else happening inside the amber ring — iterating, committing,
-verifying, guarding, logging — is agent-driven with zero interactive
-prompts. Operator hints arrive asynchronously via `/harness:send` and
-are consumed at the next atomic-step boundary.
+호박색 고리 안에서 일어나는 그 외 모든 것 — 이터레이션, 커밋, 검증, 가드, 로깅 —
+은 인터랙티브 프롬프트 없이 에이전트가 주도한다. 운영자의 힌트는 `/harness:send` 를
+통해 비동기로 도착하며, 다음 원자 단계 경계에서 소비된다.
 
-## 2 · Pre-loop — scaffold, clarify, plan
+## 2 · 루프 진입 전 — 스캐폴드, 명료화, 계획
 
-Three slash commands staircase the operator from a raw intent to an
-executable plan:
+세 개의 슬래시 명령이 운영자를 원시 의도에서 실행 가능한 계획까지 계단처럼
+끌어올린다.
 
 <CommandCheatsheet />
 
-- **`/harness:new-loop <slug>`** (feature `harness-loop-scaffold`,
-  Article VIII): auto-increments NNN, copies `loops/TEMPLATE/`, opens
-  `spec.md` for Goal/Scope/Metric entry, and wires the loop to the
-  Article III–VII invariants.
-- **`/harness:clarify`** (feature `harness-clarify-gate`, Article V):
-  walks the seven coverage dimensions D1–D7 and writes
-  `clarifications.md`. Unresolved `[ASSUMPTION]` markers for D1 fail
-  `composite-guard` (Article VI) — the loop cannot proceed.
-- **`/autoresearch:plan`** (feature `plan-mode-discipline`, Article V):
-  consumes `clarifications.md`, dry-runs verify, records the baseline.
-  `ExitPlanMode` is the **only** legal HITL gate into in-loop (Article III).
+- **`/harness:new-loop <slug>`** (피처 `harness-loop-scaffold`, 조항 VIII):
+  NNN을 자동 증가시키고, `loops/TEMPLATE/` 을 복사하며, Goal/Scope/Metric 입력을
+  위해 `spec.md` 를 열고, 루프를 조항 III–VII 의 불변 조건에 배선한다.
+- **`/harness:clarify`** (피처 `harness-clarify-gate`, 조항 V): 7개 커버리지
+  차원 D1–D7 을 순회하며 `clarifications.md` 를 작성한다. D1 에 대한 미해결
+  `[ASSUMPTION]` 마커는 `composite-guard` 를 실패시킨다 (조항 VI) — 루프는
+  진행될 수 없다.
+- **`/autoresearch:plan`** (피처 `plan-mode-discipline`, 조항 V):
+  `clarifications.md` 를 소비하고 verify를 드라이런하며 baseline을 기록한다.
+  `ExitPlanMode` 가 루프 내부로 들어가는 **유일하게** 합법적인 HITL 게이트다
+  (조항 III).
 
-## 3 · In-loop — the eight-phase ring
+## 3 · 루프 내부 — 8단계 고리
 
-Each iteration walks eight phases in order. Phase 1 loads the
-Constitution, surfaces wiki entries by keyword (Article VII), and
-re-reads prior `reflexion` notes. Phases 2–5 ideate, modify, commit,
-verify and guard. Phase 6 decides keep/discard/rework gated by
-`composite-guard` (Article VI). Phase 7 writes one log line and the
-milestone block via `harness-progress-cadence`. Phase 8 repeats, or
-exits on a stop condition.
+각 이터레이션은 8개 단계를 순서대로 밟는다. Phase 1은 헌법을 로드하고, 키워드로
+위키 항목을 표면화하며 (조항 VII), 이전의 `reflexion` 노트를 다시 읽는다. Phase 2–5
+는 발상, 수정, 커밋, 검증, 가드를 수행한다. Phase 6은 `composite-guard` 가
+게이팅하는 keep/discard/rework 결정을 내린다 (조항 VI). Phase 7은 한 줄의 로그와
+마일스톤 블록을 `harness-progress-cadence` 를 통해 작성한다. Phase 8은 반복하거나
+정지 조건에서 종료한다.
 
-Ratcheting is performed by `noise-aware-ratchet` with a `SUM=MAX`
-ratchet so LLM-as-judge noise (±10) never weakens the anchor. Plateau
-detection by `plateau-detection` combines `ratchet-patience` and
-`trend-slope` under the measured σ; tripping either is insufficient.
+래칫팅은 `noise-aware-ratchet` 이 `SUM=MAX` 래칫으로 수행해, LLM-as-judge 노이즈
+(±10) 가 절대 앵커를 약화시키지 못하게 한다. 플래토 감지는 `plateau-detection` 이
+측정된 σ 하에서 `ratchet-patience` 와 `trend-slope` 를 결합한다. 어느 한 쪽만
+발화해서는 부족하다.
 
-## 4 · In-loop safety tiers
+## 4 · 루프 내부 안전 등급
 
-Operations inside the ring are not homogeneous. The graduated-confirm
-ladder classifies each op and decides whether it may run silently, ping
-the statusline for 30 seconds, or block the loop entirely until the
-operator acks it with a keystroke.
+고리 안의 작업은 균질하지 않다. 단계적 확인 사다리는 각 작업을 분류해, 침묵 실행할지,
+30초 동안 상태 줄에 핑할지, 운영자가 키 입력으로 응답할 때까지 루프를 완전히 차단할지를
+결정한다.
 
 <SafetyTierLadder />
 
-L2 events are appended to `report.mdx` and shown in the statusline. A
-loop that hits L2 three times in five iterations auto-escalates to
-operator attention regardless of per-event verdict.
+L2 이벤트는 `report.mdx` 에 추가되고 상태 줄에 표시된다. 5개 이터레이션 안에 L2를
+3번 친 루프는 이벤트별 판정과 무관하게 운영자 주의로 자동 격상된다.
 
-## 5 · Stop conditions — automatic and manual
+## 5 · 정지 조건 — 자동과 수동
 
-A loop ends for one of six reasons, split between the agent and the
-operator.
+루프는 6개 사유 중 하나로 종료되며, 에이전트와 운영자에 분산된다.
 
 <StopConditionMatrix />
 
-Automatic stops (bounded N, goal-achieved, plateau) all run the
-post-loop report cleanly. Manual pause and abandon preserve the
-checkpoint. Emergency stop (Ctrl+C) is the only lossy path and should
-be avoided when `/harness:abandon` or `/harness:pause` are available.
+자동 정지 (bounded N, 목표 달성, 플래토) 는 모두 루프 종료 후 리포트를 깔끔하게
+실행한다. 수동 일시 정지와 포기는 체크포인트를 보존한다. 비상 정지(Ctrl+C) 는 유일한
+손실 경로이며, `/harness:abandon` 이나 `/harness:pause` 가 가능할 때는 피해야 한다.
 
-## 6 · Post-loop — report and wiki
+## 6 · 루프 종료 후 — 리포트와 위키
 
-Once the ring has exited, two post-loop slash commands hand the loop's
-output back to the operator.
+고리가 빠져나오면, 두 개의 루프 종료 후 슬래시 명령이 루프의 출력을 운영자에게
+돌려준다.
 
-- **`/harness:report`** (feature `cc-post-loop-slash`, Article VIII):
-  renders `report.mdx` with TL;DR, axis-coverage delta, kept/reworked/
-  discarded experiments with commit hashes, L2 confirmation log, wiki
-  contributions, and next steps.
-- **`/harness:wiki-add`** (feature `harness-llm-wiki`, Article VII):
-  the agent proposes 0–N keyword-triggered entries, the operator
-  approves/edits/rejects each, and accepted entries land under
-  `harness/wiki/<slug>.md`. A `wiki-refs.md` in the loop directory
-  records **both** the wiki entries read during the loop and the ones
-  it wrote, so future readers can trace the knowledge lineage in
-  either direction.
+- **`/harness:report`** (피처 `cc-post-loop-slash`, 조항 VIII):
+  TL;DR, 축 커버리지 델타, 커밋 해시가 달린 keep/reworked/discarded 실험들,
+  L2 확인 로그, 위키 기여, 다음 단계와 함께 `report.mdx` 를 렌더한다.
+- **`/harness:wiki-add`** (피처 `harness-llm-wiki`, 조항 VII):
+  에이전트가 0–N개의 키워드 트리거 항목을 제안하면, 운영자가 각각을 승인/편집/거부하고,
+  수락된 항목은 `harness/wiki/<slug>.md` 하위에 안착한다. 루프 디렉터리의
+  `wiki-refs.md` 가 루프 도중 읽은 위키 항목과 작성한 항목 **양쪽** 을 기록해, 미래의
+  독자가 지식 계보를 어느 방향으로든 추적할 수 있게 한다.
 
-Optional post-loop audits attach on demand: `llm-as-judge-audit` (with
-self-enhancement-bias control via a different judge model),
-`cross-domain-transfer-metric` on a held-out paired domain, and
-`gcli-eval-compare-primitive` for paired A/B vs. a baseline ref.
+선택적인 루프 종료 후 감사는 요청 시 부착된다. (다른 저지 모델로 자기 강화 편향을
+통제하는) `llm-as-judge-audit`, 보류된 짝 도메인에서의 `cross-domain-transfer-metric`,
+그리고 baseline 참조에 대한 짝 A/B 비교용 `gcli-eval-compare-primitive`.
 
-## 7 · Persistence layers — the LLM-wiki question
+## 7 · 영속 계층 — LLM 위키 질문
 
-"How does LLM-wiki persistence actually work?" turns out to have a
-four-layer answer, of which only one (the harness wiki) is
-simultaneously keyword-triggered, project-scoped, committable, and
-half-life tracked.
+"LLM 위키 영속화는 실제로 어떻게 작동하는가?" 이 질문에는 4계층 답이 있고, 그중
+오직 하나(하네스 위키)만이 키워드 트리거이며, 프로젝트 범위이고, 커밋 가능하며,
+반감기 추적까지 동시에 만족한다.
 
 <PersistenceLayers />
 
-Article VII names this layer as the sole project-scoped cross-loop
-knowledge store. `CLAUDE.md` is equivalent in scope but floods every
-session, and user memory is cross-repo. Research notes live next door
-to wiki entries but require explicit reads; the wiki's SessionStart
-matcher is what makes the difference.
+조항 VII는 이 계층을 유일한 프로젝트 범위 루프 횡단 지식 저장소로 명명한다. `CLAUDE.md`
+는 범위는 같지만 모든 세션에 범람하고, 사용자 메모리는 레포 횡단이다. 리서치 노트는
+위키 항목 옆에 살지만 명시적인 읽기를 요구한다. 위키의 SessionStart 매처가 차이를
+만든다.
 
-## 8 · Per-loop artifact tree
+## 8 · 루프별 산출물 트리
 
-Every completed loop leaves the same tree under `loops/NNN-<slug>/`.
-Hover a node for what it is, which command writes it, and which
-Article governs it.
+종료된 모든 루프는 `loops/NNN-<slug>/` 하위에 같은 트리를 남긴다. 노드를 호버하면
+무엇인지, 어느 명령이 작성하는지, 어느 조항이 그것을 관장하는지가 보인다.
 
 <ArtifactTree />
 
-`results.tsv` is gitignored because it is reconstructable from the
-commit series (Article VIII — "git is memory"). Everything else is
-committed: spec, clarifications, plan, checkpoints, report, and the
-two-directional wiki-refs.
+`results.tsv` 는 커밋 시리즈에서 재구성 가능하기 때문에 gitignore 된다 (조항 VIII —
+"git이 곧 메모리"). 그 외 모든 것은 커밋된다. spec, clarifications, plan, 체크포인트,
+report, 그리고 양방향 wiki-refs 다.
 
 ---
 
-## Further reading
+## 더 읽을거리
 
-- `harness/UX.md` — the authoritative flow spec this page visualises.
-- `harness/CONSTITUTION.md` — the nine Articles cited throughout.
-- `harness/features/*.md` — the 28 feature specs; each UX primitive
-  above maps to at least one (`harness/UX.md §9` has the full
-  phase-to-feature index).
-- Companion pages: [/harness](/harness) (overview),
+- `harness/UX.md` — 이 페이지가 시각화하는 권위 있는 플로우 스펙.
+- `harness/CONSTITUTION.md` — 페이지 곳곳에서 인용되는 9개 조항.
+- `harness/features/*.md` — 28개 피처 스펙. 위의 모든 UX 프리미티브가 적어도
+  하나에 매핑된다 (`harness/UX.md §9` 가 단계-피처 전체 인덱스를 가진다).
+- 동반 페이지: [/harness](/harness) (오버뷰),
   [/harness/constitution](/harness/constitution),
   [/harness/catalog](/harness/catalog),
   [/harness/wiki](/harness/wiki).
 
 ---
 
-## 10. Appendix — flow auxiliary visuals
+## 10. 부록 — 플로우 보조 시각
 
 import RatchetTimeline from '../../components/harness/RatchetTimeline'
 import IterationPhaseRing from '../../components/harness/IterationPhaseRing'
@@ -197,25 +178,25 @@ import KnowledgeStack from '../../components/harness/KnowledgeStack'
 import StopConditionsChart from '../../components/harness/StopConditionsChart'
 import ClarifyDimensionsRadar from '../../components/harness/ClarifyDimensionsRadar'
 
-### Ratchet trajectory across iterations
+### 이터레이션을 가로지르는 래칫 궤적
 <RatchetTimeline />
 
-### Iteration phase ring (Phase 1-8 detail)
+### 이터레이션 단계 고리 (Phase 1–8 상세)
 <IterationPhaseRing />
 
-### Article badge: <ArticleBadge n="III" status="enforced" />
+### 조항 배지: <ArticleBadge n="III" status="enforced" />
 
-### Article index (cross-page reference)
+### 조항 인덱스 (페이지 간 참조)
 <ArticleIndex />
 
-### Loop cadence overview
+### 루프 케이던스 개요
 <LoopCadenceCard />
 
-### Persistence layers (UX §7)
+### 영속 계층 (UX §7)
 <KnowledgeStack />
 
-### Stop conditions chart
+### 정지 조건 차트
 <StopConditionsChart />
 
-### Clarify-gate radar
+### 클래리파이 게이트 레이더
 <ClarifyDimensionsRadar />
