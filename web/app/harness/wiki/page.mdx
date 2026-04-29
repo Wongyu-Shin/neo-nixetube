@@ -21,6 +21,7 @@ import WikiEntrySchema from '../../components/harness/WikiEntrySchema'
 import HalfLifeTimeline from '../../components/harness/HalfLifeTimeline'
 import ReadWriteFlow from '../../components/harness/ReadWriteFlow'
 import FeatureCrossRef from '../../components/harness/FeatureCrossRef'
+import WikiIndex from '../../components/harness/WikiIndex'
 
 export const metadata = { title: 'LLM-Wiki — Keyword-Triggered Knowledge' }
 
@@ -218,3 +219,16 @@ import ArtifactTree from '../../components/harness/ArtifactTree'
 
 ### 루프별 wiki-refs.md 배치
 <ArtifactTree />
+
+---
+
+## 라이브 위키 항목
+
+> `harness/wiki/*.md` 에 영속화된 항목들. 각 카드는 frontmatter (slug, title,
+> keywords, created, half-life) 와 본문의 TL;DR 첫 단락을 노출한다. 클릭하면
+> 항목 전문 페이지(`/harness/wiki/<slug>/`)로 이동한다. 새 항목은
+> `/harness:wiki-add` 슬래시 명령이 만들고, SessionStart 키워드 매처
+> (`.claude/hooks/wiki-keyword-matcher.sh`) 가 대화 컨텍스트에 매치되는
+> 항목을 표면화한다.
+
+<WikiIndex />
