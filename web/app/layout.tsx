@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import Nav from "./components/Nav";
+import ScrollToTop from "./components/ScrollToTop";
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
@@ -38,6 +39,7 @@ export default function RootLayout({
       <body className="min-h-full bg-[#0D0D0D] text-stone-100 font-[family-name:var(--font-space-grotesk)]">
         {/* Navigation — client component with active state */}
         <Nav />
+        <ScrollToTop />
 
         {/* Content */}
         <main className="max-w-4xl mx-auto px-4 py-8">
