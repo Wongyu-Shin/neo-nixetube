@@ -456,22 +456,22 @@ export default function ConstitutionArticlesMap() {
                     y={art.pos.y + (isCenter ? 18 : 16)}
                     textAnchor="middle"
                     fontFamily="ui-sans-serif, system-ui, sans-serif"
-                    fontSize={isCenter ? 11 : 9}
+                    fontSize={isCenter ? 14 : 12}
                     fontWeight="500"
-                    fill="#e8dbc2"
-                    opacity="0.82"
+                    fill="#f0e6d4"
+                    opacity="0.95"
                   >
                     {art.title.split(" ").slice(0, isCenter ? 2 : 2).join(" ")}
                   </text>
                   {!isCenter && art.title.split(" ").length > 2 && (
                     <text
                       x={art.pos.x}
-                      y={art.pos.y + 28}
+                      y={art.pos.y + 30}
                       textAnchor="middle"
                       fontFamily="ui-sans-serif, system-ui, sans-serif"
-                      fontSize="9"
-                      fill="#e8dbc2"
-                      opacity="0.62"
+                      fontSize="11"
+                      fill="#f0e6d4"
+                      opacity="0.85"
                     >
                       {art.title.split(" ").slice(2).join(" ")}
                     </text>
@@ -480,12 +480,12 @@ export default function ConstitutionArticlesMap() {
                   {!isCenter && (
                     <text
                       x={art.pos.x}
-                      y={art.pos.y + 44}
+                      y={art.pos.y + 48}
                       textAnchor="middle"
                       fontFamily="ui-monospace, SFMono-Regular, monospace"
-                      fontSize="7"
+                      fontSize="11"
                       fill={art.color}
-                      opacity="0.6"
+                      opacity="0.92"
                       letterSpacing="1"
                     >
                       {DOMAIN_LABEL[art.domain].toUpperCase()}
@@ -496,39 +496,39 @@ export default function ConstitutionArticlesMap() {
             })}
 
             {/* ═══ Legend ═══ */}
-            <g transform="translate(24, 740)" fontFamily="ui-monospace, monospace" fontSize="10">
-              <text fill="#D4A853" opacity="0.7" y="0" letterSpacing="2">
+            <g transform="translate(24, 740)" fontFamily="ui-monospace, monospace" fontSize="12">
+              <text fill="#D4A853" opacity="0.92" y="0" letterSpacing="2">
                 ARCS
               </text>
-              <g transform="translate(0, 14)">
-                <line x1="0" y1="6" x2="30" y2="6" stroke="#6BA368" strokeWidth="1.4" strokeDasharray="3 4" />
-                <text x="40" y="9" fill="#e8dbc2" opacity="0.75">governs (IX → *)</text>
+              <g transform="translate(0, 16)">
+                <line x1="0" y1="6" x2="30" y2="6" stroke="#6BA368" strokeWidth="1.6" strokeDasharray="3 4" />
+                <text x="40" y="10" fill="#f0e6d4" opacity="0.92">governs (IX → *)</text>
               </g>
-              <g transform="translate(0, 30)">
-                <line x1="0" y1="6" x2="30" y2="6" stroke="#FF8C42" strokeWidth="1.4" />
-                <text x="40" y="9" fill="#e8dbc2" opacity="0.75">enforces</text>
+              <g transform="translate(0, 34)">
+                <line x1="0" y1="6" x2="30" y2="6" stroke="#FF8C42" strokeWidth="1.6" />
+                <text x="40" y="10" fill="#f0e6d4" opacity="0.92">enforces</text>
               </g>
-              <g transform="translate(0, 46)">
-                <line x1="0" y1="6" x2="30" y2="6" stroke="#7B9EB8" strokeWidth="1.4" />
-                <text x="40" y="9" fill="#e8dbc2" opacity="0.75">cites</text>
+              <g transform="translate(0, 52)">
+                <line x1="0" y1="6" x2="30" y2="6" stroke="#7B9EB8" strokeWidth="1.6" />
+                <text x="40" y="10" fill="#f0e6d4" opacity="0.92">cites</text>
               </g>
             </g>
 
             <g
               transform="translate(620, 740)"
               fontFamily="ui-monospace, monospace"
-              fontSize="10"
+              fontSize="12"
             >
-              <text fill="#D4A853" opacity="0.7" y="0" letterSpacing="2">
+              <text fill="#D4A853" opacity="0.92" y="0" letterSpacing="2">
                 LEGEND
               </text>
-              <text x="0" y="16" fill="#e8dbc2" opacity="0.6">
+              <text x="0" y="18" fill="#f0e6d4" opacity="0.88">
                 hover: highlight
               </text>
-              <text x="0" y="32" fill="#e8dbc2" opacity="0.6">
+              <text x="0" y="36" fill="#f0e6d4" opacity="0.88">
                 click: pin / unpin
               </text>
-              <text x="0" y="48" fill="#e8dbc2" opacity="0.6">
+              <text x="0" y="54" fill="#f0e6d4" opacity="0.88">
                 center: IX governs all
               </text>
             </g>
